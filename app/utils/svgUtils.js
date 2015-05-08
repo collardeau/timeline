@@ -47,9 +47,18 @@ let SVG = {
             .domain([d3.min(dataset), d3.max(dataset)])
             .range([10, w-10]);
 
-        svg.selectAll("circle")
-            .data(dataset)
-            .enter()
+        let selection = svg.selectAll("circle").data(dataset);
+
+        if(dataset[dataset.length-1] === d3.max(dataset)){
+            console.log("input is a higher date");
+            selection.attr({
+                'cx': (d,i) => linearScale(d),
+                'cy': 50,
+                'r': 10
+            }).style("fill", "orange")
+        }
+
+            selection.enter()
             .append('circle')
             .attr({
                 'cx': (d,i) => linearScale(d),
