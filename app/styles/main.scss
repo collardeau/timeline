@@ -12,6 +12,13 @@ body {
   @include padding(em(34px) em(55px));  // bourbon
 }
 
+#line {
+  transition: all 3s ease;
+}
+#line:hover {
+  stroke: green !important;
+}
+
 section {   // neat grid
   @include outer-container;
   aside { @include span-columns(3); }
