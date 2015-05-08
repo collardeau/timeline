@@ -13,16 +13,19 @@ let dataset = [date1, date2, date3];
 class D3Container extends React.Component {
 
     componentDidMount() {
-        SVG.createSVG('.d3-container', 500, 100);
+        SVG.createSVG('.d3-container', 800, 100);
         SVG.createLine();
         SVG.plotCircles(dataset);
 
     }
 
     handleClick(e) {
-        let date = moment("1999-08-26").unix();
-        dataset.push(date);
-        SVG.plotCircles(dataset);
+        let date = this.refs.newDate.getDOMNode().value;
+        if(date){
+            let unix = moment(date).unix();
+            dataset.push(unix);
+            SVG.plotCircles(dataset);
+        }
         e.preventDefault();
 
     }
