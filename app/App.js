@@ -7,8 +7,10 @@ const React = require('react');
 let Navigation = require('./components/Navigation');
 let Home = require('./components/Home');
 let ListContainer = require('./components/list/ListContainer');
+
 let Login = require('./components/login/Login');
 let Account = require('./components/Account');
+let D3Container = require('./components/d3/D3Container');
 
 class App extends React.Component {
 
@@ -34,6 +36,10 @@ class App extends React.Component {
                 ui = accountRoute;
                 break;
 
+            case "d3":
+                ui = d3Route;
+                break;
+
             default:
                 ui = homeRoute;
         }
@@ -45,30 +51,39 @@ class App extends React.Component {
 
 let homeRoute = (
     <div>
-        <Navigation />
-        <Home />
+    <Navigation />
+    <Home />
     </div>
 );
 
 let listRoute = (
     <div>
-        <Navigation />
-        <ListContainer />
+    <Navigation />
+    <ListContainer />
     </div>
 );
 
 let loginRoute = (
     <div>
-        <Navigation />
-        <Login />
+    <Navigation />
+    <Login />
     </div>
 );
 
 let accountRoute = (
     <div>
-        <Navigation />
-        <Account />
+    <Navigation />
+    <Account />
     </div>
 );
+
+let d3Route = (
+    <div>
+    <Navigation />
+    <D3Container />
+    </div>
+);
+
+
 
 module.exports = App;
