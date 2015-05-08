@@ -35,6 +35,7 @@
     "font-awesome": "^4.3.0",
     "hasher": "^1.2.0",
     "jquery": "^2.1.4",
+    "moment": "^2.10.2",
     "normalize.css": "^3.0.3",
     "react": "^0.13.2"
   },
