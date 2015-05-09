@@ -18,11 +18,14 @@ class D3Container extends React.Component {
         let date = this.refs.newDate.getDOMNode().value;
         if(date){
             let unix = moment(date).unix();
-            dots.addDot(unix);
+            dots.addDot({
+                timestamp: unix,
+                event: "some new event",
+                location: "some location"
+            });
             SVG.plotDots(dots.getDots());
         }
         e.preventDefault();
-
     }
 
     render() {

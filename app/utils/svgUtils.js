@@ -22,13 +22,8 @@ let SVG = {
 
     createSVG: (element, w, h, color) => {
         return d3.select(element).append("svg")
-            .attr({
-                'width': w,
-                'height': h
-            })
-            .style({
-                "background-color": color
-            });
+            .attr({ 'width': w, 'height': h })
+            .style({ "background-color": color });
     },
 
     createTimeline: () => {
@@ -38,7 +33,7 @@ let SVG = {
 
         svg.append("line")
             .attr({
-                'x1': w/2, x2: w/2,
+                'x1': w/4, x2: w/4,
                 'y1': 0, y2: 0,
                 "id": "line"
             })
@@ -59,19 +54,22 @@ let SVG = {
         let w = parseInt(svg.style("width"));
         let h = parseInt(svg.style("height"));
 
-        let selection = svg.selectAll("circle").data(dataset, function(i,d){
-            return d;
-        });
+        let timestamps = dataset.reduce((prev, next) =>{
+            prev.push(next.timestamp);
+            return prev
+        }, []);
+
+        let selection = svg.selectAll("circle").data(timestamps);
 
         let linearScale = d3.scale.linear()
-            .domain([d3.min(dataset), d3.max(dataset)])
+            .domain([d3.min(timestamps), d3.max(timestamps)])
             .range([10, h-10]);
 
-        if(isOutofBounds(dataset)){
+        if(isOutofBounds(timestamps)){
             // rescale and position the existing dots
             selection.transition().duration(2000)
             .attr({
-                'cx': w/2,
+                'cx': w/4,
                 'cy': (d,i) => linearScale(d),
                 'r': 5
             })
@@ -81,12 +79,12 @@ let SVG = {
         selection.enter()   // enter new data
         .append('circle')
         .attr({
-            'cx': w/2,
+            'cx': w/4,
             'cy': (d,i) => linearScale(d),
             'r': 0
         })
         .style("fill", "orange")
-        .on("click", function(){
+        .on("click", function(d, i){
             d3.select(this)
                 .transition()
                 .attr({
@@ -99,10 +97,10 @@ let SVG = {
                 });
                 svg.append("text")
                     .attr({
-                        'x': 100 + 15,  // eye balling
+                        'x': w/4 + 15,  // eyeballing technique
                         'y': parseInt(d3.select(this).attr('cy')) + 5
                     })
-                    .text("Born!");
+                    .text(dataset[i].event);
         })
         .transition()
         .duration(1000)
