@@ -68,7 +68,7 @@ let SVG = {
             // rescale and position the existing dots
             selection.transition().duration(2000)
             .attr({
-                'cx': 50,
+                'cx': w/2,
                 'cy': (d,i) => linearScale(d),
                 'r': 5
             })
@@ -78,7 +78,7 @@ let SVG = {
         selection.enter()   // enter new data
         .append('circle')
         .attr({
-            'cx': 50,
+            'cx': w/2,
             'cy': (d,i) => linearScale(d),
             'r': 0
         })

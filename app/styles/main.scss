@@ -23,10 +23,11 @@ h1 {
   stroke: green !important;
 }
 
-section {   // neat grid
-  @include outer-container;
-  aside { @include span-columns(3); }
-  article { @include span-columns(9); }
+#timelineApp {   // neat grid
+  @include outer-container(100%);
+  padding: 1em 1em 1em 0;
+  .d3-container { @include span-columns(3); }
+  #panel { @include span-columns(9); }
 }
 
 @import "./welcome";
