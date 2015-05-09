@@ -10,7 +10,7 @@ let ListContainer = require('./components/list/ListContainer');
 
 let Login = require('./components/login/Login');
 let Account = require('./components/Account');
-let D3Container = require('./components/d3/D3Container');
+let Timeline = require('./components/timeline/timeline');
 
 class App extends React.Component {
 
@@ -41,7 +41,7 @@ class App extends React.Component {
                 break;
 
             default:
-                ui = homeRoute;
+                ui = timelineRoute;
         }
 
         return ui ;
@@ -77,13 +77,11 @@ let accountRoute = (
     </div>
 );
 
-let d3Route = (
+let timelineRoute = (
     <div>
     <Navigation />
-    <D3Container />
+    <Timeline />
     </div>
 );
-
-
 
 module.exports = App;
