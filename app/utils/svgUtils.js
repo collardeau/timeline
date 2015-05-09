@@ -28,7 +28,7 @@ let SVG = {
             })
             .style({
                 stroke: "black",
-                "stroke-width": 10
+                "stroke-width": 5
             })
             .transition()
             .duration(2000)
@@ -49,13 +49,15 @@ let SVG = {
 
         let selection = svg.selectAll("circle").data(dataset);
 
-        if(dataset[dataset.length-1] === d3.max(dataset)){
+        if(dataset[dataset.length-1] === d3.max(dataset)){ // need a better test
             console.log("input is a higher date");
-            selection.attr({
+            selection.transition().duration(2000)
+            .attr({
                 'cx': (d,i) => linearScale(d),
                 'cy': 50,
-                'r': 10
-            }).style("fill", "orange")
+                'r': 5
+            })
+            .style("fill", "orange");
         }
 
             selection.enter()
@@ -81,7 +83,7 @@ let SVG = {
             .transition()
             .duration(1000)
             .attr({
-                'r': 10
+                'r': 5
             });
     }
 

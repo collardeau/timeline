@@ -2,20 +2,15 @@ const React = require('react');
 const d3 = require('d3');
 const moment = require('moment');
 
+let dots = require('../../stores/timelineStore');
 let SVG = require('../../utils/svgUtils');
-
-// init some data, could be a store
-let date1 = moment("1977-03-26").unix();
-let date2 = moment("2015-05-08").unix();
-let date3 = moment("1995-03-26").unix();
-let dataset = [date1, date2, date3];
 
 class D3Container extends React.Component {
 
     componentDidMount() {
         SVG.createSVG('.d3-container', 800, 100);
         SVG.createLine();
-        SVG.plotCircles(dataset);
+        SVG.plotCircles(dots.getDots());
 
     }
 
@@ -23,8 +18,8 @@ class D3Container extends React.Component {
         let date = this.refs.newDate.getDOMNode().value;
         if(date){
             let unix = moment(date).unix();
-            dataset.push(unix);
-            SVG.plotCircles(dataset);
+            dots.addDot(unix);
+            SVG.plotCircles(dots.getDots());
         }
         e.preventDefault();
 
@@ -38,7 +33,7 @@ class D3Container extends React.Component {
 
                 <form>
                     <input type="date" ref="newDate" />
-                    <button className="btn-alert"onClick={this.handleClick.bind(this)}>Hit me</button>
+                    <button className="btn-alert"onClick={this.handleClick.bind(this)}>Plot</button>
                 </form>
             </div>
         )
