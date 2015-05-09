@@ -38,8 +38,8 @@ let SVG = {
 
         svg.append("line")
             .attr({
-                'x1': 0, x2: 0,
-                'y1': h/2, y2: h/2,
+                'x1': w/2, x2: w/2,
+                'y1': 0, y2: 0,
                 "id": "line"
             })
             .style({
@@ -49,7 +49,7 @@ let SVG = {
             .transition()
             .duration(2000)
             .attr({
-                'x2': w
+                'y2': h
             });
     },
 
@@ -62,14 +62,14 @@ let SVG = {
         let selection = svg.selectAll("circle").data(dataset);
         let linearScale = d3.scale.linear()
             .domain([d3.min(dataset), d3.max(dataset)])
-            .range([10, w-10]);
+            .range([10, h-10]);
 
         if(isOutofBounds(dataset)){
             // rescale and position the existing dots
             selection.transition().duration(2000)
             .attr({
-                'cx': (d,i) => linearScale(d),
-                'cy': 50,
+                'cx': 50,
+                'cy': (d,i) => linearScale(d),
                 'r': 5
             })
             .style("fill", "orange");
@@ -78,8 +78,8 @@ let SVG = {
         selection.enter()   // enter new data
         .append('circle')
         .attr({
-            'cx': (d,i) => linearScale(d),
-            'cy': 50,
+            'cx': 50,
+            'cy': (d,i) => linearScale(d),
             'r': 0
         })
         .style("fill", "orange")
