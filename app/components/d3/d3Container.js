@@ -19,7 +19,7 @@ class D3Container extends React.Component {
         if(date){
             let unix = moment(date).unix();
             dots.addDot(unix);
-            SVG.plotCircles(dots.getDots());
+            SVG.plotDots(dots.getDots());
         }
         e.preventDefault();
 

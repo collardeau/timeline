@@ -1,5 +1,23 @@
 const d3 = require('d3');
 
+let max = 0, min =0;
+
+let isOutofBounds = (dataset) => {
+    let isInit = Boolean(max),
+        isOut = false,
+        newMax = d3.max(dataset),
+        newMin =d3.min(dataset);
+
+    if(isInit && newMax > max || newMin < min ){
+        isOut = true;
+    }
+
+    min = newMin;
+    max = newMax;
+
+    return isOut;
+};
+
 let SVG = {
 
     createSVG: (element, w, h, color="white") => {
@@ -41,14 +59,13 @@ let SVG = {
         let w = parseInt(svg.style("width"));
         let h = parseInt(svg.style("height"));
 
+        let selection = svg.selectAll("circle").data(dataset);
         let linearScale = d3.scale.linear()
             .domain([d3.min(dataset), d3.max(dataset)])
             .range([10, w-10]);
 
-        let selection = svg.selectAll("circle").data(dataset);
-
-        if(dataset[dataset.length-1] === d3.max(dataset)){ // need a better test
-            console.log("input is a higher date");
+        if(isOutofBounds(dataset)){
+            // rescale and position the existing dots
             selection.transition().duration(2000)
             .attr({
                 'cx': (d,i) => linearScale(d),
@@ -58,31 +75,31 @@ let SVG = {
             .style("fill", "orange");
         }
 
-            selection.enter()
-            .append('circle')
-            .attr({
-                'cx': (d,i) => linearScale(d),
-                'cy': 50,
-                'r': 0
-            })
-            .style("fill", "orange")
-            .on("click", function(){
-                d3.select(this)
-                    .transition()
-                    .attr({
-                        'r': 15
-                    })
-                    .ease("elastic")
-                    .transition()
-                    .attr({
-                        'r': 10
-                    })
-            })
-            .transition()
-            .duration(1000)
-            .attr({
-                'r': 5
-            });
+        selection.enter()   // enter new data
+        .append('circle')
+        .attr({
+            'cx': (d,i) => linearScale(d),
+            'cy': 50,
+            'r': 0
+        })
+        .style("fill", "orange")
+        .on("click", function(){
+            d3.select(this)
+                .transition()
+                .attr({
+                    'r': 15
+                })
+                .ease("elastic")
+                .transition()
+                .attr({
+                    'r': 10
+                })
+        })
+        .transition()
+        .duration(1000)
+        .attr({
+            'r': 5
+        });
     }
 
 };
