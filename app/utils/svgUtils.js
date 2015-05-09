@@ -85,6 +85,13 @@ let SVG = {
         })
         .style("fill", "orange")
         .on("click", function(d, i){
+        // is text already on
+            let eventId = "event-" + i;
+            var isFlippedOn = d3.select("#" + eventId).empty();
+
+            if(!isFlippedOn) {
+            console.log("the text is on");
+            }
             d3.select(this)
                 .transition()
                 .attr({
@@ -97,6 +104,7 @@ let SVG = {
                 });
                 svg.append("text")
                     .attr({
+                        'id': eventId,
                         'x': w/4 + 15,  // eyeballing technique
                         'y': parseInt(d3.select(this).attr('cy')) + 5
                     })
