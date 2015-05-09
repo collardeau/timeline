@@ -12,6 +12,10 @@ body {
   @include padding(em(34px) em(55px));  // bourbon
 }
 
+h1 {
+  font-size: 1.618em;
+}
+
 #line {
   transition: all 3s ease;
 }

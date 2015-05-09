@@ -10,7 +10,7 @@ let ListContainer = require('./components/list/ListContainer');
 
 let Login = require('./components/login/Login');
 let Account = require('./components/Account');
-let Timeline = require('./components/timeline/timeline');
+let Timeline = require('./components/timeline/Timeline');
 
 class App extends React.Component {
 

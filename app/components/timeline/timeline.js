@@ -7,7 +7,7 @@ let SVG = require('../../utils/svgUtils');
 
 class D3Container extends React.Component {
 
-    componentDidMount() {   
+    componentDidMount() {
         SVG.createSVG('.d3-container', 800, 100);
         SVG.createTimeline();
         SVG.plotDots(dots.getDots());
@@ -28,11 +28,18 @@ class D3Container extends React.Component {
     render() {
 
         return (
-            <div className="container d3-container">
-                <h1>Timeline</h1>
+            <div className="container">
+                <h1>Tonton's Timeline</h1>
+
+                <div className="d3-container"></div>
 
                 <form>
+                    <label>What happenened?</label>
+                    <input type="text" ref="event" placeholder="Event" />
+                    <label>When?</label>
                     <input type="date" ref="newDate" />
+                    <label>Where?</label>
+                    <input type="text" ref="location" placeholder="Location" />
                     <button className="btn-alert"onClick={this.handleClick.bind(this)}>Plot</button>
                 </form>
             </div>
