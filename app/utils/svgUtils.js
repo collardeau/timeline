@@ -1,6 +1,4 @@
-/**
- * Created by Thomas on 5/8/15.
- */
+const d3 = require('d3');
 
 let SVG = {
 
@@ -15,7 +13,7 @@ let SVG = {
             });
     },
 
-    createLine: () => {
+    createTimeline: () => {
         let svg = d3.select('svg');
         let w = parseInt(svg.style("width"));
         let h = parseInt(svg.style("height"));
@@ -37,7 +35,7 @@ let SVG = {
             });
     },
 
-    plotCircles: (dataset) => {
+    plotDots: (dataset) => {
 
         let svg = d3.select('svg');
         let w = parseInt(svg.style("width"));

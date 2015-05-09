@@ -1,5 +1,5 @@
 const React = require('react');
-const d3 = require('d3');
+//const d3 = require('d3');
 const moment = require('moment');
 
 let dots = require('../../stores/timelineStore');
@@ -9,8 +9,8 @@ class D3Container extends React.Component {
 
     componentDidMount() {
         SVG.createSVG('.d3-container', 800, 100);
-        SVG.createLine();
-        SVG.plotCircles(dots.getDots());
+        SVG.createTimeline();
+        SVG.plotDots(dots.getDots());
 
     }
 
