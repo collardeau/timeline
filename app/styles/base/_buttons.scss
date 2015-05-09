@@ -1,4 +1,4 @@
-@mixin button ($color: $color-action) {
+@mixin button-tonton ($color: $color-action) {
   @include appearance(none);
   -webkit-font-smoothing: antialiased;
   background-color: $color;
@@ -16,7 +16,7 @@
   user-select: none;
   vertical-align: middle;
   white-space: nowrap;
-  margin-right: 0.6em;
+  //margin-right: 0.6em;
 
   &:hover,
   &:focus {
@@ -31,9 +31,9 @@
 }
 
 .btn-action {
-  @include button($color-action);
+  @include button-tonton($color-action);
 }
 
 .btn-alert {
-  @include button($color-alert);
+  @include button-tonton($color-alert);
 }

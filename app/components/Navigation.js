@@ -9,15 +9,14 @@ class Navigation extends React.Component {
     }
 
     componentDidMount() {
-        var menuToggle = $('#js-centered-navigation-mobile-menu').unbind();
-        $('#js-centered-navigation-menu').removeClass("show");
 
-        menuToggle.on('click', function(e) {
-            e.preventDefault();
-            $('#js-centered-navigation-menu').slideToggle(function(){
-                if($('#js-centered-navigation-menu').is(':hidden')) {
-                    $('#js-centered-navigation-menu').removeAttr('style');
-                }
+        $(".dropdown-button").click(function() {
+            $(".dropdown-menu").toggleClass("show-menu");
+            $(".dropdown-menu > li").click(function(){
+                $(".dropdown-menu").removeClass("show-menu");
+            });
+            $(".dropdown-menu.dropdown-select > li").click(function() {
+                $(".dropdown-button").html($(this).html());
             });
         });
     }
@@ -25,23 +24,24 @@ class Navigation extends React.Component {
     render() {
 
         return (
-            <header className="centered-navigation" role="banner">
-
-                <div className="centered-navigation-wrapper">
-
-                    <a href="javascript:void(0)" id="js-centered-navigation-mobile-menu" className="centered-navigation-mobile-menu">MENU</a>
-                    <nav role="navigation">
-                        <ul id="js-centered-navigation-menu" className="centered-navigation-menu show">
-                            <li className="nav-link">
-                                <a onClick={this.handleLink.bind(this,'timeline') }>Timeline</a>
-                            </li>
-
-                            <li className="nav-link">
-                                <a onClick={this.handleLink.bind(this,'account') }>Account</a>
-                            </li>
+            <header>
+                <div className="dropdown">
+                    <div className="dropdown-container">
+                        <p className="dropdown-description">Timeline</p>
+                        <p className="dropdown-button">Click to Select</p>
+                        <ul className="dropdown-menu dropdown-select">
+                            <li>Tonton</li>
+                            <li>Jackson</li>
+                            <li>Visa</li>
+                            <li>Pearl Jam</li>
                         </ul>
-                    </nav>
+                    </div>
                 </div>
+
+                <div className="buttons">
+                    <button className="btn-action"><i className="fa fa-eye"></i></button>
+                </div>
+
             </header>
         )
     }

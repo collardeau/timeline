@@ -37,7 +37,7 @@ class D3Container extends React.Component {
                     <h1>Tonton's Timeline</h1>
 
                     <form>
-                        <label>What happenened?</label>
+                        <label>What happened?</label>
                         <input type="text" ref="event" placeholder="Event" />
                         <label>When?</label>
                         <input type="date" ref="newDate" />
