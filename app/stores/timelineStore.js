@@ -16,7 +16,20 @@ let date1 = moment("1977-03-26").unix();
 let date2 = moment().unix();
 
 let _store = {
-    dots: [date1, date2]
+    dots: [date1, date2],
+
+    dots2: [
+        {
+            event: "Born",
+            timestamp: date1,
+            location: "Paris"
+        },
+        {
+            event: "Moved to Berlin",
+            timestamp: date2,
+            location: "Berlin"
+        }
+    ]
 };
 
 let timelineStore = objectAssign({}, EventEmitter.prototype, {

@@ -20,7 +20,7 @@ let isOutofBounds = (dataset) => {
 
 let SVG = {
 
-    createSVG: (element, w, h, color="white") => {
+    createSVG: (element, w, h, color) => {
         return d3.select(element).append("svg")
             .attr({
                 'width': w,
@@ -59,7 +59,10 @@ let SVG = {
         let w = parseInt(svg.style("width"));
         let h = parseInt(svg.style("height"));
 
-        let selection = svg.selectAll("circle").data(dataset);
+        let selection = svg.selectAll("circle").data(dataset, function(i,d){
+            return d;
+        });
+
         let linearScale = d3.scale.linear()
             .domain([d3.min(dataset), d3.max(dataset)])
             .range([10, h-10]);
@@ -93,7 +96,13 @@ let SVG = {
                 .transition()
                 .attr({
                     'r': 10
-                })
+                });
+                svg.append("text")
+                    .attr({
+                        'x': 100 + 15,  // eye balling
+                        'y': parseInt(d3.select(this).attr('cy')) + 5
+                    })
+                    .text("Born!");
         })
         .transition()
         .duration(1000)
