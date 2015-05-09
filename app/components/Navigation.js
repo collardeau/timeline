@@ -33,44 +33,16 @@ class Navigation extends React.Component {
                     <nav role="navigation">
                         <ul id="js-centered-navigation-menu" className="centered-navigation-menu show">
                             <li className="nav-link">
-                                <a onClick={this.handleLink.bind(this,'home') }>Home</a>
-                            </li>
-                            <li className="nav-link">
-                                <a onClick={this.handleLink.bind(this,'d3') }>D3</a>
-                            </li>
-                            <li className="nav-link">
-                                <a onClick={this.handleLink.bind(this,'list') }>List</a>
+                                <a onClick={this.handleLink.bind(this,'timeline') }>Timeline</a>
                             </li>
 
-                            <li className="nav-link more">
-                                <a href="javascript:void(0)">More</a>
-                                <ul className="submenu">
-                                    <li>
-                                        <a href="javascript:void(0)">Submenu Item</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)">Another Item</a>
-                                    </li>
-                                    <li className="more">
-                                        <a href="javascript:void(0)">Item with submenu</a>
-                                        <ul className="submenu">
-                                            <li>
-                                                <a href="javascript:void(0)">Sub-submenu Item</a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0)">Another Item</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
+                            <li className="nav-link">
+                                <a onClick={this.handleLink.bind(this,'account') }>Account</a>
                             </li>
-                                <li className="nav-link">
-                                    <a onClick={this.handleLink.bind(this,'account') }>Account</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </header>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
         )
     }
 }

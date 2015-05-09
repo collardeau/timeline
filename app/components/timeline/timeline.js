@@ -7,7 +7,7 @@ let SVG = require('../../utils/svgUtils');
 
 class D3Container extends React.Component {
 
-    componentDidMount() {
+    componentDidMount() {   
         SVG.createSVG('.d3-container', 800, 100);
         SVG.createTimeline();
         SVG.plotDots(dots.getDots());

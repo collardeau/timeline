@@ -24,10 +24,6 @@ class App extends React.Component {
                 ui = homeRoute;
                 break;
 
-            case "list":
-                ui = listRoute;
-                break;
-
             case "login":
                 ui = loginRoute;
                 break;
@@ -36,8 +32,8 @@ class App extends React.Component {
                 ui = accountRoute;
                 break;
 
-            case "d3":
-                ui = d3Route;
+            case "timeline":
+                ui = timelineRoute;
                 break;
 
             default:
