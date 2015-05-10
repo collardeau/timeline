@@ -95,7 +95,7 @@ let tonton = [
 ];
 
 let _store = {
-    dots: tonton
+    dots: pj
 };
 
 let timelineStore = objectAssign({}, EventEmitter.prototype, {
@@ -104,6 +104,11 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
 
     addDot(dot) {
         _store.dots.push(dot);
+    },
+
+    changeTimeline(timeline) {
+        console.log("changing the timeline");
+        _store.dots = pj;
     }
 
 });

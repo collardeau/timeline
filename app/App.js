@@ -47,36 +47,36 @@ class App extends React.Component {
 
 let homeRoute = (
     <div>
-    <Navigation />
-    <Home />
+        <Navigation />
+        <Home />
     </div>
 );
 
 let listRoute = (
     <div>
-    <Navigation />
-    <ListContainer />
+        <Navigation />
+        <ListContainer />
     </div>
 );
 
 let loginRoute = (
     <div>
-    <Navigation />
-    <Login />
+        <Navigation />
+        <Login />
     </div>
 );
 
 let accountRoute = (
     <div>
-    <Navigation />
-    <Account />
+        <Navigation />
+        <Account />
     </div>
 );
 
 let timelineRoute = (
     <div>
-    <Navigation />
-    <Timeline />
+        <Navigation />
+        <Timeline />
     </div>
 );
 

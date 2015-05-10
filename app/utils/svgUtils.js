@@ -26,14 +26,12 @@ let isOutofBounds = (dataset) => {
 let isOverlapping = (dot) => {
     let oldPos = parseInt(lastDot && lastDot.attr('cy'));
     let newPos = parseInt(d3.select(dot).attr('cy'));
-
     //console.log("radius: " + parseInt(d3.select(dot).attr('r')));
 
     let oldBottom = oldPos + dotRadius;
     let newTop = newPos - dotRadius;
 
     if (oldBottom > newTop) {
-        console.log("stop here stranger, we have an overlap");
         return true;
     }
 
