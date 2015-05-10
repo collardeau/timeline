@@ -15,7 +15,7 @@ let _store = {
 
     dots: [
         {
-            event: "Born",
+            event: "Born in Paris",
             timestamp: moment("1977-03-26").unix(),
             location: "Paris"
         },
@@ -25,12 +25,47 @@ let _store = {
             location: "Berlin"
         },
         {
-            event: "Graduated college",
-            timestamp: moment("1999-05-25").unix(),
-            location: "Boston"
+            event: "NY",
+            timestamp: moment("2000-01-01").unix(),
+            location: "New York"
         },
         {
-            event: "Moved Back to Europe",
+            event: "Barcelona",
+            timestamp: moment("2014-02-01").unix(),
+            location: "Villefranche"
+        },
+        {
+            event: "South of France",
+            timestamp: moment("1985-08-01").unix(),
+            location: "Villefranche"
+        },
+        {
+            event: "London",
+            timestamp: moment("1989-12-25").unix(),
+            location: "Villefranche"
+        },
+        {
+            event: "Florida",
+            timestamp: moment("1991-07-25").unix(),
+            location: "Villefranche"
+        },
+        {
+            event: "Boston",
+            timestamp: moment("1995-09-01").unix(),
+            location: "Villefranche"
+        },
+        {
+            event: "Amsterdam",
+            timestamp: moment("2010-09-01").unix(),
+            location: "Villefranche"
+        },
+        {
+            event: "Prague",
+            timestamp: moment("2014-08-01").unix(),
+            location: "Villefranche"
+        },
+        {
+            event: "Back to Europe",
             timestamp: moment("2008-04-10").unix(),
             location: "London"
         }

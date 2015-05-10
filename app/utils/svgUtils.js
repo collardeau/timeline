@@ -2,6 +2,11 @@ const d3 = require('d3');
 
 let max = 0, min =0;
 
+let lineWidth = 5;
+let dotRadius = 5;
+
+let lastDot;
+
 let isOutofBounds = (dataset) => {
     let isInit = Boolean(max),
         isOut = false,
@@ -16,6 +21,23 @@ let isOutofBounds = (dataset) => {
     max = newMax;
 
     return isOut;
+};
+
+let isOverlapping = (dot) => {
+    let oldPos = parseInt(lastDot && lastDot.attr('cy'));
+    let newPos = parseInt(d3.select(dot).attr('cy'));
+
+    //console.log("radius: " + parseInt(d3.select(dot).attr('r')));
+
+    let oldBottom = oldPos + dotRadius;
+    let newTop = newPos - dotRadius;
+
+    if (oldBottom > newTop) {
+        console.log("stop here stranger, we have an overlap");
+        return true;
+    }
+
+    return false;
 };
 
 let SVG = {
@@ -39,7 +61,7 @@ let SVG = {
             })
             .style({
                 stroke: "black",
-                "stroke-width": 5
+                "stroke-width": lineWidth
             })
             .transition()
             .duration(2000)
@@ -54,6 +76,13 @@ let SVG = {
         let svg = d3.select('svg');
         let w = parseInt(svg.style("width"));
         let h = parseInt(svg.style("height"));
+
+        // order the dataset by timestamp
+        dataset.sort(function (a, b) {
+            if (a.timestamp > b.timestamp) { return 1; }
+            if (a.timestamp < b.timestamp) { return -1; }
+            return 0; // a must be equal to b
+        });
 
         // get all timestamps and determine range of viz
         let timestamps = dataset.reduce((prev, next) =>{
@@ -96,6 +125,7 @@ let SVG = {
             }).style("fill", "orange")
             .on("click", function(d, i) {
 
+                console.log(d,i,this);
                 // toggle the data
 
                 let eventId = "event-" + i,
@@ -131,13 +161,25 @@ let SVG = {
             })
             .transition().duration(1000)    // on entering
             .attr({
-                'r': 5
+                'r': dotRadius
              })
             .each(function(d,i) {
+
+                // concern with overlapping
+
+                isOverlapping(this);
+
+                lastDot = d3.select(this);
+
+            })
+            .each(function(d,i) {
+
                 selection.append('text').text(dataset[i].event).attr({
-                    'x': w/4 + 15,  // eyeballing technique
+                    'x': w/4 + (5*i),  // eyeballing technique
                     'y': parseInt(d3.select(this).attr('cy')) + 5
-                })
+                });
+
+
             });
 
 
