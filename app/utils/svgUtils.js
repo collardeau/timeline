@@ -53,7 +53,7 @@ let SVG = {
 
         svg.append("line")
             .attr({
-                'x1': w/4, x2: w/4,
+                'x1': w/8, x2: w/8,
                 'y1': 0, y2: 0,
                 "id": "line"
             })
@@ -99,7 +99,7 @@ let SVG = {
         if(isOutofBounds(timestamps)){
             selection.transition().duration(2000)
             .attr({
-                'cx': w/4,
+                'cx': w/8,
                 'cy': (d,i) => linearScale(d),
                 'r': 5
             })
@@ -117,7 +117,7 @@ let SVG = {
                     "id": (d,i) => "dot-" + i
                 })
             .append('circle').attr({
-                'cx': w/4,
+                'cx': w/8,
                 'cy': (d,i) => linearScale(d),
                 'r': 0,
                 'id': (d,i) => "circ-" + i
@@ -164,19 +164,31 @@ let SVG = {
              })
             .each(function(d,i) {
 
+                console.log("looking at: ", dataset[i].event);
 
-                if(isOverlapping(this) || i===8){
+                if(isOverlapping(this)){    // move the text further out on x axis
+
+                    // make the dot smaller
                     d3.select(this).transition().duration(1000).attr({
                         'r': dotRadius/2
                     });
+
+                    // see where the last text box was placed
+                    let prev = d3.select("#text-" + (i-1));
+                    let oldStartX = parseInt(prev.attr("x"));
+                    let oldStartY = parseInt(prev.attr("y"));
+                    let textLength = parseInt(prev.node().getComputedTextLength());
+
+                    // place the new text box accordingly
                     selection.append('text').text(dataset[i].event).attr({
-                        'x': w/4 + 15 + 80*(i-8),  // eyeballing technique
-                        'y': parseInt(d3.select(this).attr('cy')) + 5,
+                        'x': oldStartX + 10 + textLength,  // eyeballing technique
+                        'y': oldStartY + 5,
                         'id': "text-" + i
                     });
-                }else {
+                }else { // not a cluster
+
                     selection.append('text').text(dataset[i].event).attr({
-                        'x': w/4 + 15,  // eyeballing technique
+                        'x': w/8 + 10,  // eyeballing technique
                         'y': parseInt(d3.select(this).attr('cy')) + 5,
                         'id': "text-" + i
                     });

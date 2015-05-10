@@ -10,19 +10,124 @@ let moment = require('moment');
 // init some data, could be a store
 let pj = [
     {
-        event: "First Show",
-        timestamp: moment("1996-10-01").unix(),
+        event: "Hartford 1996",
+        timestamp: moment("1996-10-02").unix(),
         location: "Connecticut"
     },
     {
-        event: "Touring Band 2000",
-        timestamp: moment().unix("2000-06-01"),
+        event: "NJ 98",
+        timestamp: moment("1998-09-08").unix(),
+        location: "NJ"
+    },
+    {
+        event: "MSG2",
+        timestamp: moment("1998-09-10").unix(),
+        location: "NYC"
+    },
+    {
+        event: "Hartford 98",
+        timestamp: moment("1998-09-13").unix(),
+        location: "Hartford"
+    },
+    {
+        event: "Boston 1",
+        timestamp: moment("2000-08-29").unix(),
         location: "USA"
     },
     {
-        event: "2007 shows",
-        timestamp: moment("2007-10-01").unix(),
-        location: "New York"
+        event: "Boston 2",
+        timestamp: moment("2000-08-30").unix(),
+        location: "USA"
+    },
+    {
+        event: "Jones Beach 1",
+        timestamp: moment("2000-08-23").unix(),
+        location: "USA"
+    },
+    {
+        event: "Jones Beach 2",
+        timestamp: moment("2000-08-24").unix(),
+        location: "USA"
+    },
+    {
+        event: "Jones Beach 3",
+        timestamp: moment("2000-08-25").unix(),
+        location: "USA"
+    },
+    {
+        event: "2003 Birmingham",
+        timestamp: moment("2003-04-09").unix(),
+        location: "All over"
+    },
+    {
+        event: "Philly",
+        timestamp: moment("2003-04-28").unix(),
+        location: "All over"
+    },
+    {
+        event: "Uniondale",
+        timestamp: moment("2003-04-30").unix(),
+        location: "All over"
+    },
+    {
+        event: "NY1",
+        timestamp: moment("2003-07-08").unix(),
+        location: "All over"
+    },
+    {
+        event: "NY2",
+        timestamp: moment("2003-07-09").unix(),
+        location: "All over"
+    },
+    {
+        event: "Boston",
+        timestamp: moment("2003-07-03").unix(),
+        location: "All over"
+    },
+    {
+        event: "Hershey",
+        timestamp: moment("2003-07-12").unix(),
+        location: "All over"
+    },
+    {
+        event: "Boston 2",
+        timestamp: moment("2004-09-29").unix(),
+        location: "All over"
+    },
+    {
+        event: "Kissimmee",
+        timestamp: moment("2004-10-08").unix(),
+        location: "All over"
+    },
+    {
+        event: "Borgata 2",
+        timestamp: moment("2005-10-01").unix(),
+        location: "All over"
+    },
+    {
+        event: "Philly",
+        timestamp: moment("2005-10-03").unix(),
+        location: "All over"
+    },
+    {
+        event: "Hartford",
+        timestamp: moment("2006-05-13").unix(),
+        location: "All over"
+    },
+    {
+        event: "NJ2",
+        timestamp: moment("2006-05-28").unix(),
+        location: "All over"
+    },
+    {
+        event: "MSG1",
+        timestamp: moment("2010-05-20").unix(),
+        location: "All over"
+    },
+    {
+        event: "MSG2",
+        timestamp: moment("2010-05-21").unix(),
+        location: "All over"
     },
     {
         event: "2012 Tour",
@@ -30,7 +135,7 @@ let pj = [
         location: "Villefranche"
     },
     {
-        event: "Last Show",
+        event: "euro 2014",
         timestamp: moment("2014-08-01").unix(),
         location: "Berlin"
     }
@@ -58,7 +163,7 @@ let tonton = [
         location: "Villefranche"
     },
     {
-        event: "South of France",
+        event: "Villefranche",
         timestamp: moment("1985-08-01").unix(),
         location: "Villefranche"
     },
@@ -95,7 +200,7 @@ let tonton = [
 ];
 
 let _store = {
-    dots: pj
+    dots: tonton
 };
 
 let timelineStore = objectAssign({}, EventEmitter.prototype, {

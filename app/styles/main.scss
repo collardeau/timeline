@@ -38,8 +38,8 @@ header {
 #timelineApp {   // neat grid
   @include outer-container(100%);
   padding: 1em 1em 1em 0;
-  .d3-container { @include span-columns(6); }
-  #panel { @include span-columns(6); }
+  .d3-container { @include span-columns(12); }
+  #panel { @include span-columns(6); display: none;}
 }
 
 @import "./dropbox";
