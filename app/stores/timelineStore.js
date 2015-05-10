@@ -16,13 +16,23 @@ let _store = {
     dots: [
         {
             event: "Born",
-            timestamp: date1,
+            timestamp: moment("1977-03-26").unix(),
             location: "Paris"
         },
         {
-            event: "Moved to Berlin",
-            timestamp: date2,
+            event: "Now",
+            timestamp: moment().unix(),
             location: "Berlin"
+        },
+        {
+            event: "Graduated college",
+            timestamp: moment("1999-05-25").unix(),
+            location: "Boston"
+        },
+        {
+            event: "Moved Back to Europe",
+            timestamp: moment("2008-04-10").unix(),
+            location: "London"
         }
     ]
 };

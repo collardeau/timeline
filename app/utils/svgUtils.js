@@ -50,23 +50,26 @@ let SVG = {
 
     plotDots: (dataset) => {
 
+        // get dimensions of svg
         let svg = d3.select('svg');
         let w = parseInt(svg.style("width"));
         let h = parseInt(svg.style("height"));
 
+        // get all timestamps and determine range of viz
         let timestamps = dataset.reduce((prev, next) =>{
             prev.push(next.timestamp);
             return prev
         }, []);
 
-        let selection = svg.selectAll("circle").data(timestamps);
-
         let linearScale = d3.scale.linear()
             .domain([d3.min(timestamps), d3.max(timestamps)])
             .range([10, h-10]);
 
+        // load data in d3
+        let selection = svg.selectAll("circle").data(timestamps);
+
+        //if we need to rescale
         if(isOutofBounds(timestamps)){
-            // rescale and position the existing dots
             selection.transition().duration(2000)
             .attr({
                 'cx': w/4,
@@ -74,47 +77,70 @@ let SVG = {
                 'r': 5
             })
             .style("fill", "orange");
+
+            //d3.select("#dot-0").transition()
+            //.attr({
+            //        'cx': w/2
+            //    })
         }
 
-        selection.enter()   // enter new data
-        .append('circle')
-        .attr({
-            'cx': w/4,
-            'cy': (d,i) => linearScale(d),
-            'r': 0
-        })
-        .style("fill", "orange")
-        .on("click", function(d, i){
-        // is text already on
-            let eventId = "event-" + i;
-            var isFlippedOn = d3.select("#" + eventId).empty();
-
-            if(!isFlippedOn) {
-            console.log("the text is on");
-            }
-            d3.select(this)
-                .transition()
-                .attr({
-                    'r': 15
+        // introduce new data
+        selection.enter()
+            .append('g').attr({
+                    "id": (d,i) => "dot-" + i
                 })
-                .ease("elastic")
-                .transition()
-                .attr({
-                    'r': 10
-                });
-                svg.append("text")
-                    .attr({
-                        'id': eventId,
-                        'x': w/4 + 15,  // eyeballing technique
-                        'y': parseInt(d3.select(this).attr('cy')) + 5
-                    })
-                    .text(dataset[i].event);
-        })
-        .transition()
-        .duration(1000)
-        .attr({
-            'r': 5
-        });
+            .append('circle').attr({
+                'cx': w/4,
+                'cy': (d,i) => linearScale(d),
+                'r': 0
+            }).style("fill", "orange")
+            .on("click", function(d, i) {
+
+                // toggle the data
+
+                let eventId = "event-" + i,
+                    textSelection = d3.select("#" + eventId);
+
+                if(!textSelection.empty()) {  // event text showing
+
+                    //d3.select("#dot-"+i).remove();
+                    textSelection.remove();
+
+                } else {    // event text not showing
+
+                    d3.select(this)
+                        .transition().ease("elastic")
+                        .attr({
+                            'r': 15
+                        })
+                        .transition()
+                        .attr({
+                            'r': 10
+                        });
+
+                    d3.select("#dot-" + i)
+                        .append("text")
+                        .attr({
+                            'id': eventId,
+                            'x': w/4 + 15,  // eyeballing technique
+                            'y': parseInt(d3.select(this).attr('cy')) + 5
+                        })
+                        .text(dataset[i].event);
+                }
+
+            })
+            .transition().duration(1000)    // on entering
+            .attr({
+                'r': 5
+             })
+            .each(function(d,i) {
+                selection.append('text').text(dataset[i].event).attr({
+                    'x': w/4 + 15,  // eyeballing technique
+                    'y': parseInt(d3.select(this).attr('cy')) + 5
+                })
+            });
+
+
     }
 
 };
