@@ -123,39 +123,19 @@ let SVG = {
                 'id': (d,i) => "circ-" + i
             }).style("fill", "orange")
             .on("click", function(d, i) {
+                console.log("click");
+                //console.log(d,i,this);
 
-                console.log(d,i,this);
-                // toggle the data
+                // i wanna find the corresponding text box
+                let textBox = d3.selectAll("#text-" + i);
+                //console.log(textBox.classed());
+                textBox.classed("hidden", !textBox.classed("hidden"));
+                //textBox.classed("hidden", true);
+                //console.log(textBox.text());
+                //textBox.text("");
+                //textBox.style({display: "none"});
+                //textBox.remove();
 
-                let eventId = "event-" + i,
-                    textSelection = d3.select("#" + eventId);
-
-                if(!textSelection.empty()) {  // event text showing
-
-                    //d3.select("#dot-"+i).remove();
-                    textSelection.remove();
-
-                } else {    // event text not showing
-
-                    d3.select(this)
-                        .transition().ease("elastic")
-                        .attr({
-                            'r': 15
-                        })
-                        .transition()
-                        .attr({
-                            'r': 10
-                        });
-
-                    d3.select("#dot-" + i)
-                        .append("text")
-                        .attr({
-                            'id': eventId,
-                            'x': w/4 + 15,  // eyeballing technique
-                            'y': parseInt(d3.select(this).attr('cy')) + 5
-                        })
-                        .text(dataset[i].event);
-                }
 
             })
             .transition().duration(1000)    // on entering
@@ -163,8 +143,6 @@ let SVG = {
                 'r': dotRadius
              })
             .each(function(d,i) {
-
-                console.log("looking at: ", dataset[i].event);
 
                 if(isOverlapping(this)){    // move the text further out on x axis
 
