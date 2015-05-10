@@ -121,7 +121,8 @@ let SVG = {
             .append('circle').attr({
                 'cx': w/4,
                 'cy': (d,i) => linearScale(d),
-                'r': 0
+                'r': 0,
+                'id': (d,i) => "circ-" + i
             }).style("fill", "orange")
             .on("click", function(d, i) {
 
@@ -165,20 +166,25 @@ let SVG = {
              })
             .each(function(d,i) {
 
-                // concern with overlapping
 
-                isOverlapping(this);
+                if(isOverlapping(this) || i===8){
+                    d3.select(this).transition().duration(1000).attr({
+                        'r': dotRadius/2
+                    });
+                    selection.append('text').text(dataset[i].event).attr({
+                        'x': w/4 + 15 + 80*(i-8),  // eyeballing technique
+                        'y': parseInt(d3.select(this).attr('cy')) + 5,
+                        'id': "text-" + i
+                    });
+                }else {
+                    selection.append('text').text(dataset[i].event).attr({
+                        'x': w/4 + 15,  // eyeballing technique
+                        'y': parseInt(d3.select(this).attr('cy')) + 5,
+                        'id': "text-" + i
+                    });
+                }
 
                 lastDot = d3.select(this);
-
-            })
-            .each(function(d,i) {
-
-                selection.append('text').text(dataset[i].event).attr({
-                    'x': w/4 + (5*i),  // eyeballing technique
-                    'y': parseInt(d3.select(this).attr('cy')) + 5
-                });
-
 
             });
 
