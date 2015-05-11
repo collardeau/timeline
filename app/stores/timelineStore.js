@@ -143,11 +143,6 @@ let pj = [
 
 let tonton = [
     {
-        event: "Born in Paris",
-        timestamp: moment("1977-03-26").unix(),
-        location: "Paris"
-    },
-    {
         event: "Now",
         timestamp: moment().unix(),
         location: "Berlin"
@@ -158,13 +153,13 @@ let tonton = [
         location: "New York"
     },
     {
-        event: "Barcelona",
-        timestamp: moment("2014-02-01").unix(),
-        location: "Villefranche"
+        event: "Born in Paris",
+        timestamp: moment("1977-03-26").unix(),
+        location: "Paris"
     },
     {
-        event: "Villefranche",
-        timestamp: moment("1985-08-01").unix(),
+        event: "Barcelona",
+        timestamp: moment("2014-02-01").unix(),
         location: "Villefranche"
     },
     {
@@ -175,27 +170,32 @@ let tonton = [
     {
         event: "Florida",
         timestamp: moment("1991-07-25").unix(),
-        location: "Villefranche"
+        location: "Florida"
     },
     {
         event: "Boston",
         timestamp: moment("1995-09-01").unix(),
+        location: "Boston"
+    },
+    {
+        event: "Villefranche",
+        timestamp: moment("1985-08-01").unix(),
         location: "Villefranche"
     },
     {
         event: "Amsterdam",
         timestamp: moment("2010-09-01").unix(),
-        location: "Villefranche"
+        location: "Amsterdam"
     },
     {
         event: "Prague",
         timestamp: moment("2014-08-01").unix(),
-        location: "Villefranche"
+        location: "Prague"
     },
     {
         event: "Back to Europe",
         timestamp: moment("2008-04-10").unix(),
-        location: "London"
+        location: "Europe"
     }
 ];
 
