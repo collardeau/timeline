@@ -59,7 +59,7 @@ describe('svgUtils', () => {
         let getAbove = svgUtils.getAboveDot,
             res;
 
-        it("works", function() {
+        it("works", () => {
 
             res= getAbove([1,2,5], 3);
             expect(res).toBe(1);
@@ -82,6 +82,38 @@ describe('svgUtils', () => {
         })
 
 
-    })
+    });
+
+    //describe('isOutBound()', () => {
+    //
+    //    it("works", () => {
+    //        let outBound = svgUtils.isOutBound,
+    //            res;
+    //
+    //        res = outBound([1, 5, 10], 5);
+    //        expect(res).toBe(false);
+    //
+    //        res = outBound([1, 5, 10], 15);
+    //        expect(res).toBe(true);
+    //
+    //        res = outBound([10, 15, 30], 15);
+    //        expect(res).toBe(false);
+    //
+    //        res = outBound([10, 15, 30], 5);
+    //        expect(res).toBe(true);
+    //
+    //        res = outBound([10, 15, 30], 30);
+    //        expect(res).toBe(false);
+    //
+    //        res = outBound([10, 15, 30], 10);
+    //        expect(res).toBe(false);
+    //
+    //    })
+    //
+    //
+    //
+    //});
+
+
 });
 

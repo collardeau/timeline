@@ -1,29 +1,13 @@
 const d3 = require('d3');
 
 let cach = {
-    dotsY: []
+    dotsY: [],
+    minRange: 0,
+    maxRange: 0
 };
-
-let max = 0, min =0;
 
 let lineWidth = 5;
 let dotRadius = 5;
-
-let isOutofBounds = (dataset) => {
-    let isInit = Boolean(max),
-        isOut = false,
-        newMax = d3.max(dataset),
-        newMin =d3.min(dataset);
-
-    if(isInit && newMax > max || newMin < min ){
-        isOut = true;
-    }
-
-    min = newMin;
-    max = newMax;
-
-    return isOut;
-};
 
 let isOverlapping =  (dots, r, newDot ) => {
     return dots.some((elem) => {
@@ -84,36 +68,43 @@ let SVG = {
         let w = parseInt(svg.style("width"));
         let h = parseInt(svg.style("height"));
 
-        // get all timestamps and determine scale of viz
-        let timestamps = dataset.reduce((prev, next) =>{
-            prev.push(next.timestamp);
-            return prev
-        }, []);
-        let linearScale = d3.scale.linear()
-            .domain([d3.min(timestamps), d3.max(timestamps)])
-            .range([10, h-10]);
-
+        // order and cach the dots the first time around
         if(!cach.dotsY.length) {    // sort only the first time, then just append
             dataset.sort(function (a, b) {
                 if (a.timestamp > b.timestamp) { return 1; }
                 if (a.timestamp < b.timestamp) { return -1; }
                 return 0; // a must be equal to b
             });
+            // and cach the range
+            cach.minRange = dataset[0].timestamp;
+            cach.maxRange = dataset[dataset.length - 1].timestamp;
         }
+
+        // get all timestamps and determine current scale of viz
+        let timestamps = dataset.reduce((prev, next) =>{
+            prev.push(next.timestamp);
+            return prev
+        }, []);
+
+        let linearScale = d3.scale.linear()
+            .domain([d3.min(timestamps), d3.max(timestamps)])
+            .range([10, h-10]);
 
         let selection = svg.selectAll("circle").data(dataset);
 
-        //if we need to rescale
-        if(isOutofBounds(timestamps)){
-            console.log("we are out of bounds");
-            selection.transition().duration(2000)
-            .attr({
-                'cx': w/8,
-                'cy': (d,i) => linearScale(d),
-                'r': 5
-            })
-            .style("fill", "orange");
+        let lastTimestamp = dataset[dataset.length-1].timestamp;
 
+        if(lastTimestamp > cach.maxRange || lastTimestamp < cach.minRange) {
+                selection.transition().duration(2000)
+                .attr({
+                    'cy': (d,i) => linearScale(d.timestamp),
+                    'r': 5
+                })
+                .style("fill", "orange");
+
+            //new cach
+            if(lastTimestamp > cach.maxRange) cach.maxRange = lastTimestamp
+            else cach.minRange = lastTimestamp
         }
 
         // introduce new data (at the end of the selection)
