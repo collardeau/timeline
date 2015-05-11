@@ -23,7 +23,7 @@ let isOutofBounds = (dataset) => {
     return isOut;
 };
 
-let isOverlapping = (dot) => {
+let isOverlappingLast = (dot) => {
     let oldPos = parseInt(lastDot && lastDot.attr('cy'));
     let newPos = parseInt(d3.select(dot).attr('cy'));
     //console.log("radius: " + parseInt(d3.select(dot).attr('r')));
@@ -39,6 +39,13 @@ let isOverlapping = (dot) => {
 };
 
 let SVG = {
+
+    isOverlapping: (dots, r, newDot ) => {
+        return dots.some((elem) => {
+            if(newDot - r > elem + r || newDot + r < elem - r) return false;
+            return true;
+        });
+    },
 
     createSVG: (element, w, h, color) => {
         return d3.select(element).append("svg")
@@ -70,7 +77,7 @@ let SVG = {
 
     plotDots: (dataset) => {
 
-        // get dimensions of svg
+                // get dimensions of svg
         let svg = d3.select('svg');
         let w = parseInt(svg.style("width"));
         let h = parseInt(svg.style("height"));
@@ -82,21 +89,27 @@ let SVG = {
             return 0; // a must be equal to b
         });
 
+        console.log(dataset);
+
         // get all timestamps and determine range of viz
         let timestamps = dataset.reduce((prev, next) =>{
             prev.push(next.timestamp);
             return prev
         }, []);
+        //console.log(timestamps);
 
         let linearScale = d3.scale.linear()
             .domain([d3.min(timestamps), d3.max(timestamps)])
             .range([10, h-10]);
 
         // load data in d3
-        let selection = svg.selectAll("circle").data(timestamps);
+        let selection = svg.selectAll("circle").data(dataset);
+        console.log("the selection:");
+        console.log(selection);
 
         //if we need to rescale
         if(isOutofBounds(timestamps)){
+            console.log("we are out of bounds");
             selection.transition().duration(2000)
             .attr({
                 'cx': w/8,
@@ -105,38 +118,22 @@ let SVG = {
             })
             .style("fill", "orange");
 
-            //d3.select("#dot-0").transition()
-            //.attr({
-            //        'cx': w/2
-            //    })
         }
 
         // introduce new data
+        console.log("we introduce new data");
         selection.enter()
             .append('g').attr({
                     "id": (d,i) => "dot-" + i
                 })
             .append('circle').attr({
                 'cx': w/8,
-                'cy': (d,i) => linearScale(d),
-                'r': 0,
-                'id': (d,i) => "circ-" + i
+                'cy': (d,i) => linearScale(d.timestamp),
+                'r': 0
             }).style("fill", "orange")
             .on("click", function(d, i) {
-                console.log("click");
-                //console.log(d,i,this);
-
-                // i wanna find the corresponding text box
                 let textBox = d3.selectAll("#text-" + i);
-                //console.log(textBox.classed());
                 textBox.classed("hidden", !textBox.classed("hidden"));
-                //textBox.classed("hidden", true);
-                //console.log(textBox.text());
-                //textBox.text("");
-                //textBox.style({display: "none"});
-                //textBox.remove();
-
-
             })
             .transition().duration(1000)    // on entering
             .attr({
@@ -144,8 +141,9 @@ let SVG = {
              })
             .each(function(d,i) {
 
-                if(isOverlapping(this)){    // move the text further out on x axis
+                if(isOverlappingLast(this)){    // move the text further out on x axis
 
+                    console.log("this dot is overlapping the previous one");
                     // make the dot smaller
                     d3.select(this).transition().duration(1000).attr({
                         'r': dotRadius/2
@@ -164,7 +162,8 @@ let SVG = {
                         'id': "text-" + i
                     });
                 }else { // not a cluster
-
+                    console.log("this dot is not overlapping");
+                    console.log(this);
                     selection.append('text').text(dataset[i].event).attr({
                         'x': w/8 + 10,  // eyeballing technique
                         'y': parseInt(d3.select(this).attr('cy')) + 5,
@@ -176,6 +175,7 @@ let SVG = {
 
             });
 
+            lastDot = undefined;  // clear for new input
 
     }
 
