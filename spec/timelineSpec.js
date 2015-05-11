@@ -54,12 +54,34 @@ describe('svgUtils', () => {
         });
     });
 
+    describe('getClosestDot()', () => {
+
+        let getAbove = svgUtils.getAboveDot,
+            res;
+
+        it("works", function() {
+
+            res= getAbove([1,2,5], 3);
+            expect(res).toBe(1);
+
+            res = getAbove([1,5,10], 11);
+            expect(res).toBe(2);
+
+            res = getAbove([1,5,10], 9);
+            expect(res).toBe(1);
+
+            res = getAbove([1,5,10], 2.2);
+            expect(res).toBe(0);
+
+            res = getAbove([10,50], 5);
+            expect(res).toBe(-1);
+
+            //res = getAbove([1,2,3,3], 3);
+            //expect(res).toBe(3);
+
+        })
 
 
-
-
-
-
-
+    })
 });
 

@@ -9,8 +9,6 @@ let max = 0, min =0;
 let lineWidth = 5;
 let dotRadius = 5;
 
-let dotsY = [];
-
 let isOutofBounds = (dataset) => {
     let isInit = Boolean(max),
         isOut = false,
@@ -28,16 +26,28 @@ let isOutofBounds = (dataset) => {
 };
 
 let isOverlapping =  (dots, r, newDot ) => {
-    console.log("is it overlapping?");
     return dots.some((elem) => {
         if(newDot - r > elem + r || newDot + r < elem - r) return false;
         return true;
     });
 };
 
+let getAboveDot = (dots, dot) => {
+
+    var closest = dots.reduce(function(prev,next){
+        if( next > dot )  return prev;
+        if ( next > prev ) return next;
+         return prev;
+     }, 0);
+
+   return dots.indexOf(closest);
+
+};
+
 let SVG = {
 
     isOverlapping: isOverlapping,   // for testing
+    getAboveDot: getAboveDot,
 
     createSVG: (element, w, h, color) => {
         return d3.select(element).append("svg")
@@ -74,27 +84,25 @@ let SVG = {
         let w = parseInt(svg.style("width"));
         let h = parseInt(svg.style("height"));
 
-        // order the dataset by timestamp
-        dataset.sort(function (a, b) {
-            if (a.timestamp > b.timestamp) { return 1; }
-            if (a.timestamp < b.timestamp) { return -1; }
-            return 0; // a must be equal to b
-        });
-
-        //console.log(dataset);
-
-        // get all timestamps and determine range of viz
+        // get all timestamps and determine scale of viz
         let timestamps = dataset.reduce((prev, next) =>{
             prev.push(next.timestamp);
             return prev
         }, []);
-        //console.log(timestamps);
-
         let linearScale = d3.scale.linear()
             .domain([d3.min(timestamps), d3.max(timestamps)])
             .range([10, h-10]);
 
+        if(!cach.dotsY.length) {    // sort only the first time, then just append
+            dataset.sort(function (a, b) {
+                if (a.timestamp > b.timestamp) { return 1; }
+                if (a.timestamp < b.timestamp) { return -1; }
+                return 0; // a must be equal to b
+            });
+        }
+
         let selection = svg.selectAll("circle").data(dataset);
+
         //if we need to rescale
         if(isOutofBounds(timestamps)){
             console.log("we are out of bounds");
@@ -108,7 +116,7 @@ let SVG = {
 
         }
 
-        // introduce new data
+        // introduce new data (at the end of the selection)
         selection.enter()
             .append('g').attr({
                     "id": (d,i) => "dot-" + i
@@ -123,44 +131,37 @@ let SVG = {
                 textBox.classed("hidden", !textBox.classed("hidden"));
             })
             .transition().duration(1000)    // on entering
-            .attr({
-                'r': dotRadius
-             })
+                .attr({
+                    'r': dotRadius
+                 })
             .each(function(d,i) {
 
 ;                if(isOverlapping(cach.dotsY, dotRadius, linearScale(d.timestamp))) {
-                    console.log("yes, yes it is overlapping!");
 
-                    // see where the last text box was placed
-                    let prev = d3.select("#text-" + (i-1));
-                    let oldStartX = parseInt(prev.attr("x"));
-                    let oldStartY = parseInt(prev.attr("y"));
+                    //find nearest dot above
+                    var aboveDot = getAboveDot(cach.dotsY, linearScale(d.timestamp));
+                    let prev = d3.select("#text-" + aboveDot);
+                    let prevX = parseInt(prev.attr("x"));
+                    let prevY = parseInt(prev.attr("y"));
                     let textLength = parseInt(prev.node().getComputedTextLength());
 
                     // place the new text box accordingly
                     selection.append('text').text(dataset[i].event).attr({
-                        'x': oldStartX + 10 + textLength,  // eyeballing technique
-                        'y': oldStartY + 5,
+                        'x': prevX + 10 + textLength,  // eyeballing technique
+                        'y': prevY + 5,
                         'id': "text-" + i
                     });
 
-                    // make the dot smaller
-                    //d3.select(this).transition().duration(1000).attr({
-                    //    'r': dotRadius/2
-                    //});
-
                 }else{
-
-                    console.log("no it is not overlapping!");
 
                     selection.append('text').text(dataset[i].event).attr({
                         'x': w/8 + 10,  // eyeballing technique
-                        'y': parseInt(d3.select(this).attr('cy')) + 5,
+                        'y': parseFloat(d3.select(this).attr('cy')) + 5,
                         'id': "text-" + i
                     });
                 }
 
-                cach.dotsY.push(parseInt(d3.select(this).attr("cy")));
+                cach.dotsY.push(parseFloat(d3.select(this).attr("cy")));
 
             });
 
