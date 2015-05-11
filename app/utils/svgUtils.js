@@ -1,11 +1,15 @@
 const d3 = require('d3');
 
+let cach = {
+    dotsY: []
+};
+
 let max = 0, min =0;
 
 let lineWidth = 5;
 let dotRadius = 5;
 
-let lastDot;
+let dotsY = [];
 
 let isOutofBounds = (dataset) => {
     let isInit = Boolean(max),
@@ -23,29 +27,17 @@ let isOutofBounds = (dataset) => {
     return isOut;
 };
 
-let isOverlappingLast = (dot) => {
-    let oldPos = parseInt(lastDot && lastDot.attr('cy'));
-    let newPos = parseInt(d3.select(dot).attr('cy'));
-    //console.log("radius: " + parseInt(d3.select(dot).attr('r')));
-
-    let oldBottom = oldPos + dotRadius;
-    let newTop = newPos - dotRadius;
-
-    if (oldBottom > newTop) {
+let isOverlapping =  (dots, r, newDot ) => {
+    console.log("is it overlapping?");
+    return dots.some((elem) => {
+        if(newDot - r > elem + r || newDot + r < elem - r) return false;
         return true;
-    }
-
-    return false;
+    });
 };
 
 let SVG = {
 
-    isOverlapping: (dots, r, newDot ) => {
-        return dots.some((elem) => {
-            if(newDot - r > elem + r || newDot + r < elem - r) return false;
-            return true;
-        });
-    },
+    isOverlapping: isOverlapping,   // for testing
 
     createSVG: (element, w, h, color) => {
         return d3.select(element).append("svg")
@@ -77,7 +69,7 @@ let SVG = {
 
     plotDots: (dataset) => {
 
-                // get dimensions of svg
+        // get dimensions of svg
         let svg = d3.select('svg');
         let w = parseInt(svg.style("width"));
         let h = parseInt(svg.style("height"));
@@ -89,7 +81,7 @@ let SVG = {
             return 0; // a must be equal to b
         });
 
-        console.log(dataset);
+        //console.log(dataset);
 
         // get all timestamps and determine range of viz
         let timestamps = dataset.reduce((prev, next) =>{
@@ -102,11 +94,7 @@ let SVG = {
             .domain([d3.min(timestamps), d3.max(timestamps)])
             .range([10, h-10]);
 
-        // load data in d3
         let selection = svg.selectAll("circle").data(dataset);
-        console.log("the selection:");
-        console.log(selection);
-
         //if we need to rescale
         if(isOutofBounds(timestamps)){
             console.log("we are out of bounds");
@@ -121,7 +109,6 @@ let SVG = {
         }
 
         // introduce new data
-        console.log("we introduce new data");
         selection.enter()
             .append('g').attr({
                     "id": (d,i) => "dot-" + i
@@ -141,13 +128,8 @@ let SVG = {
              })
             .each(function(d,i) {
 
-                if(isOverlappingLast(this)){    // move the text further out on x axis
-
-                    console.log("this dot is overlapping the previous one");
-                    // make the dot smaller
-                    d3.select(this).transition().duration(1000).attr({
-                        'r': dotRadius/2
-                    });
+;                if(isOverlapping(cach.dotsY, dotRadius, linearScale(d.timestamp))) {
+                    console.log("yes, yes it is overlapping!");
 
                     // see where the last text box was placed
                     let prev = d3.select("#text-" + (i-1));
@@ -161,9 +143,16 @@ let SVG = {
                         'y': oldStartY + 5,
                         'id': "text-" + i
                     });
-                }else { // not a cluster
-                    console.log("this dot is not overlapping");
-                    console.log(this);
+
+                    // make the dot smaller
+                    //d3.select(this).transition().duration(1000).attr({
+                    //    'r': dotRadius/2
+                    //});
+
+                }else{
+
+                    console.log("no it is not overlapping!");
+
                     selection.append('text').text(dataset[i].event).attr({
                         'x': w/8 + 10,  // eyeballing technique
                         'y': parseInt(d3.select(this).attr('cy')) + 5,
@@ -171,11 +160,9 @@ let SVG = {
                     });
                 }
 
-                lastDot = d3.select(this);
+                cach.dotsY.push(parseInt(d3.select(this).attr("cy")));
 
             });
-
-            lastDot = undefined;  // clear for new input
 
     }
 
