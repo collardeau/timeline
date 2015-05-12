@@ -14,13 +14,13 @@ class Timeline extends React.Component {
         SVG.placeDots(dataset);
         SVG.placeInfo(dataset);
 
-        //let unix = moment("2010-02-03").unix();
-        //let dot = {
-        //    timestamp: unix,
-        //    event: "mayo",
-        //    location: "some location"
-        //};
-        //SVG.addDot(timelineStore.getDots(), dot);
+        let unix = moment("2018-02-03").unix();
+        let dot = {
+            timestamp: unix,
+            event: "mayo",
+            location: "some location"
+        };
+        SVG.addDot(timelineStore.getDots(), dot);
         //SVG.addDot(timelineStore.getDots(), dot);
 
     }

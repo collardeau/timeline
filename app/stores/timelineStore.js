@@ -200,7 +200,7 @@ let tonton = [
 ];
 
 let _store = {
-    dots: pj
+    dots: tonton
 };
 
 let timelineStore = objectAssign({}, EventEmitter.prototype, {

@@ -4,7 +4,7 @@ let svgUtils = require('../app/utils/svgUtils');
 
 describe('svgUtils', () => {
 
-    describe('isOverlapping function', () => {
+    describe('isOverlapping', () => {
 
         var isOverlapping = svgUtils.isOverlapping;
         var res;
@@ -106,35 +106,34 @@ describe('svgUtils', () => {
 
     });
 
-    //describe('isOutBound()', () => {
-    //
-    //    it("works", () => {
-    //        let outBound = svgUtils.isOutBound,
-    //            res;
-    //
-    //        res = outBound([1, 5, 10], 5);
-    //        expect(res).toBe(false);
-    //
-    //        res = outBound([1, 5, 10], 15);
-    //        expect(res).toBe(true);
-    //
-    //        res = outBound([10, 15, 30], 15);
-    //        expect(res).toBe(false);
-    //
-    //        res = outBound([10, 15, 30], 5);
-    //        expect(res).toBe(true);
-    //
-    //        res = outBound([10, 15, 30], 30);
-    //        expect(res).toBe(false);
-    //
-    //        res = outBound([10, 15, 30], 10);
-    //        expect(res).toBe(false);
-    //
-    //    })
-    //
-    //
-    //
-    //});
+    describe('isOutBound()', () => {
+
+        it("works", () => {
+            let out = svgUtils.isOutOfScale,
+                res;
+
+            res = out([1, 5, 10], 5);
+            expect(res).toBe(false);
+
+            res = out([1, 5, 10], 15);
+            expect(res).toBe(true);
+
+            res = out([10, 15, 30], 15);
+            expect(res).toBe(false);
+
+            res = out([10, 15, 30], 5);
+            expect(res).toBe(true);
+
+            res = out([10, 15, 30], 30);
+            expect(res).toBe(false);
+
+            res = out([10, 15, 30], 10);
+            expect(res).toBe(false);
+
+        })
+
+
+    });
 
 
 });

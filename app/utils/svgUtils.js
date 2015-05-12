@@ -35,14 +35,18 @@ let reorderData = (dataset, key) => {
         if (a[key] < b[key]) { return -1; }
         return 0; // a must be equal to b
     });
+};
+
+let getTimestamps = (dataset) => {
+    return dataset.reduce((prev, next) =>{
+        prev.push(next.timestamp);
+        return prev
+    }, []);
 }
 
 let getScale = (dataset) => {
 
-    let timestamps = dataset.reduce((prev, next) =>{
-        prev.push(next.timestamp);
-        return prev
-    }, []);
+    let timestamps = getTimestamps(dataset);
 
     return d3.scale.linear()
         .domain([d3.min(timestamps), d3.max(timestamps)])
@@ -130,9 +134,33 @@ let getPrevDot = (dots, dot) => {
 
 };
 
+let isOutOfScale = (dataset, dot) => {
+
+    if ( dot > d3.max(dataset) || dot < d3.min(dataset) ) {
+        return true;
+    }
+
+    return false;
+};
+
 let addDot = (dataset, dot) => {
 
+    let oldTimestamps = getTimestamps(dataset);
     dataset.push(dot);
+
+    if (isOutOfScale(oldTimestamps, dot.timestamp)){
+
+        let selection = d3.selectAll("circle"),
+            scale = getScale(dataset)
+
+        selection.transition().duration(2000)
+            .attr({
+                'cy': (d,i) => scale(d.timestamp),
+                'r': 5
+            })
+            .style("fill", "blue");
+    }
+
     placeDots(dataset);
 
     let pos = dataset.length -1,
@@ -154,6 +182,7 @@ let SVG = {
     reorderData: reorderData,
     getTxtPos: getTxtPos,
     getPrevDot: getPrevDot,
+    isOutOfScale: isOutOfScale,
 
     //API
     initialize: init,
