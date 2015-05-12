@@ -8,12 +8,11 @@ class Timeline extends React.Component {
 
     componentDidMount() {
 
-        SVG.initialize();
-        SVG.placeDots(timelineStore.getDots())
+        let dataset = timelineStore.getDots();
 
-        //SVG.createSVG('.d3-container', 600, 400, "white");
-        //SVG.createTimeline();
-        //SVG.plotDots(timelineStore.getDots());
+        SVG.initialize(dataset);
+        SVG.placeDots(dataset);
+
     }
 
     handleClick(e) {

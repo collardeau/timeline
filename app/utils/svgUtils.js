@@ -2,13 +2,17 @@ const d3 = require('d3');
 
 let w = 500, h = 500, r = 5;
 
-let init = () => {
+let dotsCY = [];
+
+let init = (dataset) => {
+
+    reorderData(dataset, "timestamp");
 
     let svg = d3.select('.d3-container').append("svg")
         .attr({ 'width': w, 'height': h })
         .style({ "background-color": 'white' });
 
-    svg.append("line")
+    svg.append("line")  // draw in the timeline
         .attr({
             'x1': w/8, x2: w/8,
             'y1': 0, y2: 0,
@@ -24,6 +28,14 @@ let init = () => {
             'y2': h
         });
     };
+
+let reorderData = (dataset, key) => {
+    dataset.sort(function (a, b) {
+        if (a[key] > b[key]) { return 1; }
+        if (a[key] < b[key]) { return -1; }
+        return 0; // a must be equal to b
+    });
+}
 
 let getScale = (dataset) => {
 
@@ -45,15 +57,20 @@ let placeDots = (dataset) => {
     let selection = d3.select("svg").selectAll("circle").data(dataset);
 
     selection.enter().append('g')
+
         .attr({
             'id': (d,i) => 'dot-' + i
         })
         .append('circle').attr({
+            'id': (d,i) => 'circ-' + i,
             'cx': w/8,
             'cy': (d,i) => scale(d.timestamp),
-            'r': r,
-            'id': (d,i) => 'circ-' + i
-        }).style("fill", "orange");
+            'r': 0
+        }).style("fill", "orange")
+        .transition().duration(3000)    // on entering
+        .attr({
+            'r': r
+        });
 
     placeInfo(dataset);
 
@@ -61,24 +78,67 @@ let placeDots = (dataset) => {
 
 let placeInfo = (dataset) => {
 
-    let selection = d3.select('svg').selectAll("g").data(dataset);
+    let selection = d3.select('svg').selectAll("g").data(dataset),
+        scale = getScale(dataset);
 
     selection.append('text')
         .text(d => d.event)
         .attr({
-            x: w/8 + 10,
-            y: (d,i) => getPos(d,i, dataset),
-            id: (d,i) => "text-" + i
+            id: (d,i) => "text-" + i,
+            x: (d,i) => getTxtPos(d,i),
+            y: (d,i) => scale(d.timestamp) + 5
         })
 };
 
-let getPos = (d,i, dataset) => {
-    let cy = d3.select("#circ-" + i).attr('cy');
-    return parseInt(cy) + 5;
-}
+let getTxtPos = (d,i) => {
+
+    let dotRef = d3.select("#circ-" + i),
+        cx = parseFloat(dotRef.attr('cx')),
+        cy = parseFloat(dotRef.attr('cy'));
+
+    if( isOverlapping(dotsCY, r, cy) ){
+
+        let prevDot = getPrevDot(dotsCY, cy),
+            prevTxt = d3.select("#text-" + prevDot),
+            prevTxtX = parseFloat(prevTxt.attr("x")),
+            txtLength = parseFloat(prevTxt.node().getComputedTextLength());
+
+        cx = prevTxtX + txtLength;
+
+    }
+
+    dotsCY.push(cy);
+
+    return cx + 10.0;
+};
+
+let isOverlapping =  (dots, r, cy) => {
+    return dots.some((elem) => {
+        if(cy - r > elem + r || cy + r < elem - r) return false;
+        return true;
+    });
+};
+
+let getPrevDot = (dots, dot) => {
+    var closest = dots.reduce(function(prev,next){
+        if( next > dot )  return prev;
+        if ( next > prev ) return next;
+        return prev;
+    }, 0);
+
+    return dots.indexOf(closest);
+
+};
 
 let SVG = {
 
+    //for testing
+    isOverlapping: isOverlapping,
+    reorderData: reorderData,
+    getTxtPos: getTxtPos,
+    getPrevDot: getPrevDot,
+
+    //API
     initialize: init,
     placeDots: placeDots
 

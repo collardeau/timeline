@@ -58,32 +58,50 @@ describe('svgUtils', () => {
         });
     });
 
-    describe('getClosestDot()', () => {
+    describe('reorderData', () => {
 
-        let getAbove = svgUtils.getAboveDot,
+        var reorder = svgUtils.reorderData;
+        var res;
+
+        it("works", () => {
+
+            let data = [{pos: 2}, {pos: 1}, {pos: 3}];
+            res = reorder(data, "pos");
+            expect(data).toEqual([{pos: 1}, {pos: 2}, {pos: 3}])
+
+            let data2 = [{pos: 45}, {pos: 11}, {pos: -3}, {post: 26.5}];
+            res = reorder(data2, "pos");
+            //expect(data2).toEqual([{pos: -3}, {pos: 11}, {pos: 26.5}, { pos: 45}])
+
+        });
+    });
+
+    describe('getPrevDot()', () => {
+
+        let getPrev = svgUtils.getPrevDot,
             res;
 
         it("works", () => {
 
-            res= getAbove([1,2,5], 3);
+            res= getPrev([1,2,5], 3);
             expect(res).toBe(1);
 
-            res = getAbove([1,5,10], 11);
+            res = getPrev([1,5,10], 11);
             expect(res).toBe(2);
 
-            res = getAbove([1,5,10], 9);
+            res = getPrev([1,5,10], 9);
             expect(res).toBe(1);
 
-            res = getAbove([1,5,10], 2.2);
+            res = getPrev([1,5,10], 2.2);
             expect(res).toBe(0);
 
-            res = getAbove([10,50], 5);
+            res = getPrev([10,50], 5);
             expect(res).toBe(-1);
 
             //res = getAbove([1,2,3,3], 3);
             //expect(res).toBe(3);
 
-        })
+        });
 
 
     });
