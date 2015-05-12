@@ -51,6 +51,10 @@ describe('svgUtils', () => {
             res = isOverlapping([0, 10, 20, 30, 40, 100, 1000.333], 5, 98.5); // fraction
             expect(res).toBe(true);
 
+            res = isOverlapping([10], 5, 93.22); // fraction
+            expect(res).toBe(false);
+
+
         });
     });
 
