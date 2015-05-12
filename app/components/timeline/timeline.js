@@ -7,9 +7,13 @@ let SVG = require('../../utils/svgUtils');
 class Timeline extends React.Component {
 
     componentDidMount() {
-        SVG.createSVG('.d3-container', 600, 400, "white");
-        SVG.createTimeline();
-        SVG.plotDots(timelineStore.getDots());
+
+        SVG.initialize();
+        SVG.placeDots(timelineStore.getDots())
+
+        //SVG.createSVG('.d3-container', 600, 400, "white");
+        //SVG.createTimeline();
+        //SVG.plotDots(timelineStore.getDots());
     }
 
     handleClick(e) {
