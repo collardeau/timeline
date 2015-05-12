@@ -72,7 +72,7 @@ let placeDots = (dataset) => {
             'r': r
         });
 
-    placeInfo(dataset);
+    //placeInfo(dataset);
 
 };
 
@@ -85,12 +85,12 @@ let placeInfo = (dataset) => {
         .text(d => d.event)
         .attr({
             id: (d,i) => "text-" + i,
-            x: (d,i) => getTxtPos(d,i),
+            x: (d,i) => getTxtPos(i),
             y: (d,i) => scale(d.timestamp) + 5
         })
 };
 
-let getTxtPos = (d,i) => {
+let getTxtPos = (i) => {
 
     let dotRef = d3.select("#circ-" + i),
         cx = parseFloat(dotRef.attr('cx')),
@@ -130,6 +130,23 @@ let getPrevDot = (dots, dot) => {
 
 };
 
+let addDot = (dataset, dot) => {
+
+    dataset.push(dot);
+    placeDots(dataset);
+
+    let pos = dataset.length -1,
+        scale = getScale(dataset);
+
+    d3.select('#dot-' + pos).append('text')
+        .text(dot.event)
+        .attr({
+            id: "text-" + pos,
+            x: getTxtPos(pos),
+            y: scale(dot.timestamp) + 5
+        });
+};
+
 let SVG = {
 
     //for testing
@@ -140,7 +157,9 @@ let SVG = {
 
     //API
     initialize: init,
-    placeDots: placeDots
+    placeDots: placeDots,
+    placeInfo: placeInfo,
+    addDot: addDot
 
 };
 

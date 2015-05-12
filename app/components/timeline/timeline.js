@@ -12,6 +12,16 @@ class Timeline extends React.Component {
 
         SVG.initialize(dataset);
         SVG.placeDots(dataset);
+        SVG.placeInfo(dataset);
+
+        //let unix = moment("2010-02-03").unix();
+        //let dot = {
+        //    timestamp: unix,
+        //    event: "mayo",
+        //    location: "some location"
+        //};
+        //SVG.addDot(timelineStore.getDots(), dot);
+        //SVG.addDot(timelineStore.getDots(), dot);
 
     }
 
@@ -19,12 +29,14 @@ class Timeline extends React.Component {
         let date = this.refs.newDate.getDOMNode().value;
         if(date){
             let unix = moment(date).unix();
-            timelineStore.addDot({
+            let dot = {
                 timestamp: unix,
                 event: "some new event",
                 location: "some location"
-            });
-            SVG.plotDots(timelineStore.getDots());
+            };
+            timelineStore.addDot(dot);
+            //SVG.plotDots(timelineStore.getDots());
+            SVG.addDot(timelineStore.getDots(), dot);
         }
         e.preventDefault();
     }
