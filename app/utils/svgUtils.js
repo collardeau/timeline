@@ -54,7 +54,7 @@ let getScale = (dataset) => {
 
 };
 
-let placeDots = (dataset) => {
+let placeNewDots = (dataset) => {
 
     let scale = getScale(dataset);
 
@@ -71,6 +71,10 @@ let placeDots = (dataset) => {
             'cy': (d,i) => scale(d.timestamp),
             'r': 0
         }).style("fill", "orange")
+        .on("click", function(d, i) {
+            let textBox = d3.selectAll("#text-" + i);
+            textBox.classed("hidden", !textBox.classed("hidden"));
+        })
         .transition().duration(3000)    // on entering
         .attr({
             'r': r
@@ -87,11 +91,19 @@ let placeInfo = (dataset) => {
 
     selection.append('text')
         .text(d => d.event)
+        .classed('dot-info', true)
         .attr({
-            id: (d,i) => "text-" + i,
-            x: (d,i) => getTxtPos(i),
-            y: (d,i) => scale(d.timestamp) + 5
+            'id': (d,i) => "text-" + i,
+            'x': (d,i) => getTxtPos(i),
+            'y': (d,i) => scale(d.timestamp) + 5
         })
+        .style({
+            'opacity': 0
+        })
+        .transition().duration(10000)
+        .style({
+            'opacity': 100
+        });
 };
 
 let getTxtPos = (i) => {
@@ -139,7 +151,6 @@ let isOutOfScale = (dataset, dot) => {
     if ( dot > d3.max(dataset) || dot < d3.min(dataset) ) {
         return true;
     }
-
     return false;
 };
 
@@ -148,7 +159,7 @@ let addDot = (dataset, dot) => {
     let oldTimestamps = getTimestamps(dataset);
     dataset.push(dot);
 
-    if (isOutOfScale(oldTimestamps, dot.timestamp)){
+    if ( isOutOfScale(oldTimestamps, dot.timestamp) ){
 
         let selection = d3.selectAll("circle"),
             scale = getScale(dataset)
@@ -159,9 +170,16 @@ let addDot = (dataset, dot) => {
                 'r': 5
             })
             .style("fill", "blue");
+
+         //kill the text tags
+        d3.selectAll('.dot-info').remove();
+        dotsCY = [];
+        // reset them
+        placeInfo(dataset);
+
     }
 
-    placeDots(dataset);
+    placeNewDots(dataset);
 
     let pos = dataset.length -1,
         scale = getScale(dataset);
@@ -172,7 +190,8 @@ let addDot = (dataset, dot) => {
             id: "text-" + pos,
             x: getTxtPos(pos),
             y: scale(dot.timestamp) + 5
-        });
+        })
+        .classed("dot-info", true);
 };
 
 let SVG = {
@@ -186,7 +205,7 @@ let SVG = {
 
     //API
     initialize: init,
-    placeDots: placeDots,
+    placeDots: placeNewDots,
     placeInfo: placeInfo,
     addDot: addDot
 
