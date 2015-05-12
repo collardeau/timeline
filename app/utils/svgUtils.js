@@ -93,6 +93,35 @@ let SVG = {
 
         let lastTimestamp = dataset[dataset.length-1].timestamp;
 
+        let placeText = (select) => {
+
+            let placeX = (d,i) => {
+                let cy = parseFloat(d3.select("#circ-" + i).attr("cy"));
+                let pos = w/8 + 10;
+                if(isOverlapping(cach.dotsY, dotRadius, cy)){
+                    let aboveDotPos = parseInt(getAboveDot(cach.dotsY, cy)),
+                        prevTxt = d3.select("#text-" + aboveDotPos),
+                        prevX = parseInt(prevTxt.attr('x')),
+                        textLength = parseInt(prevTxt.node().getComputedTextLength());
+
+                    pos = prevX + textLength + 10;  // eyeballing technique
+                }
+                cach.dotsY.push(cy);
+
+                return pos;
+            };
+
+            select.append('text').text(function(d,i){
+                return d.event
+            }).attr({
+                'id': (d,i) => "text-" + i,
+                'x': (d,i) => placeX(d,i),
+                'y': (d,i) => linearScale(d.timestamp) + 5,
+                'class': "dot-info"
+            });
+
+        };
+
         // check for rescaling
         if(lastTimestamp > cach.maxRange || lastTimestamp < cach.minRange) {
             selection.transition().duration(2000)
@@ -102,19 +131,21 @@ let SVG = {
             })
             .style("fill", "orange");
 
-            //new cach
             if(lastTimestamp > cach.maxRange) cach.maxRange = lastTimestamp
             else cach.minRange = lastTimestamp;
 
             // kill all the text nodes
-            let txt = d3.selectAll('text');
-            //console.log(txt);
+            d3.selectAll('.dot-info').remove();
 
+            //redraw them
+            cach.dotsY = [];
+            placeText(d3.selectAll('g'));
 
         }
 
         // introduce new data (at the end of the selection)
         selection.enter()
+            .append('g')
             .append('circle').attr({
                 'cx': w/8,
                 'cy': (d,i) => linearScale(d.timestamp),
@@ -130,30 +161,8 @@ let SVG = {
                     'r': dotRadius
                  });
 
-        // where to place text
-        let placeX = (d,i) => {
-            let cy = parseFloat(d3.select("#circ-" + i).attr("cy"));
-            let pos = w/8 + 10;
-            if(isOverlapping(cach.dotsY, dotRadius, cy)){
-                let aboveDotPos = parseInt(getAboveDot(cach.dotsY, cy)),
-                    prevTxt = d3.select("#text-" + aboveDotPos),
-                    prevX = parseInt(prevTxt.attr('x')),
-                    textLength = parseInt(prevTxt.node().getComputedTextLength());
-
-                pos = prevX + textLength + 10;  // eyeballing technique
-            }
-            cach.dotsY.push(cy);
-
-            return pos;
-        };
-
-        selection.enter().append('text').text(function(d,i){
-            return d.event
-        }).attr({
-            'id': (d,i) => "text-" + i,
-            'x': (d,i) => placeX(d,i),
-            'y': (d,i) => linearScale(d.timestamp) + 5
-        });
+        placeText(selection.enter());
+        //cach.dotsY = [];
 
     }
 
