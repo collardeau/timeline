@@ -47,7 +47,4 @@ let timelineRoute = (
     </div>
 );
 
-
-
-
 module.exports = App;

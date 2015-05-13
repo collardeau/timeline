@@ -47,7 +47,7 @@ let firebaseAuth = {
             } else {
 
                 options.register && options.register(authData);
-                hasher.setHash('account');
+                hasher.setHash('timeline');
 
             }
 

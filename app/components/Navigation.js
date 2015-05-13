@@ -3,6 +3,7 @@ const $ = require('jquery');
 const hasher = require('hasher');
 
 let timelineActions = require('../actions/timelineActions');
+let authUtils = require('../utils/authUtils');
 
 class Navigation extends React.Component {
 
@@ -11,9 +12,11 @@ class Navigation extends React.Component {
     }
 
     handleClick(tl) {
-        console.log("going to change the data here");
-        console.log(tl);
         timelineActions.changeTimeline(tl);
+    }
+
+    handleLogout() {
+        authUtils.logout();
     }
 
     componentDidMount() {
@@ -32,6 +35,46 @@ class Navigation extends React.Component {
 
     render() {
 
+        let loggedIn = authUtils.isLoggedIn(),
+            navOptions;
+
+        if (loggedIn) {
+            navOptions = (
+            <ul id="js-centered-navigation-menu" className="centered-navigation-menu show">
+                <li className="nav-link more">
+                    <a href="javascript:void(0)">Timelines</a>
+                    <ul className="submenu">
+                        <li>
+                            <a onClick={this.handleClick.bind(this,'tonton') }>Tonton</a>
+                        </li>
+                        <li>
+                            <a onClick={this.handleClick.bind(this,'pj') }>Pearl Jam</a>
+                        </li>
+                    </ul>
+                </li>
+                <li className="nav-link">
+                    <a onClick={ this.handleLogout }>Log Out</a>
+                </li>
+
+            </ul>
+
+            )
+        } else {
+            navOptions = (
+            <ul id="js-centered-navigation-menu" className="centered-navigation-menu show">
+                <li className="nav-link">
+                    <a href="javascript:void(0)">Login</a>
+                </li>
+
+                <li className="nav-link">
+                    <a href="javascript:void(0)">Timelines</a>
+
+                </li>
+            </ul>
+
+            )
+        }
+
         return (
             <header className="centered-navigation" role="banner">
 
@@ -39,24 +82,7 @@ class Navigation extends React.Component {
 
                     <a href="javascript:void(0)" id="js-centered-navigation-mobile-menu" className="centered-navigation-mobile-menu">MENU</a>
                     <nav role="navigation">
-                        <ul id="js-centered-navigation-menu" className="centered-navigation-menu show">
-
-
-                            <li className="nav-link more">
-                                <a href="javascript:void(0)">Timelines</a>
-                                <ul className="submenu">
-                                    <li>
-                                        <a onClick={this.handleClick.bind(this,'tonton') }>Tonton</a>
-                                    </li>
-                                    <li>
-                                        <a onClick={this.handleClick.bind(this,'pj') }>Pearl Jam</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li className="nav-link">
-                                <a onClick={this.handleLink.bind(this,'account') }>Account</a>
-                            </li>
-                        </ul>
+                        { navOptions }
                     </nav>
                 </div>
             </header>
