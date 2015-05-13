@@ -55,7 +55,7 @@ let pj = [
         location: "USA"
     },
     {
-        event: "2003 Birmingham",
+        event: "Birmingham",
         timestamp: moment("2003-04-09").unix(),
         location: "All over"
     },
@@ -130,13 +130,48 @@ let pj = [
         location: "All over"
     },
     {
-        event: "2012 Tour",
-        timestamp: moment("2012-07-01").unix(),
-        location: "Villefranche"
+        event: "Copenhagen",
+        timestamp: moment("2012-07-10").unix(),
+        location: "Denmark"
     },
     {
-        event: "euro 2014",
-        timestamp: moment("2014-08-01").unix(),
+        event: "Amsterdam 1",
+        timestamp: moment("2012-06-26").unix(),
+        location: "NED"
+    },
+    {
+        event: "Amsterdam 2",
+        timestamp: moment("2012-06-27").unix(),
+        location: "NED"
+    },
+    {
+        event: "Amsterdam 1",
+        timestamp: moment("2014-06-16").unix(),
+        location: "NED"
+    },
+    {
+        event: "Amsterdam 2",
+        timestamp: moment("2014-06-17").unix(),
+        location: "NED"
+    },
+    {
+        event: "Berlin 1",
+        timestamp: moment("2012-07-04").unix(),
+        location: "Berlin"
+    },
+    {
+        event: "Berlin 2",
+        timestamp: moment("2012-07-05").unix(),
+        location: "Berlin"
+    },
+    {
+        event: "Berlin",
+        timestamp: moment("2014-06-26").unix(),
+        location: "Berlin"
+    },
+    {
+        event: "Vienna",
+        timestamp: moment("2014-06-25").unix(),
         location: "Berlin"
     }
 ];

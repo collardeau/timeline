@@ -1,6 +1,6 @@
 const d3 = require('d3');
 
-let w = 500, h = 500, r = 5;
+let w = 700, h = 500, r = 5;
 
 let dotsCY = [];
 
@@ -80,8 +80,6 @@ let placeNewDots = (dataset) => {
             'r': r
         });
 
-    //placeInfo(dataset);
-
 };
 
 let placeInfo = (dataset) => {
@@ -94,7 +92,7 @@ let placeInfo = (dataset) => {
         .classed('dot-info', true)
         .attr({
             'id': (d,i) => "text-" + i,
-            'x': (d,i) => getTxtPos(i),
+            'x': (d,i) => getTxtPos(i, dataset),
             'y': (d,i) => scale(d.timestamp) + 5
         })
         .style({
@@ -106,21 +104,20 @@ let placeInfo = (dataset) => {
         });
 };
 
-let getTxtPos = (i) => {
+let getTxtPos = (i,dataset) => {
 
-    let dotRef = d3.select("#circ-" + i),
+    let scale = getScale(dataset),
+        dotRef = d3.select("#circ-" + i),
         cx = parseFloat(dotRef.attr('cx')),
-        cy = parseFloat(dotRef.attr('cy'));
+        cy = scale(dataset[i].timestamp);
 
     if( isOverlapping(dotsCY, r, cy) ){
-
         let prevDot = getPrevDot(dotsCY, cy),
             prevTxt = d3.select("#text-" + prevDot),
             prevTxtX = parseFloat(prevTxt.attr("x")),
             txtLength = parseFloat(prevTxt.node().getComputedTextLength());
 
         cx = prevTxtX + txtLength;
-
     }
 
     dotsCY.push(cy);
@@ -154,6 +151,19 @@ let isOutOfScale = (dataset, dot) => {
     return false;
 };
 
+let rescale = (dataset) => {
+    dotsCY = [];
+    let selection = d3.selectAll("circle"),
+        scale = getScale(dataset)
+
+    selection.transition().duration(1000)
+        .attr({
+            'cy': (d,i) => scale(d.timestamp),
+            'r': 5
+        })
+        .style("fill", "blue");
+};
+
 let addDot = (dataset, dot) => {
 
     let oldTimestamps = getTimestamps(dataset);
@@ -161,26 +171,15 @@ let addDot = (dataset, dot) => {
 
     if ( isOutOfScale(oldTimestamps, dot.timestamp) ){
 
-        let selection = d3.selectAll("circle"),
-            scale = getScale(dataset)
-
-        selection.transition().duration(2000)
-            .attr({
-                'cy': (d,i) => scale(d.timestamp),
-                'r': 5
-            })
-            .style("fill", "blue");
-
-         //kill the text tags
+        rescale(dataset);
         d3.selectAll('.dot-info').remove();
-        dotsCY = [];
-        // reset them
-        placeInfo(dataset);
+        placeInfo(dataset); // reset text info elements
 
     }
 
     placeNewDots(dataset);
 
+    // add new text
     let pos = dataset.length -1,
         scale = getScale(dataset);
 
@@ -188,7 +187,7 @@ let addDot = (dataset, dot) => {
         .text(dot.event)
         .attr({
             id: "text-" + pos,
-            x: getTxtPos(pos),
+            x: getTxtPos(pos, dataset),
             y: scale(dot.timestamp) + 5
         })
         .classed("dot-info", true);
