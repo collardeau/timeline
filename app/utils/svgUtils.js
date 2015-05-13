@@ -1,6 +1,6 @@
 const d3 = require('d3');
 
-let w = 700, h = 500, r = 5;
+let w = 700, h = 450, r = 5;
 
 let dotsCY = [];
 
@@ -16,7 +16,7 @@ let init = (dataset) => {
 
     let svg = d3.select('.d3-container').append("svg")
         .attr({ 'width': w, 'height': h })
-        .style({ "background-color": 'white' });
+        .style({'background-color': 'white'});
 
     svg.append("line")  // draw in the timeline
         .attr({

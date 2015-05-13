@@ -48,23 +48,20 @@ class Timeline extends React.Component {
         return (
             <div id="timelineApp">
 
-                <div className="d3-container"></div>
-
-                <div id="panel">
-
-                    <h1>Tonton's Timeline</h1>
-
+                <div id="inputForm">
                     <form>
-                        <label>What happened?</label>
-                        <input type="text" ref="event" placeholder="Event" />
-                        <label>When?</label>
+                        <input type="text" ref="event" placeholder="Add Event" />
                         <input type="date" ref="newDate" />
-                        <label>Where?</label>
-                        <input type="text" ref="location" placeholder="Location" />
-                        <button className="btn-alert"onClick={this.handleClick.bind(this)}>Plot</button>
+                        <button className="btn-action"onClick={this.handleClick.bind(this)}>Plot</button>
                     </form>
 
-                </div>
+                 </div>
+
+                <h3>Tonton's Timeline</h3>
+
+                <div className="d3-container"></div>
+
+
             </div>
         )
     }

@@ -19,6 +19,11 @@ h1 {
   font-size: 1.618em;
 }
 
+h3 {
+  padding: 0 0 0 10px;
+  margin: 0 0 15px 0;
+}
+
 #line {
   transition: all 3s ease;
 }
@@ -26,24 +31,33 @@ h1 {
   stroke: green !important;
 }
 
-header {
+
+#inputForm form {
   @include outer-container(100%);
-  .dropdown {
-    @include span-columns(9);
+  //border: 1px solid;
+  margin: 0 0 10px 0;
+  input[type="text"] {
+    @include span-columns(5);
+    height: 40px;
     padding: 0;
+    margin: 0;
   }
-  .buttons {
-    @include span-columns(3);
-    text-align: right;
+  input[type="date"] {
+    @include span-columns(5);
+    height: 40px;
+    padding: 0;
+    margin: 0;
   }
+  button {
+    @include span-columns(2);
+
+    width: 19.3%;
+
+  }
+
+
 }
 
-#timelineApp {   // neat grid
-  @include outer-container(100%);
-  padding: 1em 1em 1em 0;
-  .d3-container { @include span-columns(6); }
-  #panel { @include span-columns(6);}
-}
 
 @import "./dropbox";
 //@import "./welcome";
