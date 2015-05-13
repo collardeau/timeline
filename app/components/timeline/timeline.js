@@ -30,15 +30,15 @@ class Timeline extends React.Component {
 
     handleClick(e) {
         let date = this.refs.newDate.getDOMNode().value;
+        let event = this.refs.newEvent.getDOMNode().value;
         if(date){
-            let unix = moment(date).unix();
+            let unixTime = moment(date).unix();
             let dot = {
-                timestamp: unix,
-                event: "some new event",
-                location: "some location"
+                timestamp: unixTime,
+                event: event
             };
             SVG.addDot(timelineStore.getDots(), dot);
-            timelineStore.addDot(dot);
+            timelineStore.addDot(dot); // could be an action
         }
         e.preventDefault();
     }
@@ -50,7 +50,7 @@ class Timeline extends React.Component {
 
                 <div id="inputForm">
                     <form>
-                        <input type="text" ref="event" placeholder="Add Event" />
+                        <input type="text" ref="newEvent" placeholder="Add Event" />
                         <input type="date" ref="newDate" />
                         <button className="btn-action"onClick={this.handleClick.bind(this)}>Plot</button>
                     </form>
@@ -68,8 +68,6 @@ class Timeline extends React.Component {
 
     changeContent() {
         console.log("setting the state");
-        let dots = timelineStore.getDots();
-        console.log(dots);;
         this.setState({
             dataset: timelineStore.getDots()
         });

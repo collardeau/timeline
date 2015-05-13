@@ -26,21 +26,22 @@ let init = (dataset) => {
         })
         .style({
             stroke: "black",
-            "stroke-width": 5
+            "stroke-width": 5,
+            "stroke-linecap": 'round'
         })
         .transition()
         .duration(2000)
         .attr({
             'y2': h
         });
-    };
+};
 
-    let reorderData = (dataset, key) => {
-        dataset.sort(function (a, b) {
-            if (a[key] > b[key]) { return 1; }
-            if (a[key] < b[key]) { return -1; }
-            return 0; // a must be equal to b
-        });
+let reorderData = (dataset, key) => {
+    dataset.sort(function (a, b) {
+        if (a[key] > b[key]) { return 1; }
+        if (a[key] < b[key]) { return -1; }
+        return 0; // a must be equal to b
+    });
 };
 
 let getTimestamps = (dataset) => {
@@ -81,7 +82,7 @@ let placeNewDots = (dataset) => {
             let textBox = d3.selectAll("#text-" + i);
             textBox.classed("hidden", !textBox.classed("hidden"));
         })
-        .transition().duration(3000)    // on entering
+        .transition().duration(2000)    // on entering
         .attr({
             'r': r
         });
