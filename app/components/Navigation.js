@@ -51,13 +51,6 @@ class Navigation extends React.Component {
                                     <li>
                                         <a onClick={this.handleClick.bind(this,'pj') }>Pearl Jam</a>
                                     </li>
-                                    <li>
-                                        <a onClick={this.handleClick.bind(this,'nina') }>Nina</a>
-                                    </li>
-                                    <li>
-                                        <a onClick={this.handleClick.bind(this,'visa') }>Visa</a>
-                                    </li>
-
                                 </ul>
                             </li>
                             <li className="nav-link">

@@ -249,9 +249,22 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
 
     changeTimeline(timeline) {
 
-        // would be a firebase fetch
-        let data= tonton;
-        if(timeline="pj") { data = pj }
+        console.log("the timeline passed in: ", timeline);
+
+        //  would be a firebase fetch
+
+        let data = null;
+
+        switch (timeline) {
+            case "tonton":
+                data = tonton;
+                break;
+            case "pj":
+                data = pj;
+                break;
+            default:
+                data = tonton;
+        }
 
         _store.dots = data;
 

@@ -15,14 +15,13 @@ class Timeline extends React.Component {
     }
 
     componentDidMount() {
-
         timelineStore.addChangeListener(this.changeContent);
+        SVG.draw(this.state.dataset);
+    }
 
-        let dataset = timelineStore.getDots();
-        SVG.initialize(this.state.dataset);
-        SVG.placeDots(this.state.dataset);
-        SVG.placeInfo(this.state.dataset);
-
+    componentDidUpdate() {
+        SVG.killSVG();
+        SVG.draw(this.state.dataset)
     }
 
     componentWillUnmount() {
@@ -71,16 +70,12 @@ class Timeline extends React.Component {
     }
 
     changeContent() {
-        console.log("changing the content in the final call back");
-
-
+        console.log("setting the state");
+        let dots = timelineStore.getDots();
+        console.log(dots);;
         this.setState({
             dataset: timelineStore.getDots()
         });
-
-        SVG.initialize(this.state.dataset);
-        SVG.placeDots(this.state.dataset);
-        SVG.placeInfo(this.state.dataset);
 
     }
 

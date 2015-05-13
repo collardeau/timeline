@@ -4,6 +4,12 @@ let w = 700, h = 500, r = 5;
 
 let dotsCY = [];
 
+let draw = (dataset) => {
+    init(dataset);
+    placeNewDots(dataset);
+    placeInfo(dataset);
+};
+
 let init = (dataset) => {
 
     reorderData(dataset, "timestamp");
@@ -29,12 +35,12 @@ let init = (dataset) => {
         });
     };
 
-let reorderData = (dataset, key) => {
-    dataset.sort(function (a, b) {
-        if (a[key] > b[key]) { return 1; }
-        if (a[key] < b[key]) { return -1; }
-        return 0; // a must be equal to b
-    });
+    let reorderData = (dataset, key) => {
+        dataset.sort(function (a, b) {
+            if (a[key] > b[key]) { return 1; }
+            if (a[key] < b[key]) { return -1; }
+            return 0; // a must be equal to b
+        });
 };
 
 let getTimestamps = (dataset) => {
@@ -193,6 +199,12 @@ let addDot = (dataset, dot) => {
         .classed("dot-info", true);
 };
 
+let killSVG = () => {
+    d3.select('svg').remove();
+    dotsCY = [];
+
+};
+
 let SVG = {
 
     //for testing
@@ -206,7 +218,9 @@ let SVG = {
     initialize: init,
     placeDots: placeNewDots,
     placeInfo: placeInfo,
-    addDot: addDot
+    draw: draw,
+    addDot: addDot,
+    killSVG: killSVG
 
 };
 
