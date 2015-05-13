@@ -50,7 +50,9 @@ class Login extends React.Component {
 
         return (
             <div className="container">
-                <h1>Your Account</h1>
+
+                <h1>Timelines</h1>
+                <p>Log in to view some timelines visualizations.</p>
 
                 {this.state.warning ? warning : ""}
 
@@ -60,7 +62,6 @@ class Login extends React.Component {
                     <label>Password</label>
                     <input type="password" ref="pw" placeholder="Password"/>
                     <button onClick={this.handleLogin.bind(this)} className="btn btn-action">Login</button>
-                    <button onClick={this.handleRegister.bind(this)} className="btn btn-action">Register</button>
                 </form>
             </div>
         )
@@ -68,3 +69,5 @@ class Login extends React.Component {
 }
 
 module.exports = Login;
+
+//<button onClick={this.handleRegister.bind(this)} className="btn btn-action">Register</button>

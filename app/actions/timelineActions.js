@@ -5,8 +5,6 @@ let timelineActions = {
 
     changeTimeline(tl) {
 
-        console.log("we are in an action");
-
         AppDispatcher.handleAction({
             actionType: appConstants.CHANGE_TIMELINE,
             data: {

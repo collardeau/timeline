@@ -15,8 +15,8 @@ let init = (dataset) => {
     reorderData(dataset, "timestamp");
 
     let svg = d3.select('.d3-container').append("svg")
-        .attr({ 'width': w, 'height': h })
-        .style({'background-color': 'white'});
+        .attr({ 'width': w, 'height': h });
+        //.style({'background-color': 'white'});
 
     svg.append("line")  // draw in the timeline
         .attr({
