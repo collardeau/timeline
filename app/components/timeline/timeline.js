@@ -6,21 +6,19 @@ let SVG = require('../../utils/svgUtils');
 
 class Timeline extends React.Component {
 
+    constructor(){
+        super();
+        this.state = {
+            dataset : timelineStore.getDots()
+        }
+    }
+
     componentDidMount() {
 
         let dataset = timelineStore.getDots();
-
-        SVG.initialize(dataset);
-        SVG.placeDots(dataset);
-        SVG.placeInfo(dataset);
-
-        //let unix = moment("2018-02-03").unix();
-        //let dot = {
-        //    timestamp: unix,
-        //    event: "mayo",
-        //    location: "some location"
-        //};
-        //SVG.addDot(timelineStore.getDots(), dot);
+        SVG.initialize(this.state.dataset);
+        SVG.placeDots(this.state.dataset);
+        SVG.placeInfo(this.state.dataset);
 
     }
 
