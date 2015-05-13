@@ -1,4 +1,5 @@
 const d3 = require('d3');
+const moment = require('moment')
 
 let w = 700, h = 450, r = 5;
 
@@ -21,7 +22,7 @@ let init = (dataset) => {
     svg.append("line")  // draw in the timeline
         .attr({
             'x1': w/8, x2: w/8,
-            'y1': 0, y2: 0,
+            'y1': 5, y2: 5,
             "id": "line"
         })
         .style({
@@ -32,7 +33,7 @@ let init = (dataset) => {
         .transition()
         .duration(2000)
         .attr({
-            'y2': h
+            'y2': h-5
         });
 };
 
@@ -86,12 +87,20 @@ let placeNewDots = (dataset) => {
         .attr({
             'r': r
         });
-
 };
+
+let placeLabels = (dataset) => {
+    d3.selectAll('g').append('text')
+        .text((d,i) => moment.unix(dataset[i].timestamp).format("MM/DD/YYYY"))
+        .attr({
+            'x': 10,
+            'y': (d,i) => dotsCY[i]
+        })
+}
 
 let placeInfo = (dataset) => {
 
-    let selection = d3.select('svg').selectAll("g").data(dataset),
+    let selection = d3.selectAll("g"),
         scale = getScale(dataset);
 
     selection.append('text')
@@ -109,6 +118,8 @@ let placeInfo = (dataset) => {
         .style({
             'opacity': 100
         });
+
+        placeLabels(dataset);
 };
 
 let getTxtPos = (i,dataset) => {
