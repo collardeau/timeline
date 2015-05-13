@@ -2,10 +2,18 @@ const React = require('react');
 const $ = require('jquery');
 const hasher = require('hasher');
 
+let timelineActions = require('../actions/timelineActions');
+
 class Navigation extends React.Component {
 
     handleLink(route) {
         hasher.setHash(route);
+    }
+
+    handleClick(tl) {
+        console.log("going to change the data here");
+        console.log(tl);
+        timelineActions.changeTimeline(tl);
     }
 
     componentDidMount() {
@@ -38,16 +46,16 @@ class Navigation extends React.Component {
                                 <a href="javascript:void(0)">Timelines</a>
                                 <ul className="submenu">
                                     <li>
-                                        <a onClick={this.handleLink.bind(this,'d3') }>Tonton</a>
+                                        <a onClick={this.handleClick.bind(this,'tonton') }>Tonton</a>
                                     </li>
                                     <li>
-                                        <a href="javascript:void(0)">Pearl Jam</a>
+                                        <a onClick={this.handleClick.bind(this,'pj') }>Pearl Jam</a>
                                     </li>
                                     <li>
-                                        <a href="javascript:void(0)">Nina</a>
+                                        <a onClick={this.handleClick.bind(this,'nina') }>Nina</a>
                                     </li>
                                     <li>
-                                        <a href="javascript:void(0)">Visa</a>
+                                        <a onClick={this.handleClick.bind(this,'visa') }>Visa</a>
                                     </li>
 
                                 </ul>

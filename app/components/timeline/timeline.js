@@ -10,16 +10,23 @@ class Timeline extends React.Component {
         super();
         this.state = {
             dataset : timelineStore.getDots()
-        }
+        };
+        this.changeContent = this.changeContent.bind(this);
     }
 
     componentDidMount() {
+
+        timelineStore.addChangeListener(this.changeContent);
 
         let dataset = timelineStore.getDots();
         SVG.initialize(this.state.dataset);
         SVG.placeDots(this.state.dataset);
         SVG.placeInfo(this.state.dataset);
 
+    }
+
+    componentWillUnmount() {
+        timelineStore.removeChangeListener(this.changeContent);
     }
 
     handleClick(e) {
@@ -31,7 +38,6 @@ class Timeline extends React.Component {
                 event: "some new event",
                 location: "some location"
             };
-            //SVG.plotDots(timelineStore.getDots());
             SVG.addDot(timelineStore.getDots(), dot);
             timelineStore.addDot(dot);
         }
@@ -62,6 +68,20 @@ class Timeline extends React.Component {
                 </div>
             </div>
         )
+    }
+
+    changeContent() {
+        console.log("changing the content in the final call back");
+
+
+        this.setState({
+            dataset: timelineStore.getDots()
+        });
+
+        SVG.initialize(this.state.dataset);
+        SVG.placeDots(this.state.dataset);
+        SVG.placeInfo(this.state.dataset);
+
     }
 
 }

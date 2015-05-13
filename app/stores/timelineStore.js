@@ -4,10 +4,10 @@
 
 const objectAssign = require('react/lib/Object.assign');
 const EventEmitter = require('events').EventEmitter;
+let AppDispatcher = require('../dispatcher/AppDispatcher');
+let appConstants = require('../constants/appConstants');
 
 let moment = require('moment');
-
-// init some data, could be a store
 let pj = [
     {
         event: "Hartford 1996",
@@ -175,7 +175,6 @@ let pj = [
         location: "Berlin"
     }
 ];
-
 let tonton = [
     {
         event: "Now",
@@ -238,6 +237,8 @@ let _store = {
     dots: tonton
 };
 
+const CHANGE_EVENT = 'change';
+
 let timelineStore = objectAssign({}, EventEmitter.prototype, {
 
     getDots() { return _store.dots; },
@@ -247,13 +248,36 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
     },
 
     changeTimeline(timeline) {
-        console.log("changing the timeline");
-        _store.dots = pj;
-    }
+
+        // would be a firebase fetch
+        let data= tonton;
+        if(timeline="pj") { data = pj }
+
+        _store.dots = data;
+
+    },
+
+    addChangeListener(cb) { this.on(CHANGE_EVENT, cb); },
+
+    removeChangeListener(cb) { this.removeListener(CHANGE_EVENT, cb); }
 
 });
 
+AppDispatcher.register(function(payload){
+    var action = payload.action;
+    switch(action.actionType){
+        case appConstants.CHANGE_TIMELINE:
+            timelineStore.changeTimeline(action.data.timeline);
+            timelineStore.emit(CHANGE_EVENT);
+            break;
+        default:
+            return true;
+    }
+});
+
 module.exports = timelineStore;
+
+
 
 
 
