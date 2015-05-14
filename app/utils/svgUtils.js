@@ -1,14 +1,12 @@
 const d3 = require('d3');
 const moment = require('moment')
 
-let w = 700, h = 450, r = 5;
-
-let dotsCY = [];
+let w = 400, h = 450, r = 5;
 
 let draw = (dataset) => {
     init(dataset);
     placeNewDots(dataset);
-    placeInfo(dataset);
+    //placeInfo(dataset);
 };
 
 let init = (dataset) => {
@@ -21,7 +19,7 @@ let init = (dataset) => {
 
     svg.append("line")  // draw in the timeline
         .attr({
-            'x1': w/8, x2: w/8,
+            'x1': w/4, x2: w/4,
             'y1': 5, y2: 5,
             "id": "line"
         })
@@ -66,81 +64,123 @@ let placeNewDots = (dataset) => {
 
     let scale = getScale(dataset);
 
-    let selection = d3.select("svg").selectAll("circle").data(dataset);
+    let selection = d3.select("svg").selectAll("g").data(dataset);
 
-    selection.enter().append('g')
-
+    selection.enter().append('g')   // dots
         .attr({
             'id': (d,i) => 'dot-' + i
         })
         .append('circle').attr({
             'id': (d,i) => 'circ-' + i,
-            'cx': w/8,
+            'cx': w/4,
             'cy': (d,i) => scale(d.timestamp),
-            'r': 0
+            'r': 0  // animated in
         }).style("fill", "orange")
         .on("click", function(d, i) {
             let textBox = d3.selectAll("#text-" + i);
             textBox.classed("hidden", !textBox.classed("hidden"));
         })
-        .transition().duration(2000)    // on entering
+        .transition().duration(2000)
         .attr({
             'r': r
         });
+
+    placeInfo(selection);
+
+};
+
+let placeInfo = (selection) => {
+
+    let dotsCY = []; // keeping track of dots already drawn
+
+    selection.each(function(d,i) {      // place info and label depending on dot overlap
+
+        let dot = d3.select("#circ-" + i);      // corresponding dot
+        let cx = parseFloat(dot.attr('cx'));
+        let cy = parseFloat(dot.attr('cy'));
+
+        if( isOverlapping(dotsCY, r, cy) ){     // the dots are overlapping, so the space is constrained
+
+            d3.select(this).append('text')
+                .text(d.event)
+                .classed('dot-info', true)
+                .attr({
+                    'id': "text-" + i,
+                    'x': getTxtPos(dotsCY, cy) + 15,  // calculate position
+                    'y': cy + 5
+                })
+                .style({
+                    'opacity': 0
+                })
+                .transition().duration(10000)
+                .style({
+                    'opacity': 100
+                });
+
+        }else {
+
+            d3.select(this).append('text')
+                .text(d.event)
+                .classed('dot-info', true)
+                .attr({
+                    'id': "text-" + i,
+                    'x': cx + 5,
+                    'y': cy + 5
+                })
+                .style({
+                    'opacity': 0
+                })
+                .transition().duration(10000)
+                .style({
+                    'opacity': 100
+                });
+
+            // add date label
+            d3.select(this).append('text')
+                .text(moment.unix(d.timestamp).format("YYYY"))
+                .attr({
+                    'x': w/8,
+                    'y': cy + 5
+                })
+                .classed("date-labels", true);
+        }
+
+        dotsCY.push(cy);
+
+    });
 };
 
 let placeLabels = (dataset) => {
+
     d3.selectAll('g').append('text')
-        .text((d,i) => moment.unix(dataset[i].timestamp).format("MM/DD/YYYY"))
-        .attr({
-            'x': 10,
-            'y': (d,i) => dotsCY[i]
+        .each(function(d,i) {
+
+            // only add a label if it doesn't overlap
+            //if (isOverlapping(dotsCY, r, cy)) {
+            //
+            //}
+
+            d3.select(this).text(moment.unix(dataset[i].timestamp).format("YYYY"))
+                .attr({
+                    'x': w/8,
+                    'y': dotsCY[i] + 3
+                })
+                .classed("date-labels", true);
         })
+
 }
 
-let placeInfo = (dataset) => {
 
-    let selection = d3.selectAll("g"),
-        scale = getScale(dataset);
 
-    selection.append('text')
-        .text(d => d.event)
-        .classed('dot-info', true)
-        .attr({
-            'id': (d,i) => "text-" + i,
-            'x': (d,i) => getTxtPos(i, dataset),
-            'y': (d,i) => scale(d.timestamp) + 5
-        })
-        .style({
-            'opacity': 0
-        })
-        .transition().duration(10000)
-        .style({
-            'opacity': 100
-        });
+let getTxtPos = (cyArr, cy ) => {   // for overlapping dots
 
-        placeLabels(dataset);
-};
+    let prevDot = getPrevDot(cyArr, cy),
+        prevTxt = d3.select("#text-" + prevDot),
+        prevTxtX = parseFloat(prevTxt.attr("x")),
+        txtLength = parseFloat(prevTxt.node().getComputedTextLength());
 
-let getTxtPos = (i,dataset) => {
+    return prevTxtX + txtLength ;
 
-    let scale = getScale(dataset),
-        dotRef = d3.select("#circ-" + i),
-        cx = parseFloat(dotRef.attr('cx')),
-        cy = scale(dataset[i].timestamp);
-
-    if( isOverlapping(dotsCY, r, cy) ){
-        let prevDot = getPrevDot(dotsCY, cy),
-            prevTxt = d3.select("#text-" + prevDot),
-            prevTxtX = parseFloat(prevTxt.attr("x")),
-            txtLength = parseFloat(prevTxt.node().getComputedTextLength());
-
-        cx = prevTxtX + txtLength;
-    }
-
-    dotsCY.push(cy);
-
-    return cx + 10.0;
 };
 
 let isOverlapping =  (dots, r, cy) => {
@@ -213,8 +253,6 @@ let addDot = (dataset, dot) => {
 
 let killSVG = () => {
     d3.select('svg').remove();
-    dotsCY = [];
-
 };
 
 let SVG = {

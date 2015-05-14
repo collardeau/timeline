@@ -17,11 +17,8 @@ body {
 }
 h1 {
   font-size: 1.618em;
-}
-
-h3 {
-  padding: 0 0 0 10px;
-  margin: 0 0 15px 0;
+    padding: 0 0 0 10px;
+    margin: 0 0 15px 0;
 }
 
 #line {
@@ -50,12 +47,14 @@ h3 {
   }
   button {
     @include span-columns(2);
-
     width: 19.3%;
-
   }
 
+}
 
+
+.date-labels {
+  font-size: 0.8em;
 }
 
 

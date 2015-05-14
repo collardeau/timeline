@@ -17,6 +17,8 @@ class Timeline extends React.Component {
     componentDidMount() {
         timelineStore.addChangeListener(this.changeContent);
         SVG.draw(this.state.dataset);
+
+
     }
 
     componentDidUpdate() {
@@ -29,6 +31,7 @@ class Timeline extends React.Component {
     }
 
     handleClick(e) {
+        e.preventDefault();
         let date = this.refs.newDate.getDOMNode().value;
         let event = this.refs.newEvent.getDOMNode().value;
         if(date){
@@ -40,7 +43,6 @@ class Timeline extends React.Component {
             SVG.addDot(timelineStore.getDots(), dot);
             timelineStore.addDot(dot); // could be an action
         }
-        e.preventDefault();
     }
 
     render() {
@@ -57,7 +59,7 @@ class Timeline extends React.Component {
 
                  </div>
 
-                <h3>Tonton's Timeline</h3>
+                <h1>Tonton's Timeline</h1>
 
                 <div className="d3-container"></div>
 

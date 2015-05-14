@@ -136,5 +136,20 @@ describe('svgUtils', () => {
     });
 
 
+    //describe('getTxtPos()', () => {
+    //
+    //    it("works", () => {
+    //        let pos = svgUtils.getTxtPos,
+    //            res;
+    //
+    //        res = out([1, 5, 10], 5);
+    //        expect(res).toBe(false);
+    //
+    //
+    //
+    //    })
+    //
+    //
+    //});
 });
 
