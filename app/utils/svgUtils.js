@@ -88,15 +88,16 @@ let enterNewDots = (dataset) => {
 
 };
 
-let placeNewInfo = (dataset ,isAdded) => {
+let placeNewInfo = (dataset) => {
 
-    let selection = d3.select("svg").selectAll("g").data(dataset);
+    let selection = d3.select("svg").selectAll("g").data(dataset),
+        scale = getScale(dataset);
 
     selection.each(function(d,i) {      // place info and label depending on dot overlap
 
         let dot = d3.select("#circ-" + i);      // corresponding dot
         let cx = parseFloat(dot.attr('cx'));
-        let cy = parseFloat(dot.attr('cy'));
+        let cy = scale(d.timestamp);
 
         if( isOverlapping(dotsCY, r, cy) ){     // the dots are overlapping, so the space is constrained
 
@@ -152,16 +153,18 @@ let addDot = (dataset, dot) => {
     if ( isOutOfScale(oldTimestamps, dot.timestamp) ){
 
         rescale(dataset);
-        d3.selectAll('.dot-info').remove();
+        d3.selectAll('text').remove();
         placeNewInfo(dataset); // reset text info elements
 
     }
 
     enterNewDots(dataset);
 
+    // put in info for th new dot
     let pos = dataset.length -1,
+        scale = getScale(dataset),
         elem = d3.select("#circ-" + pos),
-        cy = parseFloat(elem.attr('cy')),
+        cy = scale(dataset[pos].timestamp),
         cx = parseFloat(elem.attr('cx')),
         selection = d3.select('#dot-' + pos);
 
@@ -203,7 +206,14 @@ let addDateLabel = ( elem, timestamp, cy ) => {
             'x': w/8,
             'y': cy + 5
         })
-        .classed("date-labels", true);
+        .classed("date-labels", true)
+        .style({
+            'opacity': 0
+        })
+        .transition().duration(10000)
+            .style({
+                'opacity': 100
+            });
 };
 
 let getTxtPos = (cyArr, cy ) => {   // for overlapping dots
