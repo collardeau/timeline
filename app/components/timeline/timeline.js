@@ -52,7 +52,7 @@ class Timeline extends React.Component {
 
                 <div id="inputForm">
                     <form>
-                        <input type="text" ref="newEvent" placeholder="Add Event" />
+                        <input type="text" ref="newEvent" placeholder="Add Event" value="adfasdf" />
                         <input type="date" ref="newDate" />
                         <button className="btn-action"onClick={this.handleClick.bind(this)}>Plot</button>
                     </form>
