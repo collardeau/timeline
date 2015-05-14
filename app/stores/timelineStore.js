@@ -147,9 +147,8 @@ let pj = [
 ];
 let tonton = [
     {
-        event: "Now",
-        timestamp: moment().unix(),
-        location: "Berlin"
+        event: "Berlin",
+        timestamp: moment("2015-04-17").unix()
     },
     {
         event: "NY",
@@ -168,11 +167,15 @@ let tonton = [
         timestamp: moment("1989-12-25").unix()
     },
     {
-        event: "Florida",
+        event: "Miami",
         timestamp: moment("1991-07-25").unix()
     },
     {
-        event: "Boston",
+        event: "Montverde",
+        timestamp: moment("1993-09-01").unix()
+    },
+    {
+        event: "Boston U",
         timestamp: moment("1995-09-01").unix()
     },
     {
@@ -188,9 +191,39 @@ let tonton = [
         timestamp: moment("2014-08-01").unix()
     },
     {
-        event: "Back to Europe",
-        timestamp: moment("2008-04-10").unix()
+        event: "Madrid",
+        timestamp: moment("2009-01-01").unix()
+    },
+    {
+        event: "Lisbon",
+        timestamp: moment("2009-03-01").unix()
     }
+];
+let nina = [
+    {
+        event: "Born in Paris",
+        timestamp: moment("1975-03-19").unix()
+    },
+    //{
+    //    event: "London",
+    //    timestamp: moment("1989-12-20").unix()
+    //},
+    {
+        event: "Married",
+        timestamp: moment("2012-04-14").unix()
+    },
+    //{
+    //    event: "Miami",
+    //    timestamp: moment("1991-06-01").unix()
+    //},
+    //{
+    //    event: "New York?",
+    //    timestamp: moment("1998-06-01").unix()
+    //},
+    {
+        event: "now",
+        timestamp: moment().unix()
+    },
 ];
 let painting = [
     {
@@ -201,10 +234,10 @@ let painting = [
         event: "Monet",
         timestamp: moment("1840-09-14").unix()
     },
-    {
-        event: "Manet",
-        timestamp: moment("1832-01-23").unix()
-    },
+    //{
+    //    event: "Manet",
+    //    timestamp: moment("1832-01-23").unix()
+    //},
     //{
     //    event: "Renoir",
     //    timestamp: moment("1841-02-25").unix()
@@ -232,13 +265,98 @@ let painting = [
     {
         event: "Van Gogh",
         timestamp: moment("1853-03-30").unix()
+    },
+    {
+        event: "Pissaro",
+        timestamp: moment("1830-07-10").unix()
+    },
+    {
+        event: "Chagall",
+        timestamp: moment("1887-07-07").unix()
     }
-]
+];
+let visa = [
+    {
+        event: "Sentencing",
+        timestamp: moment("2005-07-07").unix()
+    },
+    {
+        event: "JFK pickup",
+        timestamp: moment("2003-11-24").unix()
+    },
+    {
+        event: "Fort Dix",
+        timestamp: moment("2005-08-22").unix()
+    },
+    {
+        event: "Plea Deal",
+        timestamp: moment("2004-08-17").unix()
+    },
+    {
+        event: "Mom flies to Europe",
+        timestamp: moment("2006-06-18").unix()
+    },
+    {
+        event: "Time Served",
+        timestamp: moment("2008-08-15").unix()
+    },
+    {
+        event: "Loft forfeiture",
+        timestamp: moment("2008-02-15").unix()
+    },
+    {
+        event: "w57 apt forfeiture",
+        timestamp: moment("2005-03-01").unix()
+    },
+    {
+        event: "175e2 apt forfeiture",
+        timestamp: moment("2006-01-25").unix()
+    }
+];
+let geniuses = [
+    {
+        event: "Galileo",
+        timestamp: moment("1564-02-15").unix()
+    },
+    {
+        event: "Newton",
+        timestamp: moment("1643-01-04").unix()
+    },
+    {
+        event: "Copernicus",
+        timestamp: moment("1473-02-19").unix()
+    },
+    {
+        event: "Kepler",
+        timestamp: moment("1571-12-27").unix()
+    },
+    {
+        event: "Da Vinci",
+        timestamp: moment("1452-01-15").unix()
+    },
+    {
+        event: "Einstein",
+        timestamp: moment("1879-03-14").unix()
+    },
+    {
+        event: "Mozart",
+        timestamp: moment("1756-03-14").unix()
+    },
+    {
+        event: "Darwin",
+        timestamp: moment("1809-02-12").unix()
+    }
+    ,
+    {
+        event: "Edison",
+        timestamp: moment("1847-02-11").unix()
+    }
+];
 
 let _store = {
     dots: painting,
     timeline: {
-        name: "Painters timeline",
+        name: "Painter's Timeline",
         dots: painting
     }
 };
@@ -267,15 +385,23 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
         switch (timeline) {
             case "tonton":
                 data = tonton;
-                name = "Tonton's timeline";
+                name = "Tonton's Timeline";
                 break;
-            case "pj":
-                data = pj;
-                name = "Pearl Jam shows";
+            case "geniuses":
+                data = geniuses;
+                name = "Geniuses Timeline";
                 break;
             case "painting":
                 data = painting;
                 name = "Painters Timeline";
+                break;
+            case "nina":
+                data = nina;
+                name = "Alvina's Timeline";
+                break;
+            case "visa":
+                data = visa;
+                name = "Visa Timeline";
                 break;
             default:
                 data = tonton;

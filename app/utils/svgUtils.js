@@ -1,7 +1,7 @@
 const d3 = require('d3');
 const moment = require('moment')
 
-let w = 300, h = 450, r = 5;
+let w = 350, h = 550, r = 5;
 let dotsCY = []; // keeping track of dots already drawn
 
 let draw = (dataset) => {
@@ -20,7 +20,7 @@ let init = (dataset) => {
 
     svg.append("line")  // draw in the timeline
         .attr({
-            'x1': w/4, x2: w/4,
+            'x1': w/3, x2: w/3,
             'y1': 5, y2: 5,
             "id": "line"
         })
@@ -73,7 +73,7 @@ let enterNewDots = (dataset) => {
         })
         .append('circle').attr({
             'id': (d,i) => 'circ-' + i,
-            'cx': w/4,
+            'cx': w/3,
             'cy': (d,i) => scale(d.timestamp),
             'r': 0  // animated in
         }).style("fill", "#EE6E44")
@@ -202,18 +202,18 @@ let addDot = (dataset, dot) => {
 let addDateLabel = ( elem, timestamp, cy ) => {
 
     d3.select(elem).append('text')
-        .text(moment.unix(timestamp).format("YYYY"))
+        .text(moment.unix(timestamp).format("MMM YYYY"))
         .attr({
-            'x': w/8,
+            'x': 10,
             'y': cy + 5
         })
-        .classed("date-labels", true)
+        .classed("date-label", true)
         .style({
             'opacity': 0
         })
         .transition().duration(10000)
             .style({
-                'opacity': 100
+                'opacity': 100,
             });
 };
 

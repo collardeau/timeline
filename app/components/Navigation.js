@@ -56,13 +56,16 @@ class Navigation extends React.Component {
                     <a href="javascript:void(0)">Timelines</a>
                     <ul className="submenu">
                         <li>
+                            <a onClick={this.handleClick.bind(this,'nina') }>Nina</a>
+                        </li>
+                        <li>
                             <a onClick={this.handleClick.bind(this,'tonton') }>Tonton</a>
                         </li>
                         <li>
-                            <a onClick={this.handleClick.bind(this,'pj') }>Pearl Jam</a>
+                            <a onClick={this.handleClick.bind(this,'painting') }>Painters</a>
                         </li>
                         <li>
-                            <a onClick={this.handleClick.bind(this,'painting') }>Painters</a>
+                            <a onClick={this.handleClick.bind(this,'visa') }>Visa</a>
                         </li>
                     </ul>
                 </li>
