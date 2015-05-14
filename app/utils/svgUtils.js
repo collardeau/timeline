@@ -1,7 +1,7 @@
 const d3 = require('d3');
 const moment = require('moment')
 
-let w = 400, h = 450, r = 5;
+let w = 300, h = 450, r = 5;
 let dotsCY = []; // keeping track of dots already drawn
 
 let draw = (dataset) => {
@@ -26,11 +26,11 @@ let init = (dataset) => {
         })
         .style({
             stroke: "black",
-            "stroke-width": 5,
+            "stroke-width": 3,
             "stroke-linecap": 'round'
         })
-        .transition()
-        .duration(2000)
+        .transition().ease("exp")
+        .duration(1000)
         .attr({
             'y2': h-5
         });
@@ -76,12 +76,12 @@ let enterNewDots = (dataset) => {
             'cx': w/4,
             'cy': (d,i) => scale(d.timestamp),
             'r': 0  // animated in
-        }).style("fill", "orange")
+        }).style("fill", "#EE6E44")
         .on("click", function(d, i) {
             let textBox = d3.selectAll("#text-" + i);
             textBox.classed("hidden", !textBox.classed("hidden"));
         })
-        .transition().duration(2000)
+        .transition().duration(1000).ease("quad")
         .attr({
             'r': r
         });
@@ -124,13 +124,14 @@ let placeNewInfo = (dataset) => {
                 .classed('dot-info', true)
                 .attr({
                     'id': "text-" + i,
-                    'x': cx + 5,
+                    'x': cx + 10,
                     'y': cy + 5
                 })
                 .style({
                     'opacity': 0
                 })
-                .transition().duration(10000)
+                .transition().delay(500)
+                .duration(5000) // why extra zero?
                 .style({
                     'opacity': 100
                 });
@@ -258,12 +259,12 @@ let rescale = (dataset) => {
     let selection = d3.selectAll("circle"),
         scale = getScale(dataset);
 
-    selection.transition().duration(1000)
+    selection.transition().duration(2000)
         .attr({
             'cy': (d,i) => scale(d.timestamp),
             'r': 5
         })
-        .style("fill", "blue");
+        .style("fill", "#FA9246");
 };
 
 let killSVG = () => {

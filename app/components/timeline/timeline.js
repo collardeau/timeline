@@ -42,6 +42,9 @@ class Timeline extends React.Component {
             SVG.addDot(timelineStore.getDots(), dot);
             timelineStore.addDot(dot); // could be an action
         }
+
+        this.refs.newDate.getDOMNode().value = "";
+        this.refs.newEvent.getDOMNode().value = "";
     }
 
     render() {
@@ -49,16 +52,17 @@ class Timeline extends React.Component {
         return (
             <div id="timelineApp">
 
+                <h1>{ this.state.timeline.name } </h1>
+
                 <div id="inputForm">
+
                     <form>
-                        <input type="text" ref="newEvent" placeholder="Add Event" />
+                        <input type="text" ref="newEvent" placeholder="New dot" />
                         <input type="date" ref="newDate" />
-                        <button className="btn-action"onClick={this.handleClick.bind(this)}>Plot</button>
+                        <button className="btn-action"onClick={this.handleClick.bind(this)}>Add</button>
                     </form>
 
                  </div>
-
-                <h1>{ this.state.timeline.name } </h1>
 
                 <div className="d3-container"></div>
 

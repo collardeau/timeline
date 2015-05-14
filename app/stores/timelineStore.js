@@ -238,7 +238,7 @@ let painting = [
 let _store = {
     dots: painting,
     timeline: {
-        name: "Painters birth dates",
+        name: "Painters timeline",
         dots: painting
     }
 };
@@ -275,7 +275,7 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
                 break;
             case "painting":
                 data = painting;
-                name = "Painters birth dates";
+                name = "Painters Timeline";
                 break;
             default:
                 data = tonton;
