@@ -12,11 +12,21 @@ class Navigation extends React.Component {
     }
 
     handleClick(tl) {
+        this.toggleMenu();
         timelineActions.changeTimeline(tl);
     }
 
     handleLogout() {
         authUtils.logout();
+    }
+
+    toggleMenu() {
+        console.log('togglng menu');
+        $('#js-centered-navigation-menu').slideToggle(function(){
+            if($('#js-centered-navigation-menu').is(':hidden')) {
+                $('#js-centered-navigation-menu').removeAttr('style');
+            }
+        });
     }
 
     componentDidMount() {
@@ -25,6 +35,7 @@ class Navigation extends React.Component {
 
         menuToggle.on('click', function(e) {
             e.preventDefault();
+            // can't call this.toggleMenu() ?
             $('#js-centered-navigation-menu').slideToggle(function(){
                 if($('#js-centered-navigation-menu').is(':hidden')) {
                     $('#js-centered-navigation-menu').removeAttr('style');
