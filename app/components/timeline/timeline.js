@@ -9,21 +9,20 @@ class Timeline extends React.Component {
     constructor(){
         super();
         this.state = {
-            dataset : timelineStore.getDots()
+            //dataset : timelineStore.getDots(),
+            timeline: timelineStore.getTimeline()
         };
         this.changeContent = this.changeContent.bind(this);
     }
 
     componentDidMount() {
         timelineStore.addChangeListener(this.changeContent);
-        SVG.draw(this.state.dataset);
-
-
+        SVG.draw(this.state.timeline.dots);
     }
 
     componentDidUpdate() {
         SVG.killSVG();
-        SVG.draw(this.state.dataset)
+        SVG.draw(this.state.timeline.dots)
     }
 
     componentWillUnmount() {
@@ -59,7 +58,7 @@ class Timeline extends React.Component {
 
                  </div>
 
-                <h1>Tonton's Timeline</h1>
+                <h1>{ this.state.timeline.name } </h1>
 
                 <div className="d3-container"></div>
 
@@ -69,9 +68,8 @@ class Timeline extends React.Component {
     }
 
     changeContent() {
-        console.log("setting the state");
         this.setState({
-            dataset: timelineStore.getDots()
+            timeline: timelineStore.getTimeline()
         });
 
     }

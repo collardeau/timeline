@@ -236,14 +236,20 @@ let painting = [
 ]
 
 let _store = {
-    dots: painting
+    dots: painting,
+    timeline: {
+        name: "Painters birth dates",
+        dots: painting
+    }
 };
 
 const CHANGE_EVENT = 'change';
 
 let timelineStore = objectAssign({}, EventEmitter.prototype, {
 
-    getDots() { return _store.dots; },
+    getTimeline() { return _store.timeline },
+
+    getDots() { return _store.timeline.dots; },
 
     addDot(dot) {
         _store.dots.push(dot);
@@ -255,23 +261,29 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
 
         //  would be a firebase fetch
 
-        let data = null;
+        let data = null,
+            name = ""
 
         switch (timeline) {
             case "tonton":
                 data = tonton;
+                name = "Tonton's timeline";
                 break;
             case "pj":
                 data = pj;
+                name = "Pearl Jam shows";
                 break;
             case "painting":
                 data = painting;
+                name = "Painters birth dates";
                 break;
             default:
                 data = tonton;
+                name = "";
         }
 
-        _store.dots = data;
+        _store.timeline.dots = data;
+        _store.timeline.name = name;
 
     },
 
