@@ -200,10 +200,10 @@ let tonton = [
     }
 ];
 let nina = [
-    {
-        event: "Born in Paris",
-        timestamp: moment("1975-03-19").unix()
-    },
+    //{
+    //    event: "Born in Paris",
+    //    timestamp: moment("1975-03-19").unix()
+    //},
     //{
     //    event: "London",
     //    timestamp: moment("1989-12-20").unix()
@@ -211,6 +211,10 @@ let nina = [
     {
         event: "Married",
         timestamp: moment("2012-04-14").unix()
+    },
+    {
+        event: "Thomas in Miami",
+        timestamp: moment("2015-03-12").unix()
     },
     //{
     //    event: "Miami",
@@ -284,10 +288,10 @@ let visa = [
         event: "JFK pickup",
         timestamp: moment("2003-11-24").unix()
     },
-    {
-        event: "Fort Dix",
-        timestamp: moment("2005-08-22").unix()
-    },
+    //{
+    //    event: "Fort Dix",
+    //    timestamp: moment("2005-08-22").unix()
+    //},
     {
         event: "Plea Deal",
         timestamp: moment("2004-08-17").unix()
@@ -305,11 +309,11 @@ let visa = [
         timestamp: moment("2008-02-15").unix()
     },
     {
-        event: "w57 apt forfeiture",
+        event: "w57 forfeiture",
         timestamp: moment("2005-03-01").unix()
     },
     {
-        event: "175e2 apt forfeiture",
+        event: "175e2 forfeiture",
         timestamp: moment("2006-01-25").unix()
     }
 ];

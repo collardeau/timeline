@@ -1,7 +1,7 @@
 const d3 = require('d3');
-const moment = require('moment')
+const moment = require('moment');
 
-let w = 350, h = 550, r = 5;
+let w = 350, h = 480, r = 5;
 let dotsCY = []; // keeping track of dots already drawn
 
 let draw = (dataset) => {
@@ -29,8 +29,8 @@ let init = (dataset) => {
             "stroke-width": 3,
             "stroke-linecap": 'round'
         })
-        .transition().ease("exp")
-        .duration(1000)
+        .transition().ease("linear")
+        .duration(1500)
         .attr({
             'y2': h-5
         });
@@ -81,7 +81,11 @@ let enterNewDots = (dataset) => {
             let textBox = d3.selectAll("#text-" + i);
             textBox.classed("hidden", !textBox.classed("hidden"));
         })
-        .transition().duration(1000).ease("quad")
+        .transition().duration(1000)
+        .attr({
+            'r': r+2
+        })
+        .transition().duration(500)
         .attr({
             'r': r
         });
@@ -213,7 +217,7 @@ let addDateLabel = ( elem, timestamp, cy ) => {
         })
         .transition().duration(10000)
             .style({
-                'opacity': 100,
+                'opacity': 100
             });
 };
 
