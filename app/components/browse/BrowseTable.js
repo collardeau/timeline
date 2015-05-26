@@ -4,9 +4,9 @@ class BrowseTable extends React.Component {
 
   render() {
 
-    let timelines = this.props.timelines.map((t) => {
+    let timelines = this.props.timelines.map(( t, i ) => {
       return (
-        <li className="table-view-cell">
+        <li key={i} className="table-view-cell">
           <a className="navigate-right">
             { t }
           </a>

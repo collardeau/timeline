@@ -12,17 +12,23 @@ class Router extends React.Component {
     constructor() {
         super();
         this.state = {
-           hash: ""
+          route: "",
+          params: ""
         };
     }
 
     componentDidMount() {
+
+        // from hasher lib
         hasher.changed.add(this.handleChanges.bind(this));
         hasher.initialized.add(this.handleChanges.bind(this));
         hasher.init();
 
+        let parts = hasher.getHash().split('/');
+
         this.setState({
-            hash: hasher.getHash()
+          route: parts.shift(),
+          params: parts
         });
     }
 
@@ -34,15 +40,18 @@ class Router extends React.Component {
     }
 
     handleChanges(newHash, oldHash) {
+
+        let parts = newHash.split('/');
+
         this.setState({
-            hash: newHash
+          route: parts.shift(),
+          params: parts
         });
     }
 
     render () {
         return (
-            <App route={ this.state.hash } />
-        );
+            <App route={ this.state.route } params={ this.state.params } />);
     }
 }
 
