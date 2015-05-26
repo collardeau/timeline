@@ -28,7 +28,6 @@ class App extends React.Component {
 
       let timelineRoute = (
         <div>
-          <Navigation />
           <Timeline params={this.props.params} />
         </div>
       );
