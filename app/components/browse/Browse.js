@@ -1,4 +1,6 @@
 const React = require('react');
+let BrowseTable = require('./BrowseTable');
+let BrowseControls = require('./BrowseControls');
 
 class Browse extends React.Component {
 
@@ -26,31 +28,11 @@ class Browse extends React.Component {
 
         <div className="content">
 
-          <div className="segmented-control">
-            <a className="control-item active">Only Public</a>
-            <a className="control-item">Only Mine</a>
-            <a className="control-item">Bookmarks</a>
+          <BrowseControls />
+
+          <BrowseTable />
+
           </div>
-
-          <ul className="table-view">
-            <li className="table-view-cell">
-              <a className="navigate-right">
-                Painters
-              </a>
-            </li>
-            <li className="table-view-cell">
-              <a className="navigate-right">
-                Back to the Future
-              </a>
-            </li>
-            <li className="table-view-cell">
-              <a className="navigate-right">
-                Major Wars
-              </a>
-            </li>
-          </ul>
-
-        </div>
 
       </div>
     );
