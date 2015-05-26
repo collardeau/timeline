@@ -8,9 +8,16 @@ class Browse extends React.Component {
       filler: null
     };
   }
+
   render() {
     return (
-      <div>Hello, old fool</div>
+      <div>
+        <header className="bar bar-nav">
+          <h1 className="title">
+            Browse
+          </h1>
+        </header>
+      </div>
     );
   }
 }
