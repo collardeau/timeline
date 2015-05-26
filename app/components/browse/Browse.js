@@ -1,13 +1,15 @@
 const React = require('react');
 let BrowseTable = require('./BrowseTable');
 let BrowseControls = require('./BrowseControls');
+let timelineStore = require('../../stores/timelineStore');
 
 class Browse extends React.Component {
 
   constructor(){
     super();
     this.state = {
-      filler: null
+      // should be an action
+      timelines: timelineStore.getTimelines()
     };
   }
 
@@ -30,7 +32,7 @@ class Browse extends React.Component {
 
           <BrowseControls />
 
-          <BrowseTable />
+          <BrowseTable timelines={ this.state.timelines } />
 
           </div>
 

@@ -227,7 +227,7 @@ let nina = [
     {
         event: "now",
         timestamp: moment().unix()
-    },
+    }
 ];
 let painting = [
     {
@@ -358,6 +358,7 @@ let geniuses = [
 ];
 
 let _store = {
+  timelines: ["Back to the Future", "Major Wars", "Painters", "Sex and the City", "Pearl Jam Shows"],
     dots: painting,
     timeline: {
         name: "Painter's Timeline",
@@ -369,7 +370,8 @@ const CHANGE_EVENT = 'change';
 
 let timelineStore = objectAssign({}, EventEmitter.prototype, {
 
-    getTimeline() { return _store.timeline },
+  getTimelines() { return _store.timelines; },
+    getTimeline() { return _store.timeline; },
 
     getDots() { return _store.timeline.dots; },
 
@@ -384,7 +386,7 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
         //  would be a firebase fetch
 
         let data = null,
-            name = ""
+            name = "";
 
         switch (timeline) {
             case "tonton":
