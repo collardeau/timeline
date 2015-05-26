@@ -4,7 +4,7 @@ const hasher = require('hasher');
 let authUtils = require('./utils/authUtils');
 let App = require('./App');
 
-let privateViews = ['timeline'];
+let privateViews = [''];
 let isPrivateRoute = (route) => privateViews.some((view) => view === route);
 
 class Router extends React.Component {

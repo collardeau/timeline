@@ -18,6 +18,7 @@ class Timeline extends React.Component {
     componentDidMount() {
         timelineStore.addChangeListener(this.changeContent);
         SVG.draw(this.state.timeline.dots);
+        console.log(this.props.params);
     }
 
     componentDidUpdate() {

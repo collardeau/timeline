@@ -13,6 +13,27 @@ class App extends React.Component {
 
     render() {
 
+      let browseRoute = (
+        <div>
+          <Browse />
+        </div>
+      );
+
+      let loginRoute = (
+        <div>
+          <Navigation />
+          <Login />
+        </div>
+      );
+
+      let timelineRoute = (
+        <div>
+          <Navigation />
+          <Timeline params={this.props.params} />
+        </div>
+      );
+
+
         let ui = null;
 
         switch(this.props.route) {
@@ -37,25 +58,5 @@ class App extends React.Component {
 
     }
 }
-
-let browseRoute = (
-  <div>
-    <Browse />
-  </div>
-);
-
-let loginRoute = (
-    <div>
-        <Navigation />
-        <Login />
-    </div>
-);
-
-let timelineRoute = (
-    <div>
-        <Navigation />
-        <Timeline />
-    </div>
-);
 
 module.exports = App;
