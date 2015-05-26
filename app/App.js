@@ -7,6 +7,7 @@ const React = require('react');
 let Navigation = require('./components/Navigation');
 let Login = require('./components/login/Login');
 let Timeline = require('./components/timeline/Timeline');
+let Browse = require('./components/browse/Browse');
 
 class App extends React.Component {
 
@@ -15,6 +16,10 @@ class App extends React.Component {
         let ui = null;
 
         switch(this.props.route) {
+
+            case "browse":
+                ui = browseRoute;
+                break;
 
             case "login":
                 ui = loginRoute;
@@ -25,13 +30,19 @@ class App extends React.Component {
                 break;
 
             default:
-                ui = loginRoute;
+                ui = browseRoute;
         }
 
-        return ui ;
+        return ui;
 
     }
 }
+
+let browseRoute = (
+  <div>
+    <Browse />
+  </div>
+);
 
 let loginRoute = (
     <div>

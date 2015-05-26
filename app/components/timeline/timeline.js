@@ -22,7 +22,7 @@ class Timeline extends React.Component {
 
     componentDidUpdate() {
         SVG.killSVG();
-        SVG.draw(this.state.timeline.dots)
+        SVG.draw(this.state.timeline.dots);
     }
 
     componentWillUnmount() {
@@ -68,7 +68,7 @@ class Timeline extends React.Component {
 
 
             </div>
-        )
+        );
     }
 
     changeContent() {

@@ -5,14 +5,14 @@ let authUtils = require('./utils/authUtils');
 let App = require('./App');
 
 let privateViews = ['timeline'];
-let isPrivateRoute = (route) => privateViews.some((view) =>  view === route);
+let isPrivateRoute = (route) => privateViews.some((view) => view === route);
 
 class Router extends React.Component {
 
     constructor() {
         super();
         this.state = {
-            hash : ""
+           hash: ""
         };
     }
 
@@ -23,7 +23,7 @@ class Router extends React.Component {
 
         this.setState({
             hash: hasher.getHash()
-        })
+        });
     }
 
     componentWillUpdate() {
@@ -42,7 +42,7 @@ class Router extends React.Component {
     render () {
         return (
             <App route={ this.state.hash } />
-        )
+        );
     }
 }
 
