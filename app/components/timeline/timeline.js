@@ -1,8 +1,6 @@
 const React = require('react');
 const moment = require('moment');
 
-let TimelineControls = require('./TimelineControls');
-
 let timelineStore = require('../../stores/timelineStore');
 let SVG = require('../../utils/svgUtils');
 
@@ -20,7 +18,6 @@ class Timeline extends React.Component {
     componentDidMount() {
         timelineStore.addChangeListener(this.changeContent);
         SVG.draw(this.state.timeline.dots);
-        console.log(this.props.params);
     }
 
     componentDidUpdate() {
@@ -52,26 +49,8 @@ class Timeline extends React.Component {
 
     render() {
 
-        return (
-            <div id="timelineApp">
-              <header className="bar bar-nav">
-                <button className="btn pull-left">
-                  <i className="fa fa-chevron-left"></i>
-                </button>
-                <h1 className="title">
-                  Timeline
-                </h1>
-              </header>
+        return <div className="d3-container"></div>;
 
-              <div className="content">
-
-                <TimelineControls />
-
-                <div className="d3-container"></div>
-              </div>
-
-            </div>
-        );
     }
 
     changeContent() {

@@ -6,7 +6,7 @@ const React = require('react');
 // top level components for layouts
 let Navigation = require('./components/Navigation');
 let Login = require('./components/login/Login');
-let Timeline = require('./components/timeline/Timeline');
+let TimelineContainer = require('./components/timeline/TimelineContainer');
 let Browse = require('./components/browse/Browse');
 
 class App extends React.Component {
@@ -28,7 +28,7 @@ class App extends React.Component {
 
       let timelineRoute = (
         <div>
-          <Timeline params={this.props.params} />
+          <TimelineContainer params={this.props.params} />
         </div>
       );
 
