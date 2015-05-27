@@ -15,6 +15,10 @@ class Timeline extends React.Component {
         SVG.draw(this.props.dots);
     }
 
+    componentWillUnmount() {
+      SVG.killSVG();
+    }
+
     handleClick(e) {
         e.preventDefault();
         let date = this.refs.newDate.getDOMNode().value;

@@ -358,13 +358,23 @@ let geniuses = [
 ];
 
 let _store = {
-  timelines: ["Back to the Future", "Major Wars", "Painters", "Sex and the City", "Pearl Jam Shows"],
-    dots: painting,
-    timeline: {
-        name: "Painter's Timeline",
-        dots: painting
-    }
-};
+  timelines: [{
+    name: "Painters",
+    id: "painters"
+  }, {
+    name: "Tonton",
+    id: "tonton"
+  }]
+}
+
+//let _store = {
+//  timelines: ["Back to the Future", "Major Wars", "Painters", "Sex and the City", "Pearl Jam Shows"],
+//   dots: painting,
+//   timeline: {
+//       name: "Painter's Timeline",
+//       dots: painting
+//   }
+//};
 
 const CHANGE_EVENT = 'change';
 

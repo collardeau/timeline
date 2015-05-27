@@ -7,14 +7,19 @@ class BrowseTable extends React.Component {
     hasher.setHash(route);
   }
 
+  handleTimelineLink(id){
+    console.log("handling link to timeline id: ", id);
+    hasher.setHash('timeline/' + id);
+  }
+
   render() {
 
     let timelines = this.props.timelines.map(( t, i ) => {
       return (
         <li key={i} className="table-view-cell">
           <a className="navigate-right"
-            onClick={this.handleLink.bind(this, 'timeline')} >
-            { t }
+            onClick={this.handleTimelineLink.bind(this, t.id )} >
+            { t.name }
           </a>
         </li>
       );

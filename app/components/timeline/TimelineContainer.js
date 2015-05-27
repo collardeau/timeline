@@ -10,9 +10,17 @@ class TimelineContainer extends React.Component {
   constructor() {
     super();
     this.state = {
-      timeline: timelineStore.getTimeline()
+      timeline: null
     };
     this.changeContent = this.changeContent.bind(this);
+  }
+
+  componentWillMount(){
+    let timelineId = this.props.params[0];
+    console.log("dealing with this id: ", timelineId);
+    this.state = {
+      timeline: timelineStore.getTimeline(timelineId)
+    };
   }
 
   componentDidMount() {
