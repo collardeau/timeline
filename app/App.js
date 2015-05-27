@@ -7,7 +7,7 @@ const React = require('react');
 let Navigation = require('./components/Navigation');
 let Login = require('./components/login/Login');
 let TimelineContainer = require('./components/timeline/TimelineContainer');
-let Browse = require('./components/browse/Browse');
+let BrowseContainer = require('./components/browse/BrowseContainer');
 
 class App extends React.Component {
 
@@ -15,7 +15,7 @@ class App extends React.Component {
 
       let browseRoute = (
         <div>
-          <Browse />
+          <BrowseContainer />
         </div>
       );
 
