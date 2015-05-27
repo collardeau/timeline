@@ -3,6 +3,7 @@ let Timeline = require('./Timeline');
 let TimelineControls = require('./TimelineControls');
 let timelineStore = require('../../stores/timelineStore');
 let timelineActions = require('../../actions/timelineActions');
+let hasher = require('hasher');
 
 class TimelineContainer extends React.Component {
 
@@ -22,13 +23,18 @@ class TimelineContainer extends React.Component {
     timelineStore.removeChangeListener(this.changeContent);
   }
 
+  handleRoute(route) {
+    console.log('handling routing for: ', route);
+    hasher.setHash(route);
+  }
+
   render(){
 
     return (
          <div id="tbd">
 
             <header className="bar bar-nav">
-              <button className="btn pull-left">
+              <button className="btn pull-left" onClick={this.handleRoute.bind(this, "browse") }>
                 <i className="fa fa-chevron-left"></i>
               </button>
               <h1 className="title">
