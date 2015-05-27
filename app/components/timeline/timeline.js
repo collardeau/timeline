@@ -6,27 +6,13 @@ let SVG = require('../../utils/svgUtils');
 
 class Timeline extends React.Component {
 
-    constructor(){
-        super();
-        this.state = {
-            //dataset : timelineStore.getDots(),
-            timeline: timelineStore.getTimeline()
-        };
-        this.changeContent = this.changeContent.bind(this);
-    }
-
     componentDidMount() {
-        timelineStore.addChangeListener(this.changeContent);
-        SVG.draw(this.state.timeline.dots);
+        SVG.draw(this.props.dots);
     }
 
     componentDidUpdate() {
         SVG.killSVG();
-        SVG.draw(this.state.timeline.dots);
-    }
-
-    componentWillUnmount() {
-        timelineStore.removeChangeListener(this.changeContent);
+        SVG.draw(this.props.dots);
     }
 
     handleClick(e) {
@@ -53,14 +39,9 @@ class Timeline extends React.Component {
 
     }
 
-    changeContent() {
-        this.setState({
-            timeline: timelineStore.getTimeline()
-        });
+  }
 
-    }
 
-}
 
 module.exports = Timeline;
 

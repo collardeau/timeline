@@ -51,7 +51,7 @@ class TimelineContainer extends React.Component {
 
               </div>
 
-              <Timeline />
+              <Timeline dots={ this.state.timeline.dots } />
 
             </div>
 
