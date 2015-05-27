@@ -28,6 +28,14 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
     return mockupUtils[timeline];
   },
 
+  addTimeline(timeline){
+    console.log("adding a timeline from the store");
+    _store.timelines.push({
+      name: timeline.name,
+      id: "tonton"  // temp
+    });
+  },
+
   getDots() { return _store.timeline.dots; },
 
   addDot(dot) {
@@ -47,14 +55,15 @@ AppDispatcher.register(function(payload){
             timelineStore.changeTimeline(action.data.timeline);
             timelineStore.emit(CHANGE_EVENT);
             break;
+        case appConstants.ADD_TIMELINE:
+          timelineStore.addTimeline(action.data.timeline);
+          //timelineStore.emit(CHANGE_EVENT);
+          break;
+
         default:
             return true;
     }
 });
 
 module.exports = timelineStore;
-
-
-
-
 

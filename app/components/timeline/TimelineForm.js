@@ -1,4 +1,5 @@
 const React = require('react');
+const timelineActions = require('../../actions/timelineActions');
 const hasher = require('hasher');
 
 class TimelineForm extends React.Component {
@@ -12,8 +13,10 @@ class TimelineForm extends React.Component {
         privacy: this.refs.privacy.getDOMNode().checked
       };
       console.log(timeline);
+      timelineActions.addTimeline(timeline);
+      hasher.setHash("browse");
     }else {
-      alert("you haven't put in a name");
+      console.log("you haven't put in a name");
     }
   }
 
@@ -32,7 +35,7 @@ class TimelineForm extends React.Component {
           <form onSubmit={this.handleSubmit.bind(this)}>
             <label className="content-padded">Timeline Name </label>
             <input ref="name" type="text" placeholder="New Timeline" />
-            <input type="checkbox" ref="privacy">Make Public</input>
+            <input type="checkbox" ref="privacy">Make Public (disabled)</input>
           </form>
           <div className="bar bar-standard bar-footer-secondary">
               <button className="btn btn-block" onClick={ this.handleSubmit.bind(this) }>Submit</button>

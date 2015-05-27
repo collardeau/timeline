@@ -1,9 +1,11 @@
 const React = require('react');
 const hasher = require('hasher');
+const $ = require('jquery');
+
 let BrowseTable = require('./BrowseTable');
 let BrowseControls = require('./BrowseControls');
 let timelineStore = require('../../stores/timelineStore');
-let $ = require('jquery');
+let timelineActions = require('../../actions/timelineActions');
 
 class Browse extends React.Component {
 
@@ -44,7 +46,7 @@ class Browse extends React.Component {
 
         <nav className="js-menu sliding-panel-content">
           <ul>
-            <li><a href="#">Login</a></li>
+            <li><a onClick={ this.handleRoute.bind(this, 'login') } >Login</a></li>
             <li><a href="#">About</a></li>
           </ul>
         </nav>

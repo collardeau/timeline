@@ -3,6 +3,15 @@ let appConstants = require('../constants/appConstants');
 
 let timelineActions = {
 
+  addTimeline(timeline){
+    AppDispatcher.handleAction({
+      actionType: appConstants.ADD_TIMELINE,
+      data: {
+        timeline: timeline
+      }
+    });
+  },
+
     changeTimeline(tl) {
 
         AppDispatcher.handleAction({
