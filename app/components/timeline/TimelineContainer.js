@@ -32,7 +32,6 @@ class TimelineContainer extends React.Component {
   }
 
   handleRoute(route) {
-    console.log('handling routing for: ', route);
     hasher.setHash(route);
   }
 
