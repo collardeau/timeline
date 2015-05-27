@@ -10,7 +10,7 @@ class TimelineControls extends React.Component {
       <div className="segmented-control">
         <a className="control-item">Share</a>
         <a className="control-item">Bookmark</a>
-        <a className="control-item">Fork It</a>
+        <a className="control-item">Edit</a>
       </div>
     );
   }
