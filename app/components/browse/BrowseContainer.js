@@ -1,4 +1,5 @@
 const React = require('react');
+const hasher = require('hasher');
 let BrowseTable = require('./BrowseTable');
 let BrowseControls = require('./BrowseControls');
 let timelineStore = require('../../stores/timelineStore');
@@ -15,10 +16,15 @@ class Browse extends React.Component {
   }
 
   componentDidMount(){
-    $('.sliding-panel-button,.sliding-panel-fade-screen,.sliding-panel-close').on('click touchstart',function (e) {
+
+    $('.sliding-panel-button,.sliding-panel-fade-screen,.sliding-panel-close').on('click touchstart', function (e) {
       $('.sliding-panel-content,.sliding-panel-fade-screen').toggleClass('is-visible');
       e.preventDefault();
     });
+  }
+
+  handleRoute(route) {
+    hasher.setHash(route);
   }
 
   render() {
@@ -31,15 +37,15 @@ class Browse extends React.Component {
           <h1 className="title">
             Timelines
           </h1>
-          <button className="btn pull-right">
+          <button className="btn pull-right" onClick= { this.handleRoute.bind(this, 'new')}>
             <i className="fa fa-plus"></i>
           </button>
         </header>
 
         <nav className="js-menu sliding-panel-content">
           <ul>
-            <li><a href="javascript:void(0)">Login</a></li>
-            <li><a href="javascript:void(0)">About</a></li>
+            <li><a href="#">Login</a></li>
+            <li><a href="#">About</a></li>
           </ul>
         </nav>
 
