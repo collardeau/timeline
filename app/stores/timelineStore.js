@@ -14,6 +14,9 @@ let _store = {
   }, {
     name: "Pearl Jam",
     id: "pj"
+  }, {
+    name: "Ghost",
+    id: "doesnt exist"
   }]
 };
 
@@ -25,7 +28,13 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
 
   getTimeline(timeline) {
     console.log("fectching this timeline: ", timeline);
-    return mockupUtils[timeline];
+    let newTimeline = mockupUtils[timeline];
+    if (newTimeline){
+      return newTimeline;
+    } else {
+      console.log("no such timeline exists");
+      return mockupUtils.pj;  // temp
+    }
   },
 
   addTimeline(timeline){
