@@ -65,11 +65,12 @@ class TimelineContainer extends React.Component {
 
                 <div className="content-padded">
 
-                  <p>Public Timeline by Thomas Collardeau</p>
-                  <p>{ this.state.timeline.description }</p>
+                  <p>A Public Timeline curated  by Thomas Collardeau:<br />
+                    <b>{ this.state.timeline.description }</b></p>
 
-                  <button className="btn" onClick={this.handleToggle.bind(this)}>Add New</button>
-                  <TimelineAdd isOpen={ this.state.addIsOpen } />
+                  <button className="btn" onClick={this.handleToggle.bind(this)}>Add New Dot</button>
+
+                  <TimelineAdd isOpen={ this.state.addIsOpen } toggle={this.handleToggle.bind(this)} />
 
                 </div>
 
