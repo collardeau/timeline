@@ -17,6 +17,9 @@ let _store = {
   }, {
     name: "Ghost",
     id: "doesnt exist"
+  }, {
+    name: "new",
+    id: "new"
   }]
 };
 

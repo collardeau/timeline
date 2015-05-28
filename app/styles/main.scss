@@ -54,16 +54,16 @@ h1 {
 
 }
 
-
 .date-label {
   font-size: 0.75em;
   color: green;
 }
 
-@import "./dropbox";
+//@import "./dropbox";
 //@import "./welcome";
 @import "./navigation";
 @import "./slidingPanel";
+//@import "./modal";
 
 // flash bitter
 $base-spacing: 1.5em !default;

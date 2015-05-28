@@ -1,9 +1,11 @@
 const React = require('react');
+//const $ = require('jquery');
+const hasher = require('hasher');
+
 let Timeline = require('./Timeline');
 let TimelineControls = require('./TimelineControls');
 let timelineStore = require('../../stores/timelineStore');
 let timelineActions = require('../../actions/timelineActions');
-let hasher = require('hasher');
 
 class TimelineContainer extends React.Component {
 
@@ -55,16 +57,12 @@ class TimelineContainer extends React.Component {
 
                 <div className="content-padded">
 
-                  <p>
-                    Birthdates of some great painters
-                  </p>
-                  <p>
-                    Public Timeline by Thomas Collardeau
-                  </p>
+                  <p>Public Timeline by Thomas Collardeau</p>
+                  <p>Birthdates of some great painters</p>
 
-              </div>
+                </div>
 
-              <Timeline dots={ this.state.timeline.dots } />
+              <Timeline dots={ this.state.timeline.dots || [] } />
 
             </div>
 

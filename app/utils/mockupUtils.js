@@ -339,6 +339,11 @@ module.exports = {
                 timestamp: moment("2006-01-25").unix()
             }
         ]
+    },
+
+    new: {
+      name: "New Timeline",
+      id: "new" // no dots
     }
 
 };
