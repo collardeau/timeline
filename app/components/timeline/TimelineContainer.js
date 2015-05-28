@@ -4,6 +4,7 @@ const hasher = require('hasher');
 
 let Timeline = require('./Timeline');
 let TimelineControls = require('./TimelineControls');
+let TimelineAdd = require('./TimelineAdd');
 let timelineStore = require('../../stores/timelineStore');
 let timelineActions = require('../../actions/timelineActions');
 
@@ -12,7 +13,8 @@ class TimelineContainer extends React.Component {
   constructor() {
     super();
     this.state = {
-      timeline: null
+      timeline: null,
+      addIsOpen: true   // need to implement toggle
     };
     this.changeContent = this.changeContent.bind(this);
   }
@@ -20,9 +22,9 @@ class TimelineContainer extends React.Component {
   componentWillMount(){
     let timelineId = this.props.params[0];
     console.log("dealing with this id: ", timelineId);
-    this.state = {
+    this.setState({
       timeline: timelineStore.getTimeline(timelineId)
-    };
+    });
   }
 
   componentDidMount() {
@@ -59,6 +61,8 @@ class TimelineContainer extends React.Component {
 
                   <p>Public Timeline by Thomas Collardeau</p>
                   <p>Birthdates of some great painters</p>
+
+                  <TimelineAdd isOpen={ this.state.addIsOpen } />
 
                 </div>
 

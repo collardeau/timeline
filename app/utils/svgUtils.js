@@ -2,10 +2,11 @@ const d3 = require('d3');
 const moment = require('moment');
 
 let w = 350, h = 480, r = 5;
+let data = [];
 let dotsCY = []; // keeping track of dots already drawn
 
-let reorderData = (dataset, key) => {
-    dataset.sort(function (a, b) {
+let reorderData = (key) => {
+    data.sort(function (a, b) {
         if (a[key] > b[key]) { return 1; }
         if (a[key] < b[key]) { return -1; }
         return 0; // a must be equal to b
@@ -13,8 +14,9 @@ let reorderData = (dataset, key) => {
 };
 
 let init = (dataset) => {
-
-    reorderData(dataset, "timestamp");
+  data = dataset; // keep track of data locally
+  console.log(data);
+    reorderData("timestamp");
 
     let svg = d3.select('.d3-container').append("svg")
         .attr({ 'width': w, 'height': h });
@@ -38,16 +40,16 @@ let init = (dataset) => {
         });
 };
 
-let getTimestamps = (dataset) => {
-    return dataset.reduce((prev, next) =>{
+let getTimestamps = () => {
+    return data.reduce((prev, next) =>{
         prev.push(next.timestamp);
         return prev;
     }, []);
 };
 
-let getScale = (dataset) => {
+let getScale = () => {
 
-    let timestamps = getTimestamps(dataset);
+    let timestamps = getTimestamps(data);
 
     return d3.scale.linear()
         .domain([d3.min(timestamps), d3.max(timestamps)])
@@ -55,11 +57,11 @@ let getScale = (dataset) => {
 
 };
 
-let enterNewDots = (dataset) => {
+let enterNewDots = () => {
 
-    let scale = getScale(dataset);
+    let scale = getScale(data);
 
-    let selection = d3.select("svg").selectAll("g").data(dataset);
+    let selection = d3.select("svg").selectAll("g").data(data);
 
     selection.enter().append('g')   // dots
         .attr({
@@ -86,7 +88,7 @@ let enterNewDots = (dataset) => {
 
 };
 
-let isOverlapping = (dots, r, cy) => {
+let isOverlapping = (dots, rad, cy) => {  // don't need rad as r is defined
     return dots.some((elem) => {
         if(cy - r > elem + r || cy + r < elem - r) { return false; }
         return true;
@@ -94,17 +96,18 @@ let isOverlapping = (dots, r, cy) => {
 };
 
 let isOutOfScale = (dataset, dot) => {
+  // get rid of dataset param everywhere
 
-    if ( dot > d3.max(dataset) || dot < d3.min(dataset) ) {
+    if ( dot > d3.max(data) || dot < d3.min(data) ) {
         return true;
     }
     return false;
 };
 
-let placeNewInfo = (dataset) => {
+let placeNewInfo = () => {
 
-    let selection = d3.select("svg").selectAll("g").data(dataset),
-        scale = getScale(dataset);
+    let selection = d3.select("svg").selectAll("g").data(data),
+        scale = getScale(data);
 
     selection.each(function(d, i) {      // place info and label depending on dot overlap
 
@@ -158,27 +161,27 @@ let placeNewInfo = (dataset) => {
     });
 };
 
-let addDot = (dataset, dot) => {
+let addDot = (dot) => {
 
-    let oldTimestamps = getTimestamps(dataset);
+    let oldTimestamps = getTimestamps(data);
 
-    dataset.push(dot);
+    data.push(dot);
 
     if ( isOutOfScale(oldTimestamps, dot.timestamp) ){
 
-        rescale(dataset);
+        rescale(data);
         d3.selectAll('text').remove();
-        placeNewInfo(dataset); // reset text info elements
+        placeNewInfo(data); // reset text info elements
 
     }
 
-    enterNewDots(dataset);
+    enterNewDots(data);
 
     // put in info for th new dot
-    let pos = dataset.length - 1,
-        scale = getScale(dataset),
+    let pos = data.length - 1,
+        scale = getScale(data),
         elem = d3.select("#circ-" + pos),
-        cy = scale(dataset[pos].timestamp),
+        cy = scale(data[pos].timestamp),
         cx = parseFloat(elem.attr('cx')),
         selection = d3.select('#dot-' + pos);
 
@@ -252,10 +255,10 @@ let getTxtPos = (cyArr, cy ) => {   // for overlapping dots
 
 };
 
-let rescale = (dataset) => {
+let rescale = () => {
     dotsCY = [];
     let selection = d3.selectAll("circle"),
-        scale = getScale(dataset);
+        scale = getScale(data);
 
     selection.transition().duration(2000)
         .attr({
@@ -272,8 +275,8 @@ let killSVG = () => {
 
 let draw = (dataset) => {
     init(dataset);
-    enterNewDots(dataset);
-    placeNewInfo(dataset);
+    enterNewDots();
+    placeNewInfo();
 };
 
 let SVG = {
