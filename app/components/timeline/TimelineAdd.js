@@ -1,8 +1,7 @@
 const React = require('react');
 const moment = require('moment');
 
-let svgUtils = require('../../utils/svgUtils');
-let timelineStore = require('../../stores/timelineStore');
+let timelineActions = require('../../actions/timelineActions');
 
 class TimelineAdd extends React.Component {
 
@@ -15,14 +14,12 @@ class TimelineAdd extends React.Component {
       timestamp: unixTime,
       event: name
     };
-    svgUtils.addDot(dot);
-            // here could be an action that sets off the svg draw
-            //timelineStore.addDot(dot); // could be an action
+
+    timelineActions.addDot(dot);
+    this.refs.newName.getDOMNode().value = "";
    }
 
   render(){
-
-    // console.log(this.props.isOpen);
 
     return (
       <div>
@@ -30,7 +27,7 @@ class TimelineAdd extends React.Component {
           <label>New Input</label>
           <input type="text" ref="newName" placeholder="new name" />
           <input type="date" ref="newDate" />
-          <button onClick={ this.handleClick.bind(this) }>Submit</button>
+          <button className="btn-action" onClick={ this.handleClick.bind(this) }>Submit</button>
         </form>
       </div>
     );

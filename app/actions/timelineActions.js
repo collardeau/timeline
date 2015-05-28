@@ -1,5 +1,6 @@
 let AppDispatcher = require('../dispatcher/AppDispatcher');
 let appConstants = require('../constants/appConstants');
+let svgUtils = require('../utils/svgUtils');
 
 let timelineActions = {
 
@@ -12,15 +13,9 @@ let timelineActions = {
     });
   },
 
-    changeTimeline(tl) {
-
-        AppDispatcher.handleAction({
-            actionType: appConstants.CHANGE_TIMELINE,
-            data: {
-                timeline: tl
-            }
-        });
-    }
+  addDot(dot){
+    svgUtils.addDot(dot);
+  }
 
 };
 
