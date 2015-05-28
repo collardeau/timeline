@@ -6,27 +6,32 @@ let timelineStore = require('../../stores/timelineStore');
 
 class TimelineAdd extends React.Component {
 
-    handleClick(e) {
-        e.preventDefault();
-        console.log("handling click");
-             let unixTime = moment().unix();
-            let dot = {
-                timestamp: unixTime,
-                event: "some bullshit"
-            };
-            svgUtils.addDot(dot);
+  handleClick(e) {
+    e.preventDefault();
+    let name = this.refs.newName.getDOMNode().value,
+        unixTime = moment(this.refs.newDate.getDOMNode().value).unix();
+
+    let dot = {
+      timestamp: unixTime,
+      event: name
+    };
+    svgUtils.addDot(dot);
             // here could be an action that sets off the svg draw
             //timelineStore.addDot(dot); // could be an action
    }
 
   render(){
 
-    console.log(this.props.isOpen);
+    // console.log(this.props.isOpen);
 
     return (
       <div>
-        <h1>New Dot</h1>
-        <button onClick={ this.handleClick.bind(this) }>Submit</button>
+        <form>
+          <label>New Input</label>
+          <input type="text" ref="newName" placeholder="new name" />
+          <input type="date" ref="newDate" />
+          <button onClick={ this.handleClick.bind(this) }>Submit</button>
+        </form>
       </div>
     );
   }
