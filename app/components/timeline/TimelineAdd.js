@@ -17,10 +17,10 @@ class TimelineAdd extends React.Component {
 
     timelineActions.addDot(dot);
     this.refs.newName.getDOMNode().value = "";
+    // close the add dot section
    }
 
   render(){
-    console.log(this.props.isOpen);
 
     return (
       <div className={this.props.isOpen ? '' : 'hidden'}>

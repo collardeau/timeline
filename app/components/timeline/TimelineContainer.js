@@ -14,7 +14,7 @@ class TimelineContainer extends React.Component {
     super();
     this.state = {
       timeline: null,
-      addIsOpen: false   // need to implement toggle
+      addIsOpen: false
     };
     this.changeContent = this.changeContent.bind(this);
   }
@@ -66,7 +66,7 @@ class TimelineContainer extends React.Component {
                 <div className="content-padded">
 
                   <p>Public Timeline by Thomas Collardeau</p>
-                  <p>Birthdates of some great painters</p>
+                  <p>{ this.state.timeline.description }</p>
 
                   <button className="btn" onClick={this.handleToggle.bind(this)}>Add New</button>
                   <TimelineAdd isOpen={ this.state.addIsOpen } />

@@ -15,7 +15,6 @@ let reorderData = (key) => {
 
 let init = (dataset) => {
   data = dataset; // keep track of data locally
-  console.log(data);
     reorderData("timestamp");
 
     let svg = d3.select('.d3-container').append("svg")

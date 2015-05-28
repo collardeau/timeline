@@ -7,19 +7,29 @@ let mockupUtils = require('../utils/mockupUtils');
 let _store = {
   timelines: [{
     name: "Painters",
-    id: "painters"
+    id: "painters",
+    isPublic: true,
+    owner: "simplelogin:1" // uid
   }, {
     name: "Tonton",
-    id: "tonton"
+    id: "tonton",
+    isPublic: true,
+    owner: "simplelogin:1"
   }, {
     name: "Pearl Jam",
-    id: "pj"
+    id: "pj",
+    isPublic: false,
+    owner: "simplelogin:1"
   }, {
     name: "Ghost",
-    id: "doesnt exist"
+    id: "doesnt exist",
+    isPublic: true,
+    owner: "stranger"
   }, {
     name: "new",
-    id: "new"
+    id: "new",
+    isPublic: true,
+    owner: "simplelogin:1"
   }]
 };
 
@@ -27,7 +37,16 @@ const CHANGE_EVENT = 'change';
 
 let timelineStore = objectAssign({}, EventEmitter.prototype, {
 
-  getTimelines() { return _store.timelines; },
+  getTimelines() {
+    // should be server-side
+    let timelines = _store.timelines;
+    let filteredTimelines = timelines.filter((tl) => {
+      if(tl.isPublic){
+        return tl;
+      }
+    });
+    return filteredTimelines;
+  },
 
   getTimeline(timeline) {
     console.log("fectching this timeline: ", timeline);

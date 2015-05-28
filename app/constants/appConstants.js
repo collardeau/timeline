@@ -1,6 +1,6 @@
 var appConstants = {
 
-    FIREBASE_HOST: "https://tc-react-boilerplate.firebaseio.com/",
+    FIREBASE_HOST: "https://time-line.firebaseio.com/",
     //GET_DATA: "GET_DATA",
     //ADD_ITEM: "ADD_ITEM",
     //REMOVE_ITEM: "REMOVE_ITEM"

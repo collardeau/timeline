@@ -4,6 +4,7 @@ module.exports = {
 
     pj: {
         name: "Pearl Jam",
+        "description": "Shows that I've been to",
         id: "pj",
         dots: [
             {
@@ -145,6 +146,7 @@ module.exports = {
     },
     tonton: {
         name: "Tonton",
+        description: "Where I've lived",
         id: "tonton",
         dots: [
             {
@@ -203,6 +205,7 @@ module.exports = {
     },
     painters: {
         name: "Painters",
+        description: "Painters' birthdays",
         id: "painters",
         dots: [
             {
@@ -257,6 +260,7 @@ module.exports = {
     },
     genuises: {
         name: "Geniuses",
+        description: "Birthdates of geniuses",
         id: "geniuses",
         dots: [
             {
@@ -301,6 +305,7 @@ module.exports = {
     visa: {
         name: "Visa",
         id: "visa",
+        description: "The big saga",
         dots: [
             {
                 event: "Sentencing",
@@ -343,6 +348,7 @@ module.exports = {
 
     new: {
       name: "New Timeline",
+      description: "A blank timeline!",
       id: "new" // no dots
     }
 
