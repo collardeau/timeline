@@ -14,7 +14,7 @@ class TimelineContainer extends React.Component {
     super();
     this.state = {
       timeline: null,
-      addIsOpen: true   // need to implement toggle
+      addIsOpen: false   // need to implement toggle
     };
     this.changeContent = this.changeContent.bind(this);
   }
@@ -37,6 +37,12 @@ class TimelineContainer extends React.Component {
 
   handleRoute(route) {
     hasher.setHash(route);
+  }
+
+  handleToggle(){
+    this.setState({
+     addIsOpen: !this.state.addIsOpen
+    });
   }
 
   render(){
@@ -62,6 +68,7 @@ class TimelineContainer extends React.Component {
                   <p>Public Timeline by Thomas Collardeau</p>
                   <p>Birthdates of some great painters</p>
 
+                  <button className="btn" onClick={this.handleToggle.bind(this)}>Add New</button>
                   <TimelineAdd isOpen={ this.state.addIsOpen } />
 
                 </div>

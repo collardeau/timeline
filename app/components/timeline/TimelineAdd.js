@@ -20,9 +20,10 @@ class TimelineAdd extends React.Component {
    }
 
   render(){
+    console.log(this.props.isOpen);
 
     return (
-      <div>
+      <div className={this.props.isOpen ? '' : 'hidden'}>
         <form>
           <label>New Input</label>
           <input type="text" ref="newName" placeholder="new name" />
