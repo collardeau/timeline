@@ -4,13 +4,17 @@ const moment = require('moment');
 let w = window.innerWidth   // width of window
 || document.documentElement.clientWidth
 || document.body.clientWidth;
-// https://stackoverflow.com/questions/16265123/resize-svg-when-window-is-resized-in-d3-js
 
-let h = 480,  // height of timeline
-  r = 5;  // radius of dots
+var h = window.innerHeight
+|| document.documentElement.clientHeight
+|| document.body.clientHeight;
+h = h * 3 / 2;
+// https://stackoverflow.com/questions/16265123/resize-svg-when-window-is-resized-in-d3-js/
 
-let data = [];  // the dots
-let dotsCY = [];  // keeping track of dots already drawn
+let r = 10,  // radius of dots
+    data = [],  // the dots
+    dotsCY = [], // keeping track of dots already drawn
+    lineX = [ w / 4 ];  // horizontal pos of timeline
 
 let reorderData = (key) => {
     data.sort(function (a, b) {
@@ -31,13 +35,13 @@ let init = (dataset) => {
 
   svg.append("line")  // draw in the timeline
     .attr({
-        'x1': w / 3, x2: w / 3,
+        'x1': lineX, x2: lineX,
         'y1': 5, y2: 5,
         "id": "line"
     })
     .style({
         stroke: "black",
-        "stroke-width": 3,
+        "stroke-width": 5,
         "stroke-linecap": 'round'
      })
     .transition().ease("linear")
@@ -60,7 +64,7 @@ let getScale = () => {
 
     return d3.scale.linear()
         .domain([d3.min(timestamps), d3.max(timestamps)])
-        .range([10, h - 10]);
+        .range([15, h - 15]);
 
 };
 
@@ -76,10 +80,14 @@ let enterNewDots = () => {
         })
         .append('circle').attr({
             'id': (d, i) => 'circ-' + i,
-            'cx': w / 3,
+            'cx': lineX,
             'cy': (d, i) => scale(d.timestamp),
             'r': 0  // animated in
-        }).style("fill", "#EE6E44")
+        }).style({
+          "fill": "#888888",
+          "stroke": "black",
+          "strokeWidth": 5
+        })
         .on("click", function(d, i) {
             let textBox = d3.selectAll("#text-" + i);
             textBox.classed("hidden", !textBox.classed("hidden"));
@@ -147,7 +155,7 @@ let placeNewInfo = () => {
                 .classed('dot-info', true)
                 .attr({
                     'id': "text-" + i,
-                    'x': cx + 10,
+                    'x': cx + 30,
                     'y': cy + 5
                 })
                 .style({
@@ -159,7 +167,12 @@ let placeNewInfo = () => {
                     'opacity': 100
                 });
 
-            addDateLabel(this, d.timestamp, cy);
+                // only if first and last
+                console.log(selection.size);
+                if ( i === 0 || i === data.length - 1 ){
+                  console.log("adding a date label");
+                  addDateLabel(this, d.timestamp, cy);
+                }
 
         }
 
