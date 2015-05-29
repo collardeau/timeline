@@ -3,6 +3,7 @@ const EventEmitter = require('events').EventEmitter;
 let AppDispatcher = require('../dispatcher/AppDispatcher');
 let appConstants = require('../constants/appConstants');
 let mockupUtils = require('../utils/mockupUtils');
+let firebaseUtils = require('../utils/firebaseUtils');
 
 let _store = {
   timelines: [{
@@ -37,8 +38,15 @@ const CHANGE_EVENT = 'change';
 
 let timelineStore = objectAssign({}, EventEmitter.prototype, {
 
+  getTimelines(){
+    console.log("getting Timelines");
+    return this.getPublicTimelines();
+    // should be return _store.timelines;
+  },
+
   getPublicTimelines() {
     // should be server-side
+    console.log("rocking the store functoin for getting public");
     let timelines = _store.timelines;
     let filteredTimelines = timelines.filter((tl) => {
       if(tl.isPublic){
@@ -49,13 +57,17 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getOwnTimelines(){
-    let timelines = _store.timelines;
+    console.log("setting new state");
+    let timelines = firebaseUtils.toArray(mockupUtils);
+    // losing the reference name
+    console.log(timelines);
     let filtered = timelines.filter((tl) => {
-      if(!tl.isPublic){
+
+      if(!tl.isPublic){  // should check for ownership
         return tl;
       }
     });
-    return filtered;
+    _store.timelines = filtered;
   },
 
   getTimeline(timeline) {
@@ -99,6 +111,10 @@ AppDispatcher.register(function(payload){
           break;
         case appConstants.GET_OWN_TIMELINES:
           timelineStore.getOwnTimelines();
+          timelineStore.emit(CHANGE_EVENT);
+          break;
+         case appConstants.GET_PUBLIC_TIMELINES:
+          timelineStore.getPublicTimelines();
           timelineStore.emit(CHANGE_EVENT);
           break;
         default:

@@ -21,6 +21,12 @@ let timelineActions = {
     });
   },
 
+  getPublicTimelines() {
+    AppDispatcher.handleAction({
+      actionType: appConstants.GET_PUBLIC_TIMELINES
+    });
+  },
+
   addDot(dot){
     svgUtils.addDot(dot);
   },

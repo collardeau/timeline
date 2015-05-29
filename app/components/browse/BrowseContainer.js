@@ -12,7 +12,7 @@ class Browse extends React.Component {
   constructor(){
     super();
     this.state = {
-      timelines: timelineStore.getPublicTimelines() // public timelines
+      timelines: timelineStore.getTimelines() // public timelines
     };
     this.changeContent = this.changeContent.bind(this);
   }
@@ -73,8 +73,9 @@ class Browse extends React.Component {
   }
 
   changeContent(){
+    console.log("rerendering the view");
     this.setState({
-      timelines: timelineStore.getOwnTimelines()
+      timelines: timelineStore.getTimelines()
     });
   }
 }

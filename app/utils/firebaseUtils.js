@@ -31,3 +31,4 @@ var firebaseUtils = {
 };
 
 module.exports = firebaseUtils;
+

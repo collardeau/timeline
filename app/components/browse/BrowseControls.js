@@ -3,15 +3,19 @@ let timelineActions = require('../../actions/timelineActions.js');
 
 class BrowseControls extends React.Component {
 
-  handleMineClick(){
+  handleMine(){
     timelineActions.getOwnTimelines();
+  }
+
+  handlePublic(){
+    timelineActions.getPublicTimelines();
   }
 
   render(){
     return (
       <div className="segmented-control">
-        <a className="control-item active">Public</a>
-        <a className="control-item" onClick={ this.handleMineClick.bind(this) }>Mine</a>
+        <a className="control-item active" onClick={ this.handlePublic }>Public</a>
+        <a className="control-item" onClick={ this.handleMine }>Mine</a>
         <a className="control-item">Bookmarks</a>
       </div>
     );
