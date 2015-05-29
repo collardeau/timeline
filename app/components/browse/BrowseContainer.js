@@ -12,14 +12,15 @@ class Browse extends React.Component {
   constructor(){
     super();
     this.state = {
-      timelines: timelineStore.getTimelines() // public timelines
+      timelines: []
     };
     this.changeContent = this.changeContent.bind(this);
   }
 
   componentDidMount(){
-
+    console.log("component mounting and setting change listener");
     timelineStore.addChangeListener(this.changeContent);
+    timelineActions.changeTimelines();
 
     // the sliding panel
     $('.sliding-panel-button,.sliding-panel-fade-screen,.sliding-panel-close').on('click touchstart', function (e) {
@@ -73,7 +74,7 @@ class Browse extends React.Component {
   }
 
   changeContent(){
-    console.log("rerendering the view");
+    console.log("setting state! re-render!");
     this.setState({
       timelines: timelineStore.getTimelines()
     });

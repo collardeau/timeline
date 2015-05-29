@@ -1,10 +1,20 @@
 let AppDispatcher = require('../dispatcher/AppDispatcher');
 let appConstants = require('../constants/appConstants');
 let svgUtils = require('../utils/svgUtils');
+let firebaseUtils = require('../utils/firebaseUtils');
 
 let timelineActions = {
 
-  // ignoring persistence
+  changeTimelines(){
+    firebaseUtils.changeTimelines(function(timelines){
+      AppDispatcher.handleAction({
+        actionType: appConstants.CHANGE_TIMELINES,
+        data: {
+          timelines: timelines
+        }
+      });
+    });
+  },
 
   addTimeline(timeline){
     AppDispatcher.handleAction({
@@ -12,6 +22,18 @@ let timelineActions = {
       data: {
         timeline: timeline
       }
+    });
+    firebaseUtils.addTimeline(timeline);
+  },
+
+  getTimelines(){
+    firebaseUtils.getTimelines(function(timelines){
+      AppDispatcher.handleAction({
+        actionType: appConstants.GET_TIMELINES,
+        data: {
+          timelines: timelines
+        }
+      });
     });
   },
 

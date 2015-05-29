@@ -19,7 +19,7 @@ let myListStore = objectAssign({}, EventEmitter.prototype, {
 
     getList() { return _store.list; },
 
-    getListCount() { return _store.list.length },
+    getListCount() { return _store.list.length; },
 
     addChangeListener(cb) { this.on(CHANGE_EVENT, cb); },
 
@@ -48,3 +48,4 @@ AppDispatcher.register(function(payload){
 });
 
 module.exports = myListStore;
+

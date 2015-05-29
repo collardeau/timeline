@@ -4,44 +4,22 @@ let AppDispatcher = require('../dispatcher/AppDispatcher');
 let appConstants = require('../constants/appConstants');
 let mockupUtils = require('../utils/mockupUtils');
 let firebaseUtils = require('../utils/firebaseUtils');
+let authUtils = require('../utils/authUtils');
 
 let _store = {
-  timelines: [{
-    name: "Painters",
-    id: "painters",
-    isPublic: true,
-    owner: "simplelogin:1" // uid
-  }, {
-    name: "Tonton",
-    id: "tonton",
-    isPublic: true,
-    owner: "simplelogin:1"
-  }, {
-    name: "Pearl Jam",
-    id: "pj",
-    isPublic: false,
-    owner: "simplelogin:1"
-  }, {
-    name: "Ghost",
-    id: "doesnt exist",
-    isPublic: true,
-    owner: "stranger"
-  }, {
-    name: "new",
-    id: "new",
-    isPublic: true,
-    owner: "simplelogin:1"
-  }]
+  timelines: []
 };
 
 const CHANGE_EVENT = 'change';
 
 let timelineStore = objectAssign({}, EventEmitter.prototype, {
 
+  changeTimelines(timelines){
+    _store.timelines = timelines;
+  },
+
   getTimelines(){
-    console.log("getting Timelines");
-    return this.getPublicTimelines();
-    // should be return _store.timelines;
+    return _store.timelines;
   },
 
   // need work over here for filters
@@ -57,7 +35,6 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getOwnTimelines(){
-    console.log("setting new state");
     let timelines = firebaseUtils.toArray(mockupUtils);
     // losing the reference name
     console.log(timelines);
@@ -82,11 +59,11 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
   },
 
   addTimeline(timeline){
-    console.log("adding a timeline from the store");
-    _store.timelines.push({
-      name: timeline.name,
-      id: "tonton"  // temp
-    });
+    // setting owner to timeine object here
+    // is this the place for this? what if user is logged out here?
+    timeline.owner = authUtils.isLoggedIn().uid;
+
+    _store.timelines.push(timeline);
   },
 
   getDots() { return _store.timeline.dots; },
@@ -104,6 +81,10 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(payload){
     var action = payload.action;
     switch(action.actionType){
+        case appConstants.CHANGE_TIMELINES:
+          timelineStore.changeTimelines(action.data.timelines);
+          timelineStore.emit(CHANGE_EVENT);
+          break;
        case appConstants.ADD_TIMELINE:
           timelineStore.addTimeline(action.data.timeline);
           //timelineStore.emit(CHANGE_EVENT);

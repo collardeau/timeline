@@ -7,10 +7,13 @@ class TimelineForm extends React.Component {
   handleSubmit(e){
     e.preventDefault();
     let name = this.refs.name.getDOMNode().value;
-    if(name) {
+    let desc = this.refs.description.getDOMNode().value;
+
+    if(name) {  // pretty weak error checking
       let timeline = {
         name: name,
-        privacy: this.refs.privacy.getDOMNode().checked
+        description: desc,
+        isPublic: this.refs.privacy.getDOMNode().checked
       };
       console.log(timeline);
       timelineActions.addTimeline(timeline);
@@ -36,7 +39,7 @@ class TimelineForm extends React.Component {
 
           <form onSubmit={this.handleSubmit.bind(this)}>
             <input ref="name" type="text" placeholder="Name" />
-            <input type="text" placeholder="Description" />
+            <input ref="description" type="text" placeholder="Description" />
             <label className="label-switch">
               Make Public?
                <input ref="privacy" type="checkbox" />

@@ -18,7 +18,7 @@ class BrowseTable extends React.Component {
       return (
         <li key={i} className="table-view-cell">
           <a className="navigate-right"
-            onClick={this.handleTimelineLink.bind(this, t.id )} >
+            onClick={this.handleTimelineLink.bind(this, t.key )} >
             { t.name }
           </a>
         </li>
