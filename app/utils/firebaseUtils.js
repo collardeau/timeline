@@ -3,6 +3,7 @@ var appConstants = require('../constants/appConstants');
 var ref = new Firebase(appConstants.FIREBASE_HOST);
 
 var publicTimelinesIndex = 'public-timelines-index';
+var publicTimelines = "public-timelines";
 
 var addNewUserToFB = function(newUser){
     ref.child('user').child(newUser.uid).set(newUser);
@@ -37,7 +38,22 @@ var firebaseUtils = {
     },
 
     addTimeline: function(timeline){
-      this.homeInstance().child(publicTimelinesIndex).push(timeline);
+
+      // callback fun, 2 ops for timeline itself and an index
+      let addIt = (cb) => {
+        var fbRef = this.homeInstance().child(publicTimelines).push({
+          owner: timeline.owner
+        });
+        cb(fbRef.key());
+      };
+
+      let setIndex = (fbKey) => {
+        timeline.ref = fbKey;
+        this.homeInstance().child(publicTimelinesIndex).push(timeline);
+      };
+
+    addIt(setIndex);
+
     },
 
     addItem: function (item) {
