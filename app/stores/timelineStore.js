@@ -44,9 +44,9 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
     // should be return _store.timelines;
   },
 
+  // need work over here for filters
   getPublicTimelines() {
     // should be server-side
-    console.log("rocking the store functoin for getting public");
     let timelines = _store.timelines;
     let filteredTimelines = timelines.filter((tl) => {
       if(tl.isPublic){

@@ -32,11 +32,19 @@ class TimelineForm extends React.Component {
           <button className="btn pull-right" onClick= { this.handleRoute.bind(this, "browse") }>Close</button>
         </header>
         <div className="content">
+          <div className="content-padded">
+
           <form onSubmit={this.handleSubmit.bind(this)}>
-            <label className="content-padded">Timeline Name </label>
-            <input ref="name" type="text" placeholder="New Timeline" />
-            <input type="checkbox" ref="privacy">Make Public (disabled)</input>
+            <input ref="name" type="text" placeholder="Name" />
+            <input type="text" placeholder="Description" />
+            <label className="label-switch">
+              Make Public?
+               <input ref="privacy" type="checkbox" />
+              <div className="checkbox"></div>
+            </label>
           </form>
+
+        </div>
           <div className="bar bar-standard bar-footer-secondary">
               <button className="btn btn-block" onClick={ this.handleSubmit.bind(this) }>Submit</button>
           </div>

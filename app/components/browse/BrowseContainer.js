@@ -47,7 +47,7 @@ class Browse extends React.Component {
             Timelines
           </h1>
           <button className="btn pull-right" onClick= { this.handleRoute.bind(this, 'new')}>
-            <i className="fa fa-plus"></i>
+            Create New
           </button>
         </header>
 
