@@ -27,7 +27,7 @@ class TimelineAdd extends React.Component {
         <form>
           <input type="text" ref="newName" placeholder="new name" />
           <input type="date" ref="newDate" />
-          <button className="btn-action" onClick={ this.handleClick.bind(this) }>Submit</button>
+          <button className="btn" onClick={ this.handleClick.bind(this) }>Submit</button>
         </form>
       </div>
     );

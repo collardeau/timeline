@@ -84,7 +84,7 @@ let enterNewDots = () => {
             'cy': (d, i) => scale(d.timestamp),
             'r': 0  // animated in
         }).style({
-          "fill": "#888888",
+          "fill": "#FA9248",
           "stroke": "black",
           "strokeWidth": 5
         })
@@ -111,9 +111,7 @@ let isOverlapping = (dots, rad, cy) => {  // don't need rad as r is defined
 };
 
 let isOutOfScale = (dataset, dot) => {
-  // get rid of dataset param everywhere
-
-    if ( dot > d3.max(data) || dot < d3.min(data) ) {
+    if ( dot > d3.max(dataset) || dot < d3.min(dataset) ) {
         return true;
     }
     return false;
@@ -183,7 +181,6 @@ let addDot = (dot) => {
     data.push(dot);
 
     if ( isOutOfScale(oldTimestamps, dot.timestamp) ){
-
         rescale(data);
         d3.selectAll('text').remove();
         placeNewInfo(data); // reset text info elements
@@ -217,7 +214,7 @@ let addDot = (dot) => {
             .text(dot.event)
             .attr({
                 id: "text-" + pos,
-                x: cx + 5,
+                x: cx + 30,
                 y: cy + 5
             })
             .classed("dot-info", true);
@@ -283,9 +280,9 @@ let rescale = () => {
     selection.transition().duration(2000)
         .attr({
             'cy': (d, i) => scale(d.timestamp),
-            'r': 5
+            'r': r
         })
-        .style("fill", "#FA9246");
+        .style("fill", "#888888");
 };
 
 let killSVG = () => {
