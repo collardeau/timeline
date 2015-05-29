@@ -17,7 +17,6 @@ class TimelineAdd extends React.Component {
 
     timelineActions.addDot(dot);
     this.refs.newName.getDOMNode().value = "";
-    // close the add dot section
     this.props.toggle();
    }
 
@@ -26,7 +25,6 @@ class TimelineAdd extends React.Component {
     return (
       <div className={this.props.isOpen ? '' : 'hidden'}>
         <form>
-          <label>New Input</label>
           <input type="text" ref="newName" placeholder="new name" />
           <input type="date" ref="newDate" />
           <button className="btn-action" onClick={ this.handleClick.bind(this) }>Submit</button>

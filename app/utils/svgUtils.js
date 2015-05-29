@@ -167,12 +167,7 @@ let placeNewInfo = () => {
                     'opacity': 100
                 });
 
-                // only if first and last
-                console.log(selection.size);
-                if ( i === 0 || i === data.length - 1 ){
-                  console.log("adding a date label");
-                  addDateLabel(this, d.timestamp, cy);
-                }
+            addDateLabel(this, d.timestamp, cy);
 
         }
 
@@ -244,6 +239,7 @@ let addDateLabel = ( elem, timestamp, cy ) => {
             'y': cy + 5
         })
         .classed("date-label", true)
+        .classed("hidden", true)
         .style({
             'opacity': 0
         })
@@ -251,6 +247,10 @@ let addDateLabel = ( elem, timestamp, cy ) => {
             .style({
                 'opacity': 100
             });
+};
+
+let toggleDates = () => {
+  d3.selectAll('.date-label').classed("hidden", !d3.select('.date-label').classed("hidden"));
 };
 
 let getPrevDot = (dots, dot) => {
@@ -312,6 +312,7 @@ let SVG = {
     initialize: init,
     placeDots: enterNewDots,
     placeInfo: placeNewInfo,
+    toggleDates: toggleDates,
     draw: draw,
     addDot: addDot,
     killSVG: killSVG

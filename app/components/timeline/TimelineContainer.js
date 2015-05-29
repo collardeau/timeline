@@ -39,10 +39,14 @@ class TimelineContainer extends React.Component {
     hasher.setHash(route);
   }
 
-  handleToggle(){
+  handleToggle(){   // add new dot form
     this.setState({
      addIsOpen: !this.state.addIsOpen
     });
+  }
+
+  handleDateToggle(){
+    timelineActions.toggleDates();
   }
 
   render(){
@@ -65,9 +69,10 @@ class TimelineContainer extends React.Component {
 
                 <div className="content-padded">
 
-                  <p>A Public Timeline curated  by Thomas Collardeau:<br />
-                    <b>{ this.state.timeline.description }</b></p>
+                  <h5>{ this.state.timeline.description }</h5>
+                  <p>A Public Timeline curated  by Thomas Collardeau</p>
 
+                  <button className="btn" onClick = { this.handleDateToggle.bind(this) }>View Dates</button>
                   <button className="btn" onClick={this.handleToggle.bind(this)}>Add New Dot</button>
 
                   <TimelineAdd isOpen={ this.state.addIsOpen } toggle={this.handleToggle.bind(this)} />

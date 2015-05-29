@@ -15,6 +15,10 @@ let timelineActions = {
 
   addDot(dot){
     svgUtils.addDot(dot);
+  },
+
+  toggleDates(){
+    svgUtils.toggleDates();
   }
 
 };
