@@ -55,8 +55,6 @@ class Browse extends React.Component {
 
         <div className="content">
 
-          <BrowseControls />
-
           <BrowseTable timelines={ this.state.timelines } />
 
           </div>

@@ -1,9 +1,16 @@
 const d3 = require('d3');
 const moment = require('moment');
 
-let w = 350, h = 480, r = 5;
-let data = [];
-let dotsCY = []; // keeping track of dots already drawn
+let w = window.innerWidth   // width of window
+|| document.documentElement.clientWidth
+|| document.body.clientWidth;
+// https://stackoverflow.com/questions/16265123/resize-svg-when-window-is-resized-in-d3-js
+
+let h = 480,  // height of timeline
+  r = 5;  // radius of dots
+
+let data = [];  // the dots
+let dotsCY = [];  // keeping track of dots already drawn
 
 let reorderData = (key) => {
     data.sort(function (a, b) {
@@ -14,29 +21,30 @@ let reorderData = (key) => {
 };
 
 let init = (dataset) => {
+
   data = dataset; // keep track of data locally
-    reorderData("timestamp");
+  reorderData("timestamp");
 
-    let svg = d3.select('.d3-container').append("svg")
-        .attr({ 'width': w, 'height': h });
-        //.style({'background-color': 'white'});
+  let svg = d3.select('.d3-container').append("svg")
+    .attr({ 'width': w, 'height': h })
+    .style({'background-color': 'white'});
 
-    svg.append("line")  // draw in the timeline
-        .attr({
-            'x1': w / 3, x2: w / 3,
-            'y1': 5, y2: 5,
-            "id": "line"
-        })
-        .style({
-            stroke: "black",
-            "stroke-width": 3,
-            "stroke-linecap": 'round'
-        })
-        .transition().ease("linear")
-        .duration(1500)
-        .attr({
-            'y2': h - 5
-        });
+  svg.append("line")  // draw in the timeline
+    .attr({
+        'x1': w / 3, x2: w / 3,
+        'y1': 5, y2: 5,
+        "id": "line"
+    })
+    .style({
+        stroke: "black",
+        "stroke-width": 3,
+        "stroke-linecap": 'round'
+     })
+    .transition().ease("linear")
+    .duration(1500)
+    .attr({
+        'y2': h - 5
+    });
 };
 
 let getTimestamps = () => {
