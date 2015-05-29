@@ -5,8 +5,8 @@ var appConstants = {
     //ADD_ITEM: "ADD_ITEM",
     //REMOVE_ITEM: "REMOVE_ITEM"
 
-    CHANGE_TIMELINE: "CHANGE_TIMELINE",
-    ADD_TIMELINE: "ADD_TIMELINE"
+    ADD_TIMELINE: "ADD_TIMELINE",
+    GET_OWN_TIMELINES: "GET_OWN_TIMELINES"
 };
 
 module.exports = appConstants;

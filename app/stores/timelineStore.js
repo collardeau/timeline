@@ -37,7 +37,7 @@ const CHANGE_EVENT = 'change';
 
 let timelineStore = objectAssign({}, EventEmitter.prototype, {
 
-  getTimelines() {
+  getPublicTimelines() {
     // should be server-side
     let timelines = _store.timelines;
     let filteredTimelines = timelines.filter((tl) => {
@@ -46,6 +46,16 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
       }
     });
     return filteredTimelines;
+  },
+
+  getOwnTimelines(){
+    let timelines = _store.timelines;
+    let filtered = timelines.filter((tl) => {
+      if(!tl.isPublic){
+        return tl;
+      }
+    });
+    return filtered;
   },
 
   getTimeline(timeline) {
@@ -82,15 +92,15 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(payload){
     var action = payload.action;
     switch(action.actionType){
-        case appConstants.CHANGE_TIMELINE:
-            timelineStore.changeTimeline(action.data.timeline);
-            timelineStore.emit(CHANGE_EVENT);
-            break;
-        case appConstants.ADD_TIMELINE:
+       case appConstants.ADD_TIMELINE:
           timelineStore.addTimeline(action.data.timeline);
           //timelineStore.emit(CHANGE_EVENT);
+          // we are going jumping to a new route anyway;
           break;
-
+        case appConstants.GET_OWN_TIMELINES:
+          timelineStore.getOwnTimelines();
+          timelineStore.emit(CHANGE_EVENT);
+          break;
         default:
             return true;
     }

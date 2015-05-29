@@ -4,12 +4,20 @@ let svgUtils = require('../utils/svgUtils');
 
 let timelineActions = {
 
+  // ignoring persistence
+
   addTimeline(timeline){
     AppDispatcher.handleAction({
       actionType: appConstants.ADD_TIMELINE,
       data: {
         timeline: timeline
       }
+    });
+  },
+
+  getOwnTimelines() {
+    AppDispatcher.handleAction({
+      actionType: appConstants.GET_OWN_TIMELINES
     });
   },
 

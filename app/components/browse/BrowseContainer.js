@@ -12,17 +12,24 @@ class Browse extends React.Component {
   constructor(){
     super();
     this.state = {
-      // should be an action
-      timelines: timelineStore.getTimelines()
+      timelines: timelineStore.getPublicTimelines() // public timelines
     };
+    this.changeContent = this.changeContent.bind(this);
   }
 
   componentDidMount(){
 
+    timelineStore.addChangeListener(this.changeContent);
+
+    // the sliding panel
     $('.sliding-panel-button,.sliding-panel-fade-screen,.sliding-panel-close').on('click touchstart', function (e) {
       $('.sliding-panel-content,.sliding-panel-fade-screen').toggleClass('is-visible');
       e.preventDefault();
     });
+  }
+
+  componentWillUnmount(){
+    timelineStore.removeChangeListener(this.changeContent);
   }
 
   handleRoute(route) {
@@ -63,6 +70,12 @@ class Browse extends React.Component {
 
       </div>
     );
+  }
+
+  changeContent(){
+    this.setState({
+      timelines: timelineStore.getOwnTimelines()
+    });
   }
 }
 
