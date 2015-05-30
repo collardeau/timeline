@@ -14,61 +14,53 @@ class App extends React.Component {
 
     render() {
 
-      let browseRoute = () => {
-        return (
-          <div>
-            <BrowseContainer />
-          </div>
-        );
-      };
+      let browseRoute = (
+        <div>
+          <BrowseContainer />
+        </div>
+      );
 
-      let newRoute = () => {
-        return (
-          <div>
-            <TimelineForm />
-          </div>
-        );
-      };
+      let newRoute = (
+        <div>
+          <TimelineForm />
+        </div>
+      );
 
-      let loginRoute = () => {
-        return (
-          <div>
-            <Navigation />
-            <Login />
-          </div>
-        );
-      };
+      let loginRoute = (
+        <div>
+          <Navigation />
+          <Login />
+        </div>
+      );
 
-      let timelineRoute = () => {
-        return (
-          <div>
-            <TimelineContainer params={ this.props.params } />
-          </div>
-        );
-      };
+      let timelineRoute = (
+        <div>
+          <TimelineContainer params={ this.props.params } />
+        </div>
+      );
 
       let ui = null;
 
         switch(this.props.route) {
 
             case "browse":
-                ui = browseRoute();
+                ui = browseRoute;
                 break;
 
             case "new":
-                ui = newRoute();
+                ui = newRoute;
                 break;
 
             case "login":
-                ui = loginRoute();
+                ui = loginRoute;
                 break;
 
             case "timeline":
-                ui = timelineRoute();
+                ui = timelineRoute;
                 break;
 
             default:
-                ui = browseRoute();
+              ui = browseRoute;
         }
 
         return ui;

@@ -10,27 +10,15 @@ let isPrivateRoute = (route) => privateViews.some((view) => view === route);
 class Router extends React.Component {
 
     constructor() {
-        super();
-        this.state = {
-          route: "",
-          params: ""
-        };
+      super();
+      hasher.init();
+      this.state = this.getParamInfo();
     }
 
     componentDidMount() {
-
-        // from hasher lib
-        hasher.changed.add(this.handleChanges.bind(this));
-        hasher.initialized.add(this.handleChanges.bind(this));
-        hasher.init();
-
-        let parts = hasher.getHash().split('/');
-
-        this.setState({
-          route: parts.shift(),
-          params: parts
-        });
-    }
+      hasher.changed.add(this.handleChanges.bind(this));
+      // hasher.initialized.add(this.handleChanges.bind(this));
+  }
 
     componentWillUpdate() {
         let route = hasher.getHash();
@@ -39,14 +27,17 @@ class Router extends React.Component {
         }
     }
 
+    getParamInfo() {
+      let hash = hasher.getHash();
+      let parts = hash.split('/');
+      return {
+        route: parts.shift(),
+        params: parts
+      };
+    }
+
     handleChanges(newHash, oldHash) {
-
-        let parts = newHash.split('/');
-
-        this.setState({
-          route: parts.shift(),
-          params: parts
-        });
+        this.setState(this.getParamInfo());
     }
 
     render () {
