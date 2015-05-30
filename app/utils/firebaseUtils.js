@@ -2,6 +2,8 @@ var Firebase = require('firebase');
 var appConstants = require('../constants/appConstants');
 var ref = new Firebase(appConstants.FIREBASE_HOST);
 
+var mockup = require('./mockup.json');
+
 var publicTimelinesIndex = 'public-timelines-index';
 var publicTimelines = "public-timelines";
 
@@ -16,14 +18,21 @@ var firebaseUtils = {
     },
 
     changeTimelines: function(callback){  // indexes
-      console.log("fetching timelines in firebaseUtils");
-      ref.child(publicTimelinesIndex)
-      .on("value", function(snapshot) {
-        callback(this.toArray(snapshot.val()));
-      }.bind(this), function (errorObject) {
-        console.log("The read failed: " + errorObject.code);
-      });
-   },
+      //console.log("fetching timelines in firebaseUtils");
+      //ref.child(publicTimelinesIndex)
+      //.on("value", function(snapshot) {
+      //  callback(this.toArray(snapshot.val()));
+      //}.bind(this), function (errorObject) {
+      //  console.log("The read failed: " + errorObject.code);
+      //});
+
+      // using mock up for developing
+      console.log("fetching timelines from mockups");
+      let timelines = this.toArray(mockup[publicTimelinesIndex]);
+      window.setTimeout(function(){
+        callback(timelines);
+      }, 2000);
+    },
 
     addTimeline: function(timeline){
 
@@ -42,14 +51,23 @@ var firebaseUtils = {
     },
 
     loadTimeline(timelineId, cb){
-      ref.child(publicTimelines).child(timelineId)
-      .on("value", function(snapshot) {
-        let timelineObj = snapshot.val();
-        timelineObj.dots = this.toArray(timelineObj.dots);
-        cb(timelineObj);
-      }.bind(this), function(errorObject) {
-        console.log("The read failed: " + errorObject.code);
-      });
+      //      ref.child(publicTimelines).child(timelineId)
+      //      .on("value", function(snapshot) {
+      //        let timelineObj = snapshot.val();
+      //        timelineObj.dots = this.toArray(timelineObj.dots);
+      //        cb(timelineObj);
+      //      }.bind(this), function(errorObject) {
+      //        console.log("The read failed: " + errorObject.code);
+      //      });
+      //
+
+      // FROM MOCKUP
+      console.log("loading timeline from mockup");
+      let timeline = mockup[publicTimelines][timelineId];
+      timeline.dots = this.toArray(timeline.dots);
+      window.setTimeout(function(){
+        cb(timeline);
+      }, 1000);
     },
 
     addDot: function(dot, timelineId) {

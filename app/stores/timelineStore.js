@@ -2,7 +2,6 @@ const objectAssign = require('react/lib/Object.assign');
 const EventEmitter = require('events').EventEmitter;
 let AppDispatcher = require('../dispatcher/AppDispatcher');
 let appConstants = require('../constants/appConstants');
-let mockupUtils = require('../utils/mockupUtils');
 let firebaseUtils = require('../utils/firebaseUtils');
 let authUtils = require('../utils/authUtils');
 
@@ -36,7 +35,7 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getOwnTimelines(){
-    let timelines = firebaseUtils.toArray(mockupUtils);
+    let timelines = firebaseUtils.toArray();
     // losing the reference name
     let filtered = timelines.filter((tl) => {
 

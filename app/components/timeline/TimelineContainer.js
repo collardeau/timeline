@@ -1,5 +1,4 @@
 const React = require('react');
-
 //const $ = require('jquery');
 const hasher = require('hasher');
 
@@ -47,8 +46,6 @@ class TimelineContainer extends React.Component {
   }
 
   render(){
-    console.log("rendering timeline container");
-    console.log(this.state);
 
     return (
          <div id="tbd">
