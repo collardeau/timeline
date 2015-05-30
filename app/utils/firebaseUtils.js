@@ -15,45 +15,44 @@ var firebaseUtils = {
         return new Firebase(appConstants.FIREBASE_HOST);
     },
 
-    changeTimelines: function(callback){
+    changeTimelines: function(callback){  // indexes
       console.log("fetching values in firebaseUtils");
        ref.child(publicTimelinesIndex).on("value", function(snapshot) {
-         console.log(snapshot.val());
         callback(this.toArray(snapshot.val()));
       }.bind(this), function (errorObject) {
         console.log("The read failed: " + errorObject.code);
       });
-
    },
-
-    getTimelines: function(callback){
-      ref.child(publicTimelinesIndex).on("value", function(snapshot) {
-        console.log(snapshot.val());
-        callback(this.toArray(snapshot.val()));
-      }.bind(this), function (errorObject) {
-        console.log("The read failed: " + errorObject.code);
-      });
-
-      console.log("getting timelines in the firebase util");
-    },
 
     addTimeline: function(timeline){
 
       // callback fun, 2 ops for timeline itself and an index
       let addIt = (cb) => {
-        var fbRef = this.homeInstance().child(publicTimelines).push({
-          owner: timeline.owner
-        });
+        var fbRef = this.homeInstance().child(publicTimelines).push(timeline);
         cb(fbRef.key());
       };
-
       let setIndex = (fbKey) => {
         timeline.ref = fbKey;
         this.homeInstance().child(publicTimelinesIndex).push(timeline);
       };
-
     addIt(setIndex);
 
+    },
+
+    loadTimeline(timelineId, cb){
+      ref.child(publicTimelines).child(timelineId).on("value", function(snapshot) {
+        let timelineObj = snapshot.val();
+        timelineObj.dots = this.toArray(timelineObj.dots);
+        cb(timelineObj);
+      }.bind(this), function(errorObject) {
+        console.log("The read failed: " + errorObject.code);
+      });
+    },
+
+    getTimeline(timelineId){
+      // console.log("intending to get timeline: ", timelineId);
+      // return a timeline
+      // or damn it do an action for the initial loading
     },
 
     addItem: function (item) {

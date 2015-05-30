@@ -13,22 +13,18 @@ class TimelineContainer extends React.Component {
   constructor() {
     super();
     this.state = {
-      timeline: null,
+      timeline: {
+        name: "",
+        description: ""
+      },
       addIsOpen: false
     };
     this.changeContent = this.changeContent.bind(this);
   }
 
-  componentWillMount(){
-    let timelineId = this.props.params[0];
-    console.log("dealing with this id: ", timelineId);
-    this.setState({
-      timeline: timelineStore.getTimeline(timelineId)
-    });
-  }
-
   componentDidMount() {
     timelineStore.addChangeListener(this.changeContent);
+    timelineActions.loadTimeline(this.props.params[0]);
   }
 
   componentDidUnmount() {
@@ -39,7 +35,7 @@ class TimelineContainer extends React.Component {
     hasher.setHash(route);
   }
 
-  handleToggle(){   // add new dot form
+  handleFormToggle(){   // add new dot form
     this.setState({
      addIsOpen: !this.state.addIsOpen
     });
@@ -73,9 +69,9 @@ class TimelineContainer extends React.Component {
                   <p>A Public Timeline curated  by Thomas Collardeau</p>
 
                   <button className="btn" onClick = { this.handleDateToggle.bind(this) }>View Dates</button>
-                  <button className="btn" onClick={this.handleToggle.bind(this)}>Add New Dot</button>
+                  <button className="btn" onClick={this.handleFormToggle.bind(this)}>Add New Dot</button>
 
-                  <TimelineAdd isOpen={ this.state.addIsOpen } toggle={this.handleToggle.bind(this)} />
+                  <TimelineAdd isOpen={ this.state.addIsOpen } toggle={this.handleFormToggle.bind(this)} />
 
                 </div>
 

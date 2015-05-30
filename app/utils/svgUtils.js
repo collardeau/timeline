@@ -131,7 +131,7 @@ let placeNewInfo = () => {
         if( isOverlapping(dotsCY, r, cy)){     // the dots are overlapping, so the space is constrained
 
             d3.select(this).append('text')
-                .text(d.event)
+                .text(d.name)
                 .classed('dot-info', true)
                 .attr({
                     'id': "text-" + i,
@@ -149,7 +149,7 @@ let placeNewInfo = () => {
         }else {
 
             d3.select(this).append('text')
-                .text(d.event)
+                .text(d.name)
                 .classed('dot-info', true)
                 .attr({
                     'id': "text-" + i,
@@ -200,7 +200,7 @@ let addDot = (dot) => {
     if( isOverlapping(dotsCY, r, cy) ) {
 
         selection.append('text')
-            .text(dot.event)
+            .text(dot.name)
             .attr({
                 id: "text-" + pos,
                 x: getTxtPos(dotsCY, cy) + 10,
@@ -211,7 +211,7 @@ let addDot = (dot) => {
     } else {
 
         selection.append('text')
-            .text(dot.event)
+            .text(dot.name)
             .attr({
                 id: "text-" + pos,
                 x: cx + 30,

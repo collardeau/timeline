@@ -18,7 +18,6 @@ class Browse extends React.Component {
   }
 
   componentDidMount(){
-    console.log("component mounting and setting change listener");
     timelineStore.addChangeListener(this.changeContent);
     timelineActions.changeTimelines();
 

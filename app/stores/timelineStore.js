@@ -7,7 +7,8 @@ let firebaseUtils = require('../utils/firebaseUtils');
 let authUtils = require('../utils/authUtils');
 
 let _store = {
-  timelines: []
+  timelines: [],
+  timeline: null
 };
 
 const CHANGE_EVENT = 'change';
@@ -37,7 +38,6 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
   getOwnTimelines(){
     let timelines = firebaseUtils.toArray(mockupUtils);
     // losing the reference name
-    console.log(timelines);
     let filtered = timelines.filter((tl) => {
 
       if(!tl.isPublic){  // should check for ownership
@@ -47,15 +47,8 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
     _store.timelines = filtered;
   },
 
-  getTimeline(timeline) {
-    console.log("fectching this timeline: ", timeline);
-    let newTimeline = mockupUtils[timeline];
-    if (newTimeline){
-      return newTimeline;
-    } else {
-      console.log("no such timeline exists");
-      return mockupUtils.pj;  // temp
-    }
+  getTimeline() {
+    return _store.timeline;
   },
 
   addTimeline(timeline){
@@ -64,6 +57,10 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
     timeline.owner = authUtils.isLoggedIn().uid;
 
     _store.timelines.push(timeline);
+  },
+
+  loadTimeline(timeline){
+    _store.timeline = timeline;
   },
 
   getDots() { return _store.timeline.dots; },
@@ -89,6 +86,10 @@ AppDispatcher.register(function(payload){
           timelineStore.addTimeline(action.data.timeline);
           //timelineStore.emit(CHANGE_EVENT);
           // we are going jumping to a new route anyway;
+          break;
+        case appConstants.LOAD_TIMELINE:
+          timelineStore.loadTimeline(action.data.timeline);
+          timelineStore.emit(CHANGE_EVENT);
           break;
         case appConstants.GET_OWN_TIMELINES:
           timelineStore.getOwnTimelines();

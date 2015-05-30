@@ -26,6 +26,17 @@ let timelineActions = {
     firebaseUtils.addTimeline(timeline);
   },
 
+  loadTimeline(timelineId){
+    firebaseUtils.loadTimeline(timelineId, function(timeline){
+      AppDispatcher.handleAction({
+        actionType: appConstants.LOAD_TIMELINE,
+          data: {
+            timeline: timeline
+          }
+        });
+    });
+  },
+
   getTimelines(){
     firebaseUtils.getTimelines(function(timelines){
       AppDispatcher.handleAction({
