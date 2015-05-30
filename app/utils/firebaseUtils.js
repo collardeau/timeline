@@ -16,7 +16,7 @@ var firebaseUtils = {
     },
 
     changeTimelines: function(callback){  // indexes
-      console.log("fetching values in firebaseUtils");
+      console.log("fetching timelines in firebaseUtils");
        ref.child(publicTimelinesIndex).on("value", function(snapshot) {
         callback(this.toArray(snapshot.val()));
       }.bind(this), function (errorObject) {
