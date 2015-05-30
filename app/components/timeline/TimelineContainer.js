@@ -1,4 +1,5 @@
 const React = require('react');
+
 //const $ = require('jquery');
 const hasher = require('hasher');
 

@@ -73,7 +73,6 @@ class Browse extends React.Component {
   }
 
   changeContent(){
-    console.log("setting state! re-render!");
     this.setState({
       timelines: timelineStore.getTimelines()
     });
