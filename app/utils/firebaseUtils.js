@@ -17,7 +17,8 @@ var firebaseUtils = {
 
     changeTimelines: function(callback){  // indexes
       console.log("fetching timelines in firebaseUtils");
-       ref.child(publicTimelinesIndex).on("value", function(snapshot) {
+      ref.child(publicTimelinesIndex)
+      .on("value", function(snapshot) {
         callback(this.toArray(snapshot.val()));
       }.bind(this), function (errorObject) {
         console.log("The read failed: " + errorObject.code);
@@ -26,7 +27,7 @@ var firebaseUtils = {
 
     addTimeline: function(timeline){
 
-      // callback fun, 2 ops for timeline itself and an index
+      // 2 write ops for timeline itself and an index
       let addIt = (cb) => {
         var fbRef = this.homeInstance().child(publicTimelines).push(timeline);
         cb(fbRef.key());
@@ -35,12 +36,14 @@ var firebaseUtils = {
         timeline.ref = fbKey;
         this.homeInstance().child(publicTimelinesIndex).push(timeline);
       };
+
     addIt(setIndex);
 
     },
 
     loadTimeline(timelineId, cb){
-      ref.child(publicTimelines).child(timelineId).on("value", function(snapshot) {
+      ref.child(publicTimelines).child(timelineId)
+      .on("value", function(snapshot) {
         let timelineObj = snapshot.val();
         timelineObj.dots = this.toArray(timelineObj.dots);
         cb(timelineObj);
@@ -49,13 +52,11 @@ var firebaseUtils = {
       });
     },
 
-    getTimeline(timelineId){
-      // console.log("intending to get timeline: ", timelineId);
-      // return a timeline
-      // or damn it do an action for the initial loading
+    addDot: function(dot, timelineId) {
+      this.homeInstance().child(publicTimelines).child(timelineId).child("dots").push(dot);
     },
 
-    addItem: function (item) {
+   addItem: function (item) {
         this.homeInstance().child("list").push(item);
     },
 

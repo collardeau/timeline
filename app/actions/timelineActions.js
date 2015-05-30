@@ -60,8 +60,10 @@ let timelineActions = {
     });
   },
 
-  addDot(dot){
+  addDot(dot, timelineId){
     svgUtils.addDot(dot);
+    // no dispatching as nothing in React component needs updating
+    firebaseUtils.addDot(dot, timelineId);
   },
 
   toggleDates(){

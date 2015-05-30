@@ -47,6 +47,8 @@ class TimelineContainer extends React.Component {
   }
 
   render(){
+    console.log("rendering timeline container");
+    console.log(this.state);
 
     return (
          <div id="tbd">
@@ -72,7 +74,9 @@ class TimelineContainer extends React.Component {
                   <button className="btn" onClick = { this.handleDateToggle.bind(this) }>View Dates</button>
                   <button className="btn" onClick={this.handleFormToggle.bind(this)}>Add New Dot</button>
 
-                  <TimelineAdd isOpen={ this.state.addIsOpen } toggle={this.handleFormToggle.bind(this)} />
+                  <TimelineAdd isOpen={ this.state.addIsOpen }
+                    timelineId= { this.props.params[0] }
+                    toggle={this.handleFormToggle.bind(this)} />
 
                 </div>
 
