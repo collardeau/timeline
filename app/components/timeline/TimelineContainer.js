@@ -14,8 +14,8 @@ class TimelineContainer extends React.Component {
     super();
     this.state = {
       timeline: {
-        name: "",
-        description: ""
+        name: "Timeline",
+        description: "loading..."
       },
       addIsOpen: false
     };
@@ -27,7 +27,7 @@ class TimelineContainer extends React.Component {
     timelineActions.loadTimeline(this.props.params[0]);
   }
 
-  componentDidUnmount() {
+  componentWillUnmount() {
     timelineStore.removeChangeListener(this.changeContent);
   }
 
