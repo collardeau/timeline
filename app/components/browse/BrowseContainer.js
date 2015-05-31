@@ -12,7 +12,8 @@ class Browse extends React.Component {
   constructor(){
     super();
     this.state = {
-      timelines: []
+      timelines: [],
+      activeTab: 'public'
     };
     this.changeContent = this.changeContent.bind(this);
   }
@@ -28,7 +29,8 @@ class Browse extends React.Component {
 
   filterTimelines(types) {
     this.setState({
-      timelines: timelineStore.getTimelines(types)
+      timelines: timelineStore.getTimelines(types),
+      activeTab: types
     });
   }
 
@@ -40,7 +42,7 @@ class Browse extends React.Component {
 
         <div className="content">
 
-          <BrowseControls yo="bar" filterFn={ this.filterTimelines.bind(this) }/>
+          <BrowseControls active={ this.state.activeTab } filterFn={ this.filterTimelines.bind(this) }/>
 
           <BrowseTable timelines={ this.state.timelines } />
 
@@ -51,7 +53,6 @@ class Browse extends React.Component {
   }
 
   changeContent(){
-    console.log("changing state");
     this.setState({
       timelines: timelineStore.getTimelines()
     });

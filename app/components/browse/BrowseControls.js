@@ -3,33 +3,45 @@ let timelineActions = require('../../actions/timelineActions.js');
 
 class BrowseControls extends React.Component {
 
-  handleMine(){
-    this.props.filterFn('user');
-  }
-
-  handlePublic(){
-    this.props.filterFn('public');
+  handleFilter(type){
+    this.props.filterFn(type);
   }
 
   render(){
-    return (
+
+    let classString = "";
+
+    let controlNodes = this.props.controls.map((control, i) => {
+
+      classString = "control-item";
+      if (control === this.props.active) { classString += " active"; }
+
+      return (
+        <a key={i} className={classString}
+          onClick= { this.handleFilter.bind(this, control) }>
+          { control.toUpperCase() }
+        </a>
+      );
+
+    });
+
+   return (
       <div className="segmented-control">
-
-        <a className="control-item active"
-          onClick={ this.handlePublic.bind(this) }>
-            Public
-        </a>
-
-        <a className="control-item"
-          onClick={ this.handleMine.bind(this) }>
-            Mine
-        </a>
-
-        <a className="control-item">Bookmarks</a>
-
+        { controlNodes }
       </div>
     );
   }
 }
+
+BrowseControls.defaultProps = {
+  active: 'public',
+  controls: ['public', 'user']
+};
+
+BrowseControls.propTypes = {
+  active: React.PropTypes.string,
+  filterFn: React.PropTypes.func.isRequired,
+  controls: React.PropTypes.array
+};
 
 module.exports = BrowseControls;
