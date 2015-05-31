@@ -31,7 +31,7 @@ var firebaseUtils = {
       let timelines = this.toArray(mockup[publicTimelinesIndex]);
       window.setTimeout(function(){
         callback(timelines);
-      }, 2000);
+      }, 1000);
     },
 
     addTimeline: function(timeline){

@@ -18,8 +18,16 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
     _store.timelines = timelines;
   },
 
-  getTimelines(){
-    return _store.timelines;
+  getTimelines( timelineType = "public"){
+    if (timelineType === "public") {
+      return _store.timelines.filter((tl) => {
+        if(tl.isPublic) { return tl; }
+      });
+    } else if (timelineType === "user") {
+      return _store.timelines.filter((tl) => {
+        if(!tl.isPublic){ return tl; }  // shortcut
+      });
+    }
   },
 
   // need work over here for filters
@@ -34,17 +42,17 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
     return filteredTimelines;
   },
 
-  getOwnTimelines(){
-    let timelines = firebaseUtils.toArray();
-    // losing the reference name
-    let filtered = timelines.filter((tl) => {
+  // getOwnTimelines(){
+  //   let timelines = firebaseUtils.toArray();
+  //   // losing the reference name
+  //   let filtered = timelines.filter((tl) => {
 
-      if(!tl.isPublic){  // should check for ownership
-        return tl;
-      }
-    });
-    _store.timelines = filtered;
-  },
+  //     if(!tl.isPublic){  // should check for ownership
+  //       return tl;
+  //     }
+  //   });
+  //   _store.timelines = filtered;
+  // },
 
   getTimeline() {
     return _store.timeline;
@@ -91,7 +99,7 @@ AppDispatcher.register(function(payload){
           timelineStore.emit(CHANGE_EVENT);
           break;
         case appConstants.GET_OWN_TIMELINES:
-          timelineStore.getOwnTimelines();
+          timelineStore.getTimelines("user");
           timelineStore.emit(CHANGE_EVENT);
           break;
          case appConstants.GET_PUBLIC_TIMELINES:

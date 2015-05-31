@@ -73,6 +73,7 @@ class Browse extends React.Component {
   }
 
   changeContent(){
+    console.log("changing state");
     this.setState({
       timelines: timelineStore.getTimelines()
     });

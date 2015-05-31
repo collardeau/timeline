@@ -4,6 +4,7 @@ let timelineActions = require('../../actions/timelineActions.js');
 class BrowseControls extends React.Component {
 
   handleMine(){
+    console.log("get all mine");
     timelineActions.getOwnTimelines();
   }
 
