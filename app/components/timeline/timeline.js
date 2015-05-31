@@ -9,6 +9,7 @@ class Timeline extends React.Component {
   }
 
   componentDidUpdate(){
+    SVG.killSVG();
     SVG.draw(this.props.dots);
   }
 

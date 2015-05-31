@@ -62,7 +62,10 @@ let timelineActions = {
 
   addDot(dot, timelineId){
     svgUtils.addDot(dot);
-    // no dispatching as nothing in React component needs updating
+    AppDispatcher.handleAction({
+      actionType: appConstants.ADD_DOT,
+      data: { dot: dot }
+    });
     firebaseUtils.addDot(dot, timelineId);
   },
 
