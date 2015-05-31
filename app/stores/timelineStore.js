@@ -30,31 +30,11 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  // need work over here for filters
-  getPublicTimelines() {
-    // should be server-side
-    let timelines = _store.timelines;
-    let filteredTimelines = timelines.filter((tl) => {
-      if(tl.isPublic){
-        return tl;
-      }
-    });
-    return filteredTimelines;
+  loadTimeline(timeline){
+    _store.timeline = timeline;
   },
 
-  // getOwnTimelines(){
-  //   let timelines = firebaseUtils.toArray();
-  //   // losing the reference name
-  //   let filtered = timelines.filter((tl) => {
-
-  //     if(!tl.isPublic){  // should check for ownership
-  //       return tl;
-  //     }
-  //   });
-  //   _store.timelines = filtered;
-  // },
-
-  getTimeline() {
+ getTimeline() {
     return _store.timeline;
   },
 
@@ -66,15 +46,11 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
     _store.timelines.push(timeline);
   },
 
-  loadTimeline(timeline){
-    _store.timeline = timeline;
-  },
-
-  getDots() { return _store.timeline.dots; },
-
-  addDot(dot) {
-    _store.dots.push(dot);
-  },
+  //  getDots() { return _store.timeline.dots; },
+  //
+  //  addDot(dot) {
+  //    _store.dots.push(dot);
+  //  },
 
   addChangeListener(cb) { this.on(CHANGE_EVENT, cb); },
 
@@ -98,15 +74,7 @@ AppDispatcher.register(function(payload){
           timelineStore.loadTimeline(action.data.timeline);
           timelineStore.emit(CHANGE_EVENT);
           break;
-        case appConstants.GET_OWN_TIMELINES:
-          timelineStore.getTimelines("user");
-          timelineStore.emit(CHANGE_EVENT);
-          break;
-         case appConstants.GET_PUBLIC_TIMELINES:
-          timelineStore.getPublicTimelines();
-          timelineStore.emit(CHANGE_EVENT);
-          break;
-        default:
+       default:
             return true;
     }
 });

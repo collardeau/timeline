@@ -1,5 +1,4 @@
 const React = require('react');
-const hasher = require('hasher');
 const $ = require('jquery');
 
 let BrowseTable = require('./BrowseTable');
@@ -27,8 +26,10 @@ class Browse extends React.Component {
     timelineStore.removeChangeListener(this.changeContent);
   }
 
-  handleRoute(route) {
-    hasher.setHash(route);
+  filterTimelines(types) {
+    this.setState({
+      timelines: timelineStore.getTimelines(types)
+    });
   }
 
   render() {
@@ -39,7 +40,7 @@ class Browse extends React.Component {
 
         <div className="content">
 
-          <BrowseControls />
+          <BrowseControls yo="bar" filterFn={ this.filterTimelines.bind(this) }/>
 
           <BrowseTable timelines={ this.state.timelines } />
 
