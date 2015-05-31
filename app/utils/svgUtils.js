@@ -16,8 +16,8 @@ let r = 10,  // radius of dots
     dotsCY = [], // keeping track of dots already drawn
     lineX = [ w / 4 ];  // horizontal pos of timeline
 
-let reorderData = (key) => {
-    data.sort(function (a, b) {
+let reorderData = (dataset, key) => {
+    dataset.sort(function (a, b) {
         if (a[key] > b[key]) { return 1; }
         if (a[key] < b[key]) { return -1; }
         return 0; // a must be equal to b
@@ -27,7 +27,7 @@ let reorderData = (key) => {
 let init = (dataset) => {
 
   data = dataset; // keep track of data locally
-  reorderData("timestamp");
+  reorderData(data, "timestamp");
 
   let svg = d3.select('.d3-container').append("svg")
     .attr({ 'width': w, 'height': h })
@@ -105,7 +105,7 @@ let enterNewDots = () => {
 
 let isOverlapping = (dots, rad, cy) => {  // don't need rad as r is defined
     return dots.some((elem) => {
-        if(cy - r > elem + r || cy + r < elem - r) { return false; }
+        if(cy - rad > elem + rad || cy + rad < elem - rad ) { return false; }
         return true;
     });
 };

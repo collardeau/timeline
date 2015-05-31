@@ -22,5 +22,12 @@ class Timeline extends React.Component {
 
 }
 
+SVG.defaultProps = {
+  dots: []
+};
+SVG.propTypes = {
+  dots: React.PropTypes.array.isRequired
+};
+
 module.exports = Timeline;
 

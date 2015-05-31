@@ -27,7 +27,7 @@ describe('svgUtils', () => {
 
         it("works when newDot is exactly same as a dot in the array", () => {
 
-            res = isOverlapping([1,45,30], 5, 30);
+            res = isOverlapping([1, 45, 30], 5, 30);
             expect(res).toBe(true);
             res = isOverlapping([0, 1, 10, 100], 5, 10);
             expect(res).toBe(true);
@@ -36,13 +36,13 @@ describe('svgUtils', () => {
 
         it("works when newDot is within radius distance of an existing dot", () => {
 
-            res = isOverlapping([1,45,30], 5, 34);  // when new dot is little higher
+            res = isOverlapping([1, 45, 30], 5, 34);  // when new dot is little higher
             expect(res).toBe(true);
 
-            res = isOverlapping([1,45,30], 5, 21);  // little lower
+            res = isOverlapping([1, 45, 30], 5, 21);  // little lower
             expect(res).toBe(true);
 
-            res = isOverlapping([1,45,30], 10, 45); // big radius
+            res = isOverlapping([1, 45, 30], 10, 45); // big radius
             expect(res).toBe(true);
 
             res = isOverlapping([0, 10, 20, 30, 40, 100, 1000.333], 5, 60); // random numbers
@@ -67,7 +67,7 @@ describe('svgUtils', () => {
 
             let data = [{pos: 2}, {pos: 1}, {pos: 3}];
             res = reorder(data, "pos");
-            expect(data).toEqual([{pos: 1}, {pos: 2}, {pos: 3}])
+            expect(data).toEqual([{pos: 1}, {pos: 2}, {pos: 3}]);
 
             let data2 = [{pos: 45}, {pos: 11}, {pos: -3}, {post: 26.5}];
             res = reorder(data2, "pos");
