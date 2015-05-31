@@ -7,7 +7,7 @@ class TimelineControls extends React.Component {
     let edit, addDot;
     if (this.props.owner) {
       edit = <a className="control-item">Edit</a>;
-      addDot = <a className="control-item">addDot</a>;
+      addDot = <a className="control-item">Add Dot</a>;
     }
 
     return (

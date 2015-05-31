@@ -1,5 +1,4 @@
 const React = require('react');
-//const $ = require('jquery');
 const hasher = require('hasher');
 
 let Timeline = require('./Timeline');
@@ -17,7 +16,8 @@ class TimelineContainer extends React.Component {
       timeline: {
         name: "Timeline",
         description: "loading...",
-        owner: ""
+        owner: "",
+        dots: []
       },
       addIsOpen: false
     };
@@ -51,15 +51,20 @@ class TimelineContainer extends React.Component {
 
     let isOwner = authUtils.isLoggedIn().uid === this.state.timeline.owner ? true : false;
 
+    let dateToggle;
+    if( this.state.timeline.dots.length){
+      dateToggle = <button className="btn" onClick = { this.handleDateToggle.bind(this) }>View Dates</button>;
+    }
+
     return (
-         <div id="tbd">
+         <div>
 
             <header className="bar bar-nav">
               <button className="btn pull-left" onClick={this.handleRoute.bind(this, "browse") }>
                 <i className="fa fa-chevron-left"></i>
               </button>
               <h1 className="title">
-                { this.state.timeline.name }
+                Timeline
               </h1>
             </header>
 
@@ -69,11 +74,12 @@ class TimelineContainer extends React.Component {
 
                 <div className="content-padded">
 
-                  <h5>{ this.state.timeline.description }</h5>
-                  <p>A Public Timeline curated  by Thomas Collardeau</p>
+                  <h4>{ this.state.timeline.name }</h4>
 
-                  <button className="btn" onClick = { this.handleDateToggle.bind(this) }>View Dates</button>
-                  <button className="btn" onClick={this.handleFormToggle.bind(this)}>Add New Dot</button>
+                  <p>{ this.state.timeline.description }</p>
+                  <p>A Public Timeline curated  by { this.state.timeline.owner }</p>
+
+                 { dateToggle }
 
                   <TimelineAdd isOpen={ this.state.addIsOpen }
                     timelineId= { this.props.params[0] }
