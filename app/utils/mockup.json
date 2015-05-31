@@ -123,7 +123,7 @@ module.exports = {
       "description" : "for testing",
       "isPublic" : true,
       "name" : "No Dot2",
-      "owner" : "simplelogin:1"
+      "owner" : "somepoorsoul"
     },
     "-Jqf8QM-_uIqHrp6Zp6P" : {
       "description" : "testing",
@@ -183,7 +183,7 @@ module.exports = {
       "description" : "for testing",
       "isPublic" : true,
       "name" : "No Dot2",
-      "owner" : "simplelogin:1",
+      "owner" : "somepoursoul",
       "ref" : "-Jqf8JWmZzYhUxy-2vBN"
     },
     "-Jqf8QM08f88ilbbrVb6" : {

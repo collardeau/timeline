@@ -7,6 +7,7 @@ let TimelineControls = require('./TimelineControls');
 let TimelineAdd = require('./TimelineAdd');
 let timelineStore = require('../../stores/timelineStore');
 let timelineActions = require('../../actions/timelineActions');
+let authUtils = require('../../utils/authUtils');
 
 class TimelineContainer extends React.Component {
 
@@ -15,7 +16,8 @@ class TimelineContainer extends React.Component {
     this.state = {
       timeline: {
         name: "Timeline",
-        description: "loading..."
+        description: "loading...",
+        owner: ""
       },
       addIsOpen: false
     };
@@ -47,6 +49,8 @@ class TimelineContainer extends React.Component {
 
   render(){
 
+    let isOwner = authUtils.isLoggedIn().uid === this.state.timeline.owner ? true : false;
+
     return (
          <div id="tbd">
 
@@ -61,7 +65,7 @@ class TimelineContainer extends React.Component {
 
               <div className="content">
 
-                <TimelineControls />
+                <TimelineControls owner={ isOwner } />
 
                 <div className="content-padded">
 
