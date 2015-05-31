@@ -8,7 +8,7 @@ let w = window.innerWidth   // width of window
 var h = window.innerHeight
 || document.documentElement.clientHeight
 || document.body.clientHeight;
-h = h * 3 / 2;
+h = h;
 // https://stackoverflow.com/questions/16265123/resize-svg-when-window-is-resized-in-d3-js/
 
 let r = 10,  // radius of dots
@@ -16,12 +16,43 @@ let r = 10,  // radius of dots
     dotsCY = [], // keeping track of dots already drawn
     lineX = [ w / 4 ];  // horizontal pos of timeline
 
+d3.selection.prototype.moveToBack = function() {
+  return this.each(function() {
+    var firstChild = this.parentNode.firstChild;
+    if (firstChild) {
+      this.parentNode.insertBefore(this, firstChild);
+    }
+  });
+};
+
 let reorderData = (dataset, key) => {
     dataset.sort(function (a, b) {
         if (a[key] > b[key]) { return 1; }
         if (a[key] < b[key]) { return -1; }
         return 0; // a must be equal to b
     });
+};
+
+let drawLine = (svg) => {
+  console.log("drawing line");
+  svg.append("line")  // draw in the timeline
+    .attr({
+        'x1': lineX, x2: lineX,
+        'y1': 5, y2: 5,
+        "id": "line"
+    })
+    .style({
+        stroke: "black",
+        "stroke-width": 5,
+        "stroke-linecap": 'round'
+    })
+    .classed('tline', true)
+    .transition().ease("linear")
+    .duration(1500)
+    .attr({
+        'y2': h - 5
+    });
+
 };
 
 let init = (dataset) => {
@@ -33,22 +64,6 @@ let init = (dataset) => {
     .attr({ 'width': w, 'height': h })
     .style({'background-color': 'white'});
 
-  svg.append("line")  // draw in the timeline
-    .attr({
-        'x1': lineX, x2: lineX,
-        'y1': 5, y2: 5,
-        "id": "line"
-    })
-    .style({
-        stroke: "black",
-        "stroke-width": 5,
-        "stroke-linecap": 'round'
-     })
-    .transition().ease("linear")
-    .duration(1500)
-    .attr({
-        'y2': h - 5
-    });
 };
 
 let getTimestamps = () => {
@@ -69,6 +84,12 @@ let getScale = () => {
 };
 
 let enterNewDots = () => {
+
+  // draw line only if 2+ dots and no line already drawn
+  if ( data.length > 1 && d3.select('.tline').empty()) {
+    drawLine(d3.select('svg'));
+    d3.select('.tline').moveToBack();
+  }
 
     let scale = getScale(data);
 
