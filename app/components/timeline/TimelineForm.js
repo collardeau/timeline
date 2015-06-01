@@ -1,11 +1,14 @@
 const React = require('react');
-const timelineActions = require('../../actions/timelineActions');
 const hasher = require('hasher');
+
+let timelineActions = require('../../actions/timelineActions');
+let authUtils = require('../../utils/authUtils.js');
 
 class TimelineForm extends React.Component {
 
   handleSubmit(e){
     e.preventDefault();
+    let userId = authUtils.isLoggedIn().uid;
     let name = this.refs.name.getDOMNode().value;
     let desc = this.refs.description.getDOMNode().value;
 
@@ -13,7 +16,8 @@ class TimelineForm extends React.Component {
       let timeline = {
         name: name,
         description: desc,
-        isPublic: this.refs.privacy.getDOMNode().checked
+        isPublic: this.refs.privacy.getDOMNode().checked,
+        owner: userId   // if null?
       };
       console.log(timeline);
       timelineActions.addTimeline(timeline);

@@ -3,7 +3,6 @@ const EventEmitter = require('events').EventEmitter;
 let AppDispatcher = require('../dispatcher/AppDispatcher');
 let appConstants = require('../constants/appConstants');
 let firebaseUtils = require('../utils/firebaseUtils');
-let authUtils = require('../utils/authUtils');
 
 let _store = {
   timelines: [],
@@ -40,10 +39,6 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
   },
 
   addTimeline(timeline){
-    // setting owner to timeline object here
-    // is this the place for this? what if user is logged out here?
-    timeline.owner = authUtils.isLoggedIn().uid;
-
     _store.timelines.push(timeline);
   },
 
