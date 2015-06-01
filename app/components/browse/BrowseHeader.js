@@ -19,6 +19,10 @@ class Browse extends React.Component {
     hasher.setHash(route);
   }
 
+  handleAddTimeline(){
+    $('#addTimelineModal').addClass('active');
+  }
+
   render() {
     // includes the bourbon refill side panel
     return (
@@ -32,7 +36,7 @@ class Browse extends React.Component {
             Timelines
           </h1>
 
-          <button className="btn pull-right" onClick= { this.handleRoute.bind(this, 'new')}>
+          <button className="btn pull-right" onClick= { this.handleAddTimeline }>
             Create New
           </button>
 

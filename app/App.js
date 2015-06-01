@@ -16,7 +16,7 @@ class App extends React.Component {
 
       let browseRoute = (
         <div>
-          <BrowseContainer />
+          <BrowseContainer user={ this.props.user } />
         </div>
       );
 

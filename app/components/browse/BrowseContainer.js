@@ -4,6 +4,7 @@ const $ = require('jquery');
 let BrowseTable = require('./BrowseTable');
 let BrowseControls = require('./BrowseControls');
 let BrowseHeader = require('./BrowseHeader');
+let AddTimeline = require('./AddTimeline');
 let timelineStore = require('../../stores/timelineStore');
 let timelineActions = require('../../actions/timelineActions');
 
@@ -47,6 +48,8 @@ class Browse extends React.Component {
           <BrowseTable timelines={ this.state.timelines } />
 
           </div>
+
+          <AddTimeline user={this.props.user}/>
 
       </div>
     );
