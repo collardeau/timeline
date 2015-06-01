@@ -83,19 +83,19 @@ describe('svgUtils', () => {
 
         it("works", () => {
 
-            res= getPrev([1,2,5], 3);
+            res = getPrev([ 1, 2, 5], 3);
             expect(res).toBe(1);
 
-            res = getPrev([1,5,10], 11);
+            res = getPrev([1, 5, 10], 11);
             expect(res).toBe(2);
 
-            res = getPrev([1,5,10], 9);
+            res = getPrev([1, 5 , 10], 9);
             expect(res).toBe(1);
 
-            res = getPrev([1,5,10], 2.2);
+            res = getPrev([1, 5, 10], 2.2);
             expect(res).toBe(0);
 
-            res = getPrev([10,50], 5);
+            res = getPrev([10, 50], 5);
             expect(res).toBe(-1);
 
             //res = getAbove([1,2,3,3], 3);
@@ -130,7 +130,7 @@ describe('svgUtils', () => {
             res = out([10, 15, 30], 10);
             expect(res).toBe(false);
 
-        })
+        });
 
 
     });

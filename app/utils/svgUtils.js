@@ -25,6 +25,7 @@ d3.selection.prototype.moveToBack = function() {
   });
 };
 
+// tested
 let reorderData = (dataset, key) => {
     dataset.sort(function (a, b) {
         if (a[key] > b[key]) { return 1; }
@@ -123,13 +124,15 @@ let enterNewDots = () => {
 
 };
 
-let isOverlapping = (dots, rad, cy) => {  // don't need rad as r is defined
+// tested
+let isOverlapping = (dots, rad, cy) => {
     return dots.some((elem) => {
         if(cy - rad > elem + rad || cy + rad < elem - rad ) { return false; }
         return true;
     });
 };
 
+// tested
 let isOutOfScale = (dataset, dot) => {
     if ( dot > d3.max(dataset) || dot < d3.min(dataset) ) {
         return true;
@@ -270,6 +273,7 @@ let toggleDates = () => {
   d3.selectAll('.date-label').classed("hidden", !d3.select('.date-label').classed("hidden"));
 };
 
+// tested
 let getPrevDot = (dots, dot) => {
     var closest = dots.reduce(function(prev, next){
         if( next > dot ) { return prev; }
