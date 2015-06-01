@@ -46,9 +46,18 @@ class TimelineContainer extends React.Component {
 
     let isOwner = this.props.user.uid === this.state.timeline.owner ? true : false;
 
-    let dateToggle;
-    if( this.state.timeline.dots.length){
-      dateToggle = <button className="btn" onClick = { this.handleDateToggle.bind(this) }>View Dates</button>;
+    let dateToggle, info;
+    let numDots = this.state.timeline.dots.length;
+
+    if (numDots) {    // there are items in the timeline
+      dateToggle =
+        <button className="btn" onClick = { this.handleDateToggle.bind(this) }>View Dates</button>;
+
+      if(numDots === 1){
+        info = <p>Only 1 item in this list</p>;
+      }
+    }else{
+      info = <p>No item in this list!</p>;
     }
 
     return (
@@ -65,9 +74,9 @@ class TimelineContainer extends React.Component {
             <h4>{ this.state.timeline.name }</h4>
 
             <p>{ this.state.timeline.description }</p>
-            <p>A Public Timeline curated by
-              { this.state.timeline.owner }</p>
+            <p>A Public Timeline curated by { this.state.timeline.owner }</p>
 
+            { info }
             { dateToggle }
 
             <button className="btn"
