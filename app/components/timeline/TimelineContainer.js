@@ -3,7 +3,7 @@ const React = require('react');
 let TimelineHeader = require('./TimelineHeader');
 let Timeline = require('./Timeline');
 let TimelineControls = require('./TimelineControls');
-let TimelineAdd = require('./TimelineAdd');
+let TimelineAddDot = require('./TimelineAddDot');
 let timelineStore = require('../../stores/timelineStore');
 let timelineActions = require('../../actions/timelineActions');
 
@@ -17,8 +17,7 @@ class TimelineContainer extends React.Component {
         description: "loading...",
         owner: "",
         dots: []
-      },
-      addIsOpen: false
+      }
     };
     this.changeContent = this.changeContent.bind(this);
   }
@@ -50,8 +49,11 @@ class TimelineContainer extends React.Component {
     let numDots = this.state.timeline.dots.length;
 
     if (numDots) {    // there are items in the timeline
-      dateToggle =
-        <button className="btn" onClick = { this.handleDateToggle.bind(this) }>View Dates</button>;
+      dateToggle = (
+        <button className="btn" onClick = { this.handleDateToggle.bind(this) }>
+          <i className="fa fa-calendar-o"></i>
+        </button>
+      );
 
       if(numDots === 1){
         info = <p>Only 1 item in this list</p>;
@@ -79,20 +81,12 @@ class TimelineContainer extends React.Component {
             { info }
             { dateToggle }
 
-            <button className="btn"
-              onClick={this.handleFormToggle.bind(this)}>
-              Add New Dot
-            </button>
-
-            <TimelineAdd isOpen={ this.state.addIsOpen }
-                    timelineId= { this.props.params[0] }
-                    toggle={this.handleFormToggle.bind(this)} />
-
           </div>
 
           <Timeline dots={ this.state.timeline.dots || [] } />
 
-        </div>
+          <TimelineAddDot timelineId = { this.props.params[0] }/>
+       </div>
 
       </div>
     );
