@@ -42,7 +42,10 @@ class Router extends React.Component {
 
     render () {
         return (
-            <App route={ this.state.route } params={ this.state.params } />);
+          <App route={ this.state.route }
+            params={ this.state.params }
+            user ={ authUtils.isLoggedIn() }
+          />);
     }
 }
 

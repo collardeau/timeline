@@ -7,8 +7,6 @@ let TimelineAdd = require('./TimelineAdd');
 let timelineStore = require('../../stores/timelineStore');
 let timelineActions = require('../../actions/timelineActions');
 
-let authUtils = require('../../utils/authUtils');
-
 class TimelineContainer extends React.Component {
 
   constructor() {
@@ -46,7 +44,7 @@ class TimelineContainer extends React.Component {
 
   render(){
 
-    let isOwner = authUtils.isLoggedIn().uid === this.state.timeline.owner ? true : false;
+    let isOwner = this.props.user.uid === this.state.timeline.owner ? true : false;
 
     let dateToggle;
     if( this.state.timeline.dots.length){
@@ -96,7 +94,11 @@ class TimelineContainer extends React.Component {
       timeline: timelineStore.getTimeline()
     });
   }
-
 }
+
+TimelineContainer.propTypes = {
+  user: React.PropTypes.instanceOf(Object),
+  params: React.PropTypes.array
+};
 
 module.exports = TimelineContainer;

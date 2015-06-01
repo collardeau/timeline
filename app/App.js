@@ -35,7 +35,10 @@ class App extends React.Component {
 
       let timelineRoute = (
         <div>
-          <TimelineContainer params={ this.props.params } />
+          <TimelineContainer
+            params={ this.props.params }
+            user={ this.props.user }
+          />
         </div>
       );
 
