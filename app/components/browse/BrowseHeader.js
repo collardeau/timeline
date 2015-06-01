@@ -1,6 +1,7 @@
 const React = require('react');
 const hasher = require('hasher');
 const $ = require('jquery');
+let authUtils = require('../../utils/authUtils');
 
 class Browse extends React.Component {
 
@@ -23,6 +24,11 @@ class Browse extends React.Component {
     $('#addTimelineModal').addClass('active');
   }
 
+  handleLogout(){
+    console.log("handling logout");
+    authUtils.logout();
+  }
+
   render() {
     // includes the bourbon refill side panel
     return (
@@ -43,6 +49,7 @@ class Browse extends React.Component {
           <nav className="js-menu sliding-panel-content">
             <ul>
               <li><a onClick={ this.handleRoute.bind(this, 'login') } >Login</a></li>
+              <li><a onClick={ this.handleLogout }>Logout</a></li>
               <li><a href="#">About</a></li>
             </ul>
           </nav>

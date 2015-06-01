@@ -8,7 +8,6 @@ let Navigation = require('./components/Navigation');
 let Login = require('./components/login/Login');
 let TimelineContainer = require('./components/timeline/TimelineContainer');
 let BrowseContainer = require('./components/browse/BrowseContainer');
-let TimelineForm = require('./components/timeline/TimelineForm');
 
 class App extends React.Component {
 
@@ -17,12 +16,6 @@ class App extends React.Component {
       let browseRoute = (
         <div>
           <BrowseContainer user={ this.props.user } />
-        </div>
-      );
-
-      let newRoute = (
-        <div>
-          <TimelineForm />
         </div>
       );
 
@@ -48,10 +41,6 @@ class App extends React.Component {
 
             case "browse":
                 ui = browseRoute;
-                break;
-
-            case "new":
-                ui = newRoute;
                 break;
 
             case "login":

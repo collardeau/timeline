@@ -43,8 +43,10 @@ class TimelineContainer extends React.Component {
 
   render(){
 
-    let isOwner = this.props.user.uid === this.state.timeline.owner ? true : false;
-
+    let isOwner = false;
+    if ( this.props.user && this.props.user.uid === this.state.timeline.owner) {
+      isOwner = true;
+    }
     let dateToggle, info;
     let numDots = this.state.timeline.dots.length;
 

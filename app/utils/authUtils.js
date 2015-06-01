@@ -35,8 +35,8 @@ let firebaseAuth = {
 
         ref.authWithPassword({
 
-            email    : user.email,
-            password : user.password
+            email: user.email,
+            password: user.password
 
         }, function(error, authData) {
 
@@ -51,7 +51,7 @@ let firebaseAuth = {
 
             }
 
-        })
+        });
     },
 
     isLoggedIn: function(){
@@ -60,14 +60,15 @@ let firebaseAuth = {
     },
 
     isLoggedOut: function(){
-        return !this.isLoggedIn()
+        return !this.isLoggedIn();
     },
 
     logout: function(){
+      console.log("logging out");
         ref.unauth(function(foo){
             console.log("logging out");
         });
-        hasher.setHash('home')
+        hasher.setHash('login');
     }
 
 };
