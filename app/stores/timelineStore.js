@@ -11,6 +11,7 @@ let _store = {
 };
 
 const CHANGE_EVENT = 'change';
+// const SVG_EVENT = 'svg';
 
 let timelineStore = objectAssign({}, EventEmitter.prototype, {
 
@@ -39,18 +40,12 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
   },
 
   addTimeline(timeline){
-    // setting owner to timeine object here
+    // setting owner to timeline object here
     // is this the place for this? what if user is logged out here?
     timeline.owner = authUtils.isLoggedIn().uid;
 
     _store.timelines.push(timeline);
   },
-
-  //  getDots() { return _store.timeline.dots; },
-  //
-  //  addDot(dot) {
-  //    _store.dots.push(dot);
-  //  },
 
   addChangeListener(cb) { this.on(CHANGE_EVENT, cb); },
 
@@ -72,6 +67,10 @@ AppDispatcher.register(function(payload){
           break;
         case appConstants.LOAD_TIMELINE:
           timelineStore.loadTimeline(action.data.timeline);
+          timelineStore.emit(CHANGE_EVENT);
+          break;
+        case appConstants.ADD_DOT:
+          //svgutils already updated store array
           timelineStore.emit(CHANGE_EVENT);
           break;
        default:

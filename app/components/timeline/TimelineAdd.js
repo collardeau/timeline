@@ -14,7 +14,6 @@ class TimelineAdd extends React.Component {
       timestamp: unixTime,
       name: name
     };
-
     timelineActions.addDot(dot, this.props.timelineId);
     this.refs.newName.getDOMNode().value = "";
     //this.props.toggle();

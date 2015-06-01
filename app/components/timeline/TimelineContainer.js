@@ -81,6 +81,8 @@ class TimelineContainer extends React.Component {
 
                  { dateToggle }
 
+                 <button className="btn" onClick={this.handleFormToggle.bind(this)}>Add New Dot</button>
+
                   <TimelineAdd isOpen={ this.state.addIsOpen }
                     timelineId= { this.props.params[0] }
                     toggle={this.handleFormToggle.bind(this)} />

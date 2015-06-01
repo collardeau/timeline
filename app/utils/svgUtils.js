@@ -34,7 +34,6 @@ let reorderData = (dataset, key) => {
 };
 
 let drawLine = (svg) => {
-  console.log("drawing line");
   svg.append("line")  // draw in the timeline
     .attr({
         'x1': lineX, x2: lineX,
@@ -57,7 +56,7 @@ let drawLine = (svg) => {
 
 let init = (dataset) => {
 
-  data = dataset; // keep track of data locally
+  data = dataset; // keep track of data locally (pass by ref)
   reorderData(data, "timestamp");
 
   let svg = d3.select('.d3-container').append("svg")
@@ -199,7 +198,7 @@ let addDot = (dot) => {
 
     let oldTimestamps = getTimestamps(data);
 
-    data.push(dot);
+    data.push(dot);   // this updates timeline store directly!
 
     if ( isOutOfScale(oldTimestamps, dot.timestamp) ){
         rescale(data);
@@ -312,9 +311,9 @@ let killSVG = () => {
 };
 
 let draw = (dataset) => {
-    init(dataset);
-    enterNewDots();
-    placeNewInfo();
+  init(dataset);  // pass by ref, now this is Timeline state
+  enterNewDots();
+  placeNewInfo();
 };
 
 let SVG = {
