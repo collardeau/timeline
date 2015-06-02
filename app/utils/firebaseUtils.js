@@ -74,12 +74,15 @@ var firebaseUtils = {
       this.homeInstance().child(publicTimelines).child(timelineId).child("dots").push(dot);
     },
 
-   addItem: function (item) {
-        this.homeInstance().child("list").push(item);
-    },
-
-    removeItem: function (key) {
-        this.homeInstance().child("list").child(key).remove();
+    getUserData: function(userId, cb ) {
+      ref.child('user').child(userId).child('info')
+      .on("value", function(snapshot) {
+        console.log("we have fetched user information");
+        console.log(snapshot.val());
+        cb(snapshot.val());
+      }, function(errorObject){
+        console.log("The read failed: " + errorObject.code);
+      });
     },
 
     toArray: function (obj) {

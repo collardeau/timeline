@@ -14,7 +14,10 @@ class App extends React.Component {
 
       let browseRoute = (
         <div>
-          <BrowseContainer user={ this.props.user } />
+          <BrowseContainer
+            user={ this.props.userAuth }
+            userData = { this.props.userData }
+          />
         </div>
       );
 

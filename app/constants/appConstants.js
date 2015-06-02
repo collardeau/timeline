@@ -10,7 +10,9 @@ var appConstants = {
     LOAD_TIMELINE: "LOAD_TIMELINE",
     GET_OWN_TIMELINES: "GET_OWN_TIMELINES",
     GET_PUBLIC_TIMELINES: "GET_PUBLIC_TIMELINES",
-    ADD_DOT: "ADD_DOT"
+    ADD_DOT: "ADD_DOT",
+
+    CHANGE_USER: "CHANGE_USER"
 };
 
 module.exports = appConstants;

@@ -1,34 +1,52 @@
 const React = require('react');
 const hasher = require('hasher');
 
-let authUtils = require('./utils/authUtils');
 let App = require('./App');
+let authUtils = require('./utils/authUtils');
+let userStore = require('./stores/userStore');
+let userActions = require('./actions/userActions');
 
 let privateViews = [''];
 let isPrivateRoute = (route) => privateViews.some((view) => view === route);
 
 class Router extends React.Component {
 
-    constructor() {
-      super();
-      hasher.init();
-      this.state = this.getParamInfo();
+  constructor() {
+    super();
+    hasher.init();
+    this.state = {
+      hashInfo: this.getHashInfo(),
+      userAuth: authUtils.isLoggedIn(),
+      userData: {
+        nickname: 'anonymous fly'
+      }
+    };
+    this.handleChanges = this.handleChanges.bind(this); // hash changes
+    this.changeUserContent = this.changeUserContent.bind(this);
     }
 
-    componentDidMount() {
-      hasher.changed.add(this.handleChanges.bind(this));
-      //hasher.initialized.add(this.handleChanges.bind(this));
-      console.log(authUtils.isLoggedIn());
+  componentDidMount() {
+    hasher.changed.add(this.handleChanges);
+    //hasher.initialized.add(this.handleChanges);
+    userStore.addChangeListener(this.changeUserContent);
+    if(this.state.userAuth){
+      userActions.changeUser(this.state.userAuth.uid);
+      console.log("user logged in, get more data on him/her");
+    }
   }
 
-    componentWillUpdate() {
-        let route = hasher.getHash();
-        if(isPrivateRoute(route) && authUtils.isLoggedOut()) {
-            hasher.setHash('login');
-        }
+  componentWillUpdate() {
+    let route = hasher.getHash();
+    if(isPrivateRoute(route) && authUtils.isLoggedOut()) {
+      hasher.setHash('login');
+    }
+  }
+
+    componentWillUnmount(){
+      userStore.removeChangeListener(this.changeUserContent);
     }
 
-    getParamInfo() {
+    getHashInfo() {
       let hash = hasher.getHash();
       let parts = hash.split('/');
       return {
@@ -38,14 +56,26 @@ class Router extends React.Component {
     }
 
     handleChanges(newHash, oldHash) {
-        this.setState(this.getParamInfo());
+      this.setState({
+        hashInfo: this.getHashInfo()
+      });
+    }
+
+    changeUserContent(){
+      console.log("changing user content");
+      this.setState({
+        userData: {
+          nickname: "a new nickname here!!!"
+        }
+      });
     }
 
     render () {
         return (
-          <App route={ this.state.route }
-            params={ this.state.params }
-            user ={ authUtils.isLoggedIn() }
+          <App route = { this.state.hashInfo.route }
+            params = { this.state.hashInfo.params }
+            userAuth = { this.state.userAuth }
+            userData = { this.state.userData }
           />);
     }
 }

@@ -46,6 +46,7 @@ class Browse extends React.Component {
           <BrowseControls active={ this.state.activeTab } filterFn={ this.filterTimelines.bind(this) }/>
 
           <BrowseTable timelines={ this.state.timelines } />
+          Hello { this.props.userData.nickname }
 
           </div>
 
