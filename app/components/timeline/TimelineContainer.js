@@ -16,6 +16,7 @@ class TimelineContainer extends React.Component {
         name: "Timeline",
         description: "loading...",
         owner: "",
+        ownerNickname: "",
         dots: []
       }
     };
@@ -31,12 +32,6 @@ class TimelineContainer extends React.Component {
     timelineStore.removeChangeListener(this.changeContent);
   }
 
-  handleFormToggle(){   // add new dot form
-    this.setState({
-     addIsOpen: !this.state.addIsOpen
-    });
-  }
-
   handleDateToggle(){
     timelineActions.toggleDates();
   }
@@ -44,7 +39,7 @@ class TimelineContainer extends React.Component {
   render(){
 
     let isOwner = false;
-    if ( this.props.user && this.props.user.uid === this.state.timeline.owner) {
+    if ( this.props.userAuth && this.props.userAuth.uid === this.state.timeline.owner) {
       isOwner = true;
     }
     let dateToggle, info;
@@ -78,7 +73,7 @@ class TimelineContainer extends React.Component {
             <h4>{ this.state.timeline.name }</h4>
 
             <p>{ this.state.timeline.description }</p>
-            <p>A Public Timeline curated by { this.state.timeline.owner }</p>
+            <p> A Public Timeline curated by { this.state.timeline.ownerNickname }</p>
 
             { info }
             { dateToggle }
@@ -102,7 +97,7 @@ class TimelineContainer extends React.Component {
 }
 
 TimelineContainer.propTypes = {
-  user: React.PropTypes.instanceOf(Object),
+  userAuth: React.PropTypes.instanceOf(Object),
   params: React.PropTypes.array
 };
 

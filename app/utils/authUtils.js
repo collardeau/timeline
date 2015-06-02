@@ -52,30 +52,6 @@ let firebaseAuth = {
   },
 
   isLoggedIn: function(){
-
-    // let getAuth = function(cb){
-    //   console.log('getting auth');
-    //   cb(ref.getAuth);
-    // }
-
-    // let getUserInfo = function(auth, cb){
-    //   firebase.getUserInfo(auth.uid, function(){
-    //     auth.extra = data;
-    //   }
-    // }
-
-    //let auth = getAuth(getUserInfo);
-    let auth = ref.getAuth();
-
-    //console.log("fetching user auth");
-   console.log(auth);
-    if(auth){
-      console.log("the use is logged in, let's get more info");
-      // add more data to the user auth object
-      //firebaseUtils.getUserInfo('simplelogin:4', function(data){
-      //auth.extraData = data;
-      //});
-    }
     return ref.getAuth();
   },
 
@@ -85,7 +61,7 @@ let firebaseAuth = {
 
   logout: function(){
     ref.unauth(function(){
-      console.log("logged");
+      console.log("logged out");
     });
     hasher.setHash('login');
   }

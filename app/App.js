@@ -15,7 +15,7 @@ class App extends React.Component {
       let browseRoute = (
         <div>
           <BrowseContainer
-            user={ this.props.userAuth }
+            userAuth={ this.props.userAuth }
             userData = { this.props.userData }
           />
         </div>
@@ -30,8 +30,8 @@ class App extends React.Component {
       let timelineRoute = (
         <div>
           <TimelineContainer
-            params={ this.props.params }
-            user={ this.props.user }
+            params = { this.props.params }
+            userAuth = { this.props.userAuth }
           />
         </div>
       );

@@ -17,9 +17,7 @@ class Router extends React.Component {
     this.state = {
       hashInfo: this.getHashInfo(),
       userAuth: authUtils.isLoggedIn(),
-      userData: {
-        nickname: 'anonymous fly'
-      }
+      userData: { nickname: "" }
     };
     this.handleChanges = this.handleChanges.bind(this); // hash changes
     this.changeUserContent = this.changeUserContent.bind(this);
@@ -31,7 +29,6 @@ class Router extends React.Component {
     userStore.addChangeListener(this.changeUserContent);
     if(this.state.userAuth){
       userActions.changeUser(this.state.userAuth.uid);
-      console.log("user logged in, get more data on him/her");
     }
   }
 
@@ -65,7 +62,7 @@ class Router extends React.Component {
       console.log("changing user content");
       this.setState({
         userData: {
-          nickname: "a new nickname here!!!"
+          nickname: userStore.getNickname()
         }
       });
     }

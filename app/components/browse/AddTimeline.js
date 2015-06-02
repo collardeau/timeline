@@ -14,7 +14,8 @@ class AddTimeline extends React.Component {
         name: name,
         description: desc,
         isPublic: this.refs.privacy.getDOMNode().checked,
-        owner: this.props.user.uid
+        owner: this.props.userAuth.uid,
+        ownerNickname: this.props.userData.nickname
       };
       timelineActions.addTimeline(timeline);
       this.closeModal();
@@ -60,7 +61,8 @@ class AddTimeline extends React.Component {
 }
 
 AddTimeline.propTypes = {
-  user: React.PropTypes.instanceOf(Object)
+  userAuth: React.PropTypes.instanceOf(Object),
+  userData: React.PropTypes.instanceOf(Object)
 };
 
 module.exports = AddTimeline;

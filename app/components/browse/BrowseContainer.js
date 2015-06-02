@@ -50,7 +50,7 @@ class Browse extends React.Component {
 
           </div>
 
-          <AddTimeline user={this.props.user}/>
+          <AddTimeline userAuth={this.props.userAuth} userData={this.props.userData}/>
 
       </div>
     );
