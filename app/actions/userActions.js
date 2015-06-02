@@ -5,14 +5,25 @@ let firebaseUtils = require('../utils/firebaseUtils');
 let userActions = {
 
   changeUser(userId) {
-    firebaseUtils.getUserData(userId, function(userData){
+    if(userId) {
+      console.log("fetching user data on firebase");
+      firebaseUtils.getUserData(userId, function(userData){
+        AppDispatcher.handleAction({
+          actionType: appConstants.CHANGE_USER,
+          data: {
+            userData: userData
+          }
+        });
+      });
+    } else {
+      console.log("empty out user data");
       AppDispatcher.handleAction({
         actionType: appConstants.CHANGE_USER,
         data: {
-          userData: userData
+          userData: null
         }
       });
-    });
+    }
   }
 
 };

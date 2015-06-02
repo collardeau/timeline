@@ -24,6 +24,7 @@ class Router extends React.Component {
     }
 
   componentDidMount() {
+    console.log("the router mounted, adding userStore change listener");
     hasher.changed.add(this.handleChanges);
     //hasher.initialized.add(this.handleChanges);
     userStore.addChangeListener(this.changeUserContent);

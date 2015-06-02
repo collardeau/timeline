@@ -1,9 +1,10 @@
 const Firebase = require('firebase');
 const appConstants = require('../constants/appConstants');
 let hasher = require('hasher');
-let ref = new Firebase(appConstants.FIREBASE_HOST);
-
 let firebaseUtils = require('./firebaseUtils');
+let userActions = require('../actions/userActions');
+
+let ref = new Firebase(appConstants.FIREBASE_HOST);
 
 let addNewUserToFB = (newUser) => {
     ref.child('user').child(newUser.uid).child("info").set(newUser);
@@ -62,6 +63,7 @@ let firebaseAuth = {
   logout: function(){
     ref.unauth(function(){
       console.log("logged out");
+      userActions.changeUser();
     });
     hasher.setHash('login');
   }

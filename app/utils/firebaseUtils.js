@@ -51,6 +51,7 @@ var firebaseUtils = {
     },
 
     loadTimeline(timelineId, cb){
+            console.log("fetching timeline from database");
             ref.child(publicTimelines).child(timelineId)
             .on("value", function(snapshot) {
               let timelineObj = snapshot.val();

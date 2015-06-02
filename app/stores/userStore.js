@@ -3,17 +3,19 @@ const EventEmitter = require('events').EventEmitter;
 let AppDispatcher = require('../dispatcher/AppDispatcher');
 let appConstants = require('../constants/appConstants');
 
-let _store = {
-  nickname: 'Henry',
-  bookmarks: [34, 56, 567]
+let emptyStore = {
+  nickname: '',
+  bookmarks: []
 };
+
+let _store = emptyStore;
 
 const CHANGE_EVENT = 'change';
 
 let userStore = objectAssign({}, EventEmitter.prototype, {
 
   changeUser(user) {
-    _store = user;
+    _store = user ? user : emptyStore;
   },
 
   getNickname(){
