@@ -46,7 +46,7 @@ let firebaseAuth = {
       } else {
         dummy = options.register && options.register(authData);
         hasher.setHash('browse');
-
+        userActions.changeUser(authData.uid);
       }
 
     });
