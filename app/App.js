@@ -4,7 +4,6 @@ require('./styles/main.scss');
 const React = require('react');
 
 // top level components for layouts
-let Navigation = require('./components/Navigation');
 let Login = require('./components/login/Login');
 let TimelineContainer = require('./components/timeline/TimelineContainer');
 let BrowseContainer = require('./components/browse/BrowseContainer');
@@ -21,7 +20,6 @@ class App extends React.Component {
 
       let loginRoute = (
         <div>
-          <Navigation />
           <Login />
         </div>
       );

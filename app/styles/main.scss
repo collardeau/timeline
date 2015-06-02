@@ -31,28 +31,6 @@ h1 {
 }
 
 
-#inputForm form {
-  @include outer-container(100%);
-  //border: 1px solid;
-  margin: 10px 5px;
-  input[type="text"] {
-    @include span-columns(5);
-    height: 40px;
-    //padding: 0;
-    margin: 0;
-  }
-  input[type="date"] {
-    @include span-columns(5);
-    height: 40px;
-    //padding: 0;
-    margin: 0;
-  }
-  button {
-    @include span-columns(2);
-    width: 19.3%;
-  }
-
-}
 
 .dot-info {
   //font-size: 2em;
@@ -66,8 +44,8 @@ h1 {
 
 //@import "./dropbox";
 //@import "./welcome";
-@import "./navigation";
-@import "./slidingPanel";
+//@import "./navigation";
+//@import "./slidingPanel";
 //@import "./modal";
 
 // flash bitter
