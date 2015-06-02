@@ -18,6 +18,7 @@ class Router extends React.Component {
     componentDidMount() {
       hasher.changed.add(this.handleChanges.bind(this));
       //hasher.initialized.add(this.handleChanges.bind(this));
+      console.log(authUtils.isLoggedIn());
   }
 
     componentWillUpdate() {

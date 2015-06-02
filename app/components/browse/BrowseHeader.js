@@ -14,7 +14,6 @@ class Browse extends React.Component {
   }
 
   handleLogout(){
-    console.log("would log out");
     authUtils.logout();
   }
 

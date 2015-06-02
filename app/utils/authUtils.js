@@ -9,67 +9,60 @@ let addNewUserToFB = (newUser) => {
 
 let firebaseAuth = {
 
-    createUser: function(user, options) {
-        ref.createUser(user, function(error) {
-            if (error) {
+  createUser: function(user, options) {
+    ref.createUser(user, function(error) {
+      if (error) {
+        options.warn && options.warn(error);
+      } else {
 
-                options.warn && options.warn(error);
+        this.loginWithPw(user, {
 
-            } else {
-
-                this.loginWithPw(user, {
-
-                    register: (authData) => {
-                        addNewUserToFB({
-                            email: user.email,
-                            uid: authData.uid,
-                            token: authData.token
-                        });
-                    }
-                });
-            }
-        }.bind(this));
-    },
-
-    loginWithPw: function(user, options){
-
-        ref.authWithPassword({
-
-            email: user.email,
-            password: user.password
-
-        }, function(error, authData) {
-
-            if (error) {
-
-                options.warn && options.warn(error);
-
-            } else {
-
-                options.register && options.register(authData);
-                hasher.setHash('timeline');
-
-            }
-
+          register: (authData) => {
+            addNewUserToFB({
+              email: user.email,
+              uid: authData.uid,
+              token: authData.token,
+              nickname: options.nickname
+            });
+          }
         });
-    },
+      }
+    }.bind(this));
+  },
 
-    isLoggedIn: function(){
+  loginWithPw: function(user, options){
 
-        return ref.getAuth();
-    },
+    ref.authWithPassword({
+      email: user.email,
+      password: user.password
 
-    isLoggedOut: function(){
-        return !this.isLoggedIn();
-    },
+    }, function(error, authData) {
 
-    logout: function(){
-      console.log("logging out");
-        ref.unauth(function(foo){
-            console.log("logging out");
-        });
-        hasher.setHash('login');
-    }
+      if (error) {
+        options.warn && options.warn(error);
+      } else {
+        options.register && options.register(authData);
+        hasher.setHash('browse');
+
+      }
+
+    });
+  },
+
+  isLoggedIn: function(){
+    return ref.getAuth();
+  },
+
+  isLoggedOut: function(){
+    return !this.isLoggedIn();
+  },
+
+  logout: function(){
+    ref.unauth(function(){
+      console.log("logged");
+    });
+    hasher.setHash('login');
+  }
 
 };
 

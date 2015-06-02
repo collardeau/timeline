@@ -23,15 +23,21 @@ class Login extends React.Component {
     let email = this.refs.regEmail.getDOMNode().value;
     let pw = this.refs.regPw.getDOMNode().value;
     let nickname = this.refs.nickname.getDOMNode().value;
-    authUtils.createUser({email: email, password: pw, nickname: nickname }, {
-      warn: (error) => {
-        this.setState({
-          warning: error.message
-        });
-      }
-    });
-    this.refs.regEmail.getDOMNode().value = "";
-    this.refs.regPw.getDOMNode().value = "";
+    if(nickname){
+      authUtils.createUser({email: email, password: pw }, {
+        nickname: nickname,
+        warn: (error) => {
+          this.setState({
+            warning: error.message
+          });
+        }
+      });
+      this.refs.regEmail.getDOMNode().value = "";
+      this.refs.regPw.getDOMNode().value = "";
+
+    } else {
+      this.setState({ warning: "Oops, no nickname" });
+    }
     e.preventDefault();
     }
 
@@ -90,7 +96,8 @@ class Login extends React.Component {
 
         <div className="content-padded">
 
-          <p>Log in to view some timelines visualizations.</p>
+          <p>With an account, you can bookmark timelines, and create your owns.</p>
+
           {this.state.warning ? warning : ""}
 
           <div id="loginTab" className="control-content active">
@@ -106,7 +113,7 @@ class Login extends React.Component {
 
           <div id="registerTab" className="control-content">
             <form>
-              <input type="text" ref="nickname" placeholder="Nickname"/>
+              <input type="text" ref="nickname" placeholder="Your nickname"/>
               <input type="text" ref="regEmail" placeholder="Email"/>
               <input type="password" ref="regPw" placeholder="Password"/>
 
