@@ -38,20 +38,19 @@ class AddTimeline extends React.Component {
 
         <div className="content">
           <div className="content-padded">
-            <p>Insert a new timeline</p>
             <form onSubmit={this.handleSubmit.bind(this)}>
               <input ref="name" type="text" placeholder="Name" />
               <input ref="description" type="text" placeholder="Description" />
-              <label className="label-switch">
-                 Make Public?
+              <span>Make it open to public?</span>
+              <label className="label-switch pull-right">
                 <input ref="privacy" type="checkbox" />
                 <div className="checkbox"></div>
               </label>
             </form>
 
           </div>
-            <div className="bar bar-standard bar-footer-secondary">
-              <button className="btn btn-block" onClick={ this.handleSubmit.bind(this) }>Submit</button>
+            <div className="bar bar-standard bar-footer">
+              <button className="btn btn-primary btn-outlined btn-block" onClick={ this.handleSubmit.bind(this) }>Create</button>
             </div>
         </div>
 
