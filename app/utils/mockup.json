@@ -1,6 +1,6 @@
 module.exports = {
 
-  "public-timelines" : {
+"public-timelines" : {
     "-JqW_puKfgHioCQ9puE9" : {
       "description" : "Shows I've been to",
       "dots" : {
@@ -63,7 +63,8 @@ module.exports = {
       },
       "isPublic" : true,
       "name" : "PJ",
-      "owner" : "simplelogin:1"
+      "owner" : "simplelogin:2",
+      "ownerNickname" : "tonton"
     },
     "-JqaoYXkOlLrnZus1Zjb" : {
       "description" : "Where I've lived",
@@ -91,11 +92,16 @@ module.exports = {
         "-Jqf8o4mcH4Nf_nM9lse" : {
           "name" : "Miami, USA",
           "timestamp" : 676936800
+        },
+        "-JqgHlAKRc7Qnea9heoX" : {
+          "name" : "sdfasf",
+          "timestamp" : 1433800800
         }
       },
       "isPublic" : true,
       "name" : "Tonton",
-      "owner" : "simplelogin:1"
+      "owner" : "simplelogin:2",
+      "ownerNickname" : "tonton"
     },
     "-JqapiGiliWP7a8K0_HX" : {
       "description" : "The Big Saga",
@@ -111,31 +117,8 @@ module.exports = {
       },
       "isPublic" : false,
       "name" : "Saga",
-      "owner" : "simplelogin:1"
-    },
-    "-Jqf8C7ZsH40EGmnj1xu" : {
-      "description" : "Hahaha",
-      "isPublic" : true,
-      "name" : "No Dots",
-      "owner" : "simplelogin:1"
-    },
-    "-Jqf8JWmZzYhUxy-2vBN" : {
-      "description" : "for testing",
-      "isPublic" : true,
-      "name" : "No Dot2",
-      "owner" : "somepoorsoul"
-    },
-    "-Jqf8QM-_uIqHrp6Zp6P" : {
-      "description" : "testing",
-      "dots" : {
-        "-Jqf8XPKnhl1qj0FgY3E" : {
-          "name" : "Important Event",
-          "timestamp" : 1146866400
-        }
-      },
-      "isPublic" : true,
-      "name" : "a single dot",
-      "owner" : "simplelogin:1"
+      "owner" : "simplelogin:2",
+      "ownerNickname" : "tonton"
     },
     "-JqfAyw6ZY8K2bZmI-0T" : {
       "description" : "",
@@ -147,7 +130,16 @@ module.exports = {
       },
       "isPublic" : false,
       "name" : "Single Dot again",
-      "owner" : "simplelogin:1"
+      "owner" : "simplelogin:2",
+      "owner-nickname" : "Idefix",
+      "ownerNickname" : "Idefix"
+    },
+    "-JqqI3jHGuqZbEhB4vm_" : {
+      "description" : "asdfa",
+      "isPublic" : true,
+      "name" : "test",
+      "owner" : "simplelogin:2",
+      "ownerNickname" : "Elvis"
     }
   },
   "public-timelines-index" : {
@@ -155,52 +147,99 @@ module.exports = {
       "description" : "Shows I've been to",
       "isPublic" : true,
       "name" : "PJ",
-      "owner" : "simplelogin:1",
+      "owner" : "simplelogin:2",
+      "ownerNickname" : "tonton",
       "ref" : "-JqW_puKfgHioCQ9puE9"
     },
     "-JqaoYXl_2ApGDI_SH3n" : {
       "description" : "Where I've lived",
       "isPublic" : true,
       "name" : "Tonton",
-      "owner" : "simplelogin:1",
+      "owner" : "simplelogin:2",
+      "ownerNickname" : "tonton",
       "ref" : "-JqaoYXkOlLrnZus1Zjb"
     },
     "-JqapiGiliWP7a8K0_HY" : {
       "description" : "The Big Saga",
       "isPublic" : false,
       "name" : "Saga",
-      "owner" : "simplelogin:1",
+      "owner" : "simplelogin:2",
+      "ownerNickname" : "tonton",
       "ref" : "-JqapiGiliWP7a8K0_HX"
-    },
-    "-Jqf8C7_E2BpoW322r2e" : {
-      "description" : "Hahaha",
-      "isPublic" : true,
-      "name" : "No Dots",
-      "owner" : "simplelogin:1",
-      "ref" : "-Jqf8C7ZsH40EGmnj1xu"
-    },
-    "-Jqf8JWnWAAPSbXqVARH" : {
-      "description" : "for testing",
-      "isPublic" : true,
-      "name" : "No Dot2",
-      "owner" : "somepoursoul",
-      "ref" : "-Jqf8JWmZzYhUxy-2vBN"
-    },
-    "-Jqf8QM08f88ilbbrVb6" : {
-      "description" : "testing",
-      "isPublic" : true,
-      "name" : "a single dot",
-      "owner" : "simplelogin:1",
-      "ref" : "-Jqf8QM-_uIqHrp6Zp6P"
     },
     "-JqfAyw7hbmx4CXsoQ8g" : {
       "description" : "",
       "isPublic" : false,
       "name" : "Single Dot again",
-      "owner" : "simplelogin:1",
+      "owner" : "simplelogin:2",
+      "ownerNickname" : "Idefix",
       "ref" : "-JqfAyw6ZY8K2bZmI-0T"
+    },
+    "-JqqI3jHGuqZbEhB4vma" : {
+      "description" : "asdfa",
+      "isPublic" : true,
+      "name" : "test",
+      "owner" : "simplelogin:2",
+      "ownerNickname" : "Elvis",
+      "ref" : "-JqqI3jHGuqZbEhB4vm_"
+    }
+  },
+  "user" : {
+    "simplelogin:2" : {
+      "info" : {
+        "email" : "t@c.com",
+        "nickname" : "tonton",
+        "token" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2IjowLCJkIjp7InByb3ZpZGVyIjoicGFzc3dvcmQiLCJ1aWQiOiJzaW1wbGVsb2dpbjoyIn0sImlhdCI6MTQzMzI0MzE5NX0.2Lu68CfE4XS5brLgoNr06iDhuRXBPm7cG2UOzUDOIFQ",
+        "uid" : "simplelogin:2"
+      }
+    },
+    "simplelogin:3" : {
+      "info" : {
+        "email" : "asdf@asdfa.com",
+        "token" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2IjowLCJkIjp7InByb3ZpZGVyIjoicGFzc3dvcmQiLCJ1aWQiOiJzaW1wbGVsb2dpbjozIn0sImlhdCI6MTQzMzI0NTE5MX0.1jojH7j2ATl4m_Ao8Vywughza4eIsQmUCHupdKL7D5U",
+        "uid" : "simplelogin:3"
+      }
+    },
+    "simplelogin:4" : {
+      "info" : {
+        "email" : "afsad@asdf.com",
+        "token" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2IjowLCJkIjp7InByb3ZpZGVyIjoicGFzc3dvcmQiLCJ1aWQiOiJzaW1wbGVsb2dpbjo0In0sImlhdCI6MTQzMzI0NTI5MX0.KYKCPQkvmHuKEfr-Ud-NhlkJvYCwrvAwlchsYytYz84",
+        "uid" : "simplelogin:4"
+      }
+    },
+    "simplelogin:5" : {
+      "info" : {
+        "email" : "ad@s.fr",
+        "token" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2IjowLCJkIjp7InByb3ZpZGVyIjoicGFzc3dvcmQiLCJ1aWQiOiJzaW1wbGVsb2dpbjo1In0sImlhdCI6MTQzMzI0NTMzMn0.sM8BAhGPTH2ee2j5GaY7XHy39QZrMH7vWo5qTxiJNNU",
+        "uid" : "simplelogin:5"
+      }
+    },
+    "simplelogin:6" : {
+      "info" : {
+        "email" : "adfd@dddd.co.uk",
+        "nickname" : "Elvis",
+        "uid" : "simplelogin:6"
+      }
+    },
+    "simplelogin:7" : {
+      "info" : {
+        "email" : "tonton@collardeau.com",
+        "nickname" : "Tonton",
+        "token" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2IjowLCJkIjp7InByb3ZpZGVyIjoicGFzc3dvcmQiLCJ1aWQiOiJzaW1wbGVsb2dpbjo3In0sImlhdCI6MTQzMzI0NjMwNH0.5S3RjCOHQFkktXNCvNORYvr66vGNkB-IeAO9-cHjhmw",
+        "uid" : "simplelogin:7"
+      }
+    },
+    "simplelogin:8" : {
+      "info" : {
+        "email" : "tc@col.com",
+        "nickname" : "tc@col.com",
+        "token" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2IjowLCJkIjp7InByb3ZpZGVyIjoicGFzc3dvcmQiLCJ1aWQiOiJzaW1wbGVsb2dpbjo4In0sImlhdCI6MTQzMzI0NjM0MH0.I5B44fcf_7BsGYbORt9zi47vPCitavXUhM2_6Y7sEeA",
+        "uid" : "simplelogin:8"
+      }
     }
   }
 
 }
+
+
 
