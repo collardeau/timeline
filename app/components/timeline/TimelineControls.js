@@ -6,12 +6,16 @@ class TimelineControls extends React.Component {
   openAddDotModal (){
     $('#addDotModal').addClass('active');
   }
+
+  openEditModal(){
+    $("#editTimelineModal").addClass('active');
+  }
   render(){
 
     let edit, addDot;
 
     if (this.props.owner) {
-      edit = <a className="control-item">Edit</a>;
+      edit = <a onClick={this.openEditModal} className="control-item">Edit</a>;
       addDot = <a onClick={this.openAddDotModal} className="control-item">Add Dot</a>;
     }
 

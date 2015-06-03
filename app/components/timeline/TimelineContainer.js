@@ -4,6 +4,7 @@ let TimelineHeader = require('./TimelineHeader');
 let Timeline = require('./Timeline');
 let TimelineControls = require('./TimelineControls');
 let TimelineAddDot = require('./TimelineAddDot');
+let TimelineEdit = require('./TimelineEdit');
 let timelineStore = require('../../stores/timelineStore');
 let timelineActions = require('../../actions/timelineActions');
 
@@ -86,6 +87,7 @@ class TimelineContainer extends React.Component {
           <Timeline dots={ this.state.timeline.dots || [] } />
 
           <TimelineAddDot timelineId = { this.props.params[0] }/>
+          <TimelineEdit timeline = { this.state.timeline }/>
        </div>
 
       </div>
