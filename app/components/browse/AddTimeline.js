@@ -4,12 +4,17 @@ let timelineActions = require('../../actions/timelineActions');
 
 class AddTimeline extends React.Component {
 
+  constructor(){
+    super();
+    this.state = { warning: '' };
+  }
+
   handleSubmit(e){
     e.preventDefault();
     let name = this.refs.name.getDOMNode().value;
     let desc = this.refs.description.getDOMNode().value;
 
-    if(name) {  // pretty weak error checking
+    if(name && desc) {
       let timeline = {
         name: name,
         description: desc,
@@ -20,6 +25,11 @@ class AddTimeline extends React.Component {
       timelineActions.addTimeline(timeline);
       this.closeModal();
     }else {
+      if(!name){
+      this.setState({ warning: 'Oops, name is missing' });
+      }else {
+        this.setState({ warning: 'Oops, description is missing' });
+      }
       console.log("you haven't put in a name");
     }
   }
@@ -29,6 +39,13 @@ class AddTimeline extends React.Component {
   }
 
   render(){
+
+    var warning = (
+      <div className="flash-error">
+        <span>{ this.state.warning }</span>
+      </div>
+    );
+
     return (
       <div id="addTimelineModal" className="modal">
         <header className="bar bar-nav">
@@ -38,6 +55,7 @@ class AddTimeline extends React.Component {
 
         <div className="content">
           <div className="content-padded">
+            { this.state.warning ? warning : '' }
             <form onSubmit={this.handleSubmit.bind(this)}>
               <input ref="name" type="text" placeholder="Name" />
               <input ref="description" type="text" placeholder="Description" />
