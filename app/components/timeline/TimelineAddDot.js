@@ -24,13 +24,13 @@ class TimelineAddDot extends React.Component {
       let dot = {
         timestamp: unixTime,
         name: name
-      };
+    };
 
-      timelineActions.addDot(dot, this.props.timelineId);
-      this.refs.newName.getDOMNode().value = "";
-      this.setState( { warning: '' });
+    timelineActions.addDot(dot, this.props.timelineId);
+    this.refs.newName.getDOMNode().value = "";
+    this.setState( { warning: '' });
 
-      this.closeModal();
+    this.closeModal();
 
     }
       }

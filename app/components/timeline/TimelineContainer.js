@@ -72,8 +72,11 @@ class TimelineContainer extends React.Component {
 
             <h4>{ this.state.timeline.name }</h4>
 
-            <p>{ this.state.timeline.description }</p>
-            <p> A Public Timeline curated by { this.state.timeline.ownerNickname }</p>
+            <p>{ this.state.timeline.description }.
+              <br />
+              A Public Timeline curated by
+              <b> { this.state.timeline.ownerNickname }</b>.
+            </p>
 
             { info }
             { dateToggle }
