@@ -6,28 +6,46 @@ let timelineActions = require('../../actions/timelineActions.js');
 
 class TimelineAddDot extends React.Component {
 
-  handleClick(e) {
-    e.preventDefault();
+  constructor() {
+    super();
+    this.state = { warning: '' };
+  }
+
+  handleSubmit() {
+
     let name = this.refs.newName.getDOMNode().value,
         unixTime = moment(this.refs.newDate.getDOMNode().value).unix();
 
-    let dot = {
-      timestamp: unixTime,
-      name: name
-    };
+    if (!name) {
+      this.setState({ warning: 'Oops, event name' });
+    } else if(!unixTime || typeof unixTime !== 'number') {
+      this.setState( { warning: "Oops, not a valid date "});
+    } else {
+      let dot = {
+        timestamp: unixTime,
+        name: name
+      };
 
-    timelineActions.addDot(dot, this.props.timelineId);
-    this.refs.newName.getDOMNode().value = "";
+      timelineActions.addDot(dot, this.props.timelineId);
+      this.refs.newName.getDOMNode().value = "";
 
-    this.closeModal();
+      this.closeModal();
 
-  }
+    }
+      }
 
   closeModal() {
     $('#addDotModal').removeClass('active');
   }
 
   render(){
+
+    var warning = (
+      <div className="flash-error">
+        <span>{ this.state.warning }</span>
+      </div>
+    );
+
     return (
       <div id="addDotModal" className="modal">
         <header className="bar bar-nav">
@@ -37,15 +55,18 @@ class TimelineAddDot extends React.Component {
 
         <div className="content">
           <div className="content-padded">
-            <p>Insert a new event (dot)</p>
-            <form>
-              <input type="text" ref="newName" placeholder="new name" />
-              <input type="date" ref="newDate" />
-              <button className="btn" onClick={ this.handleClick.bind(this) }>Submit</button>
-            </form>
+            { this.state.warning ? warning : '' }
+            <input type="text" ref="newName" placeholder="new name" />
+            <input type="date" ref="newDate" />
           </div>
         </div>
 
+        <div className="bar bar-standard bar-footer">
+          <button className="btn btn-primary btn-outlined btn-block"
+            onClick={ this.handleSubmit.bind(this) }>
+              Add
+            </button>
+          </div>
       </div>
     );
   }
