@@ -26,12 +26,12 @@ var firebaseUtils = {
         console.log("The read failed: " + errorObject.code);
       });
 
-      // using mock up for developing
-      //console.log("fetching timelines from mockups");
-      //let timelines = this.toArray(mockup[publicTimelinesIndex]);
-      //window.setTimeout(function(){
-      //  callback(timelines);
-      //}, 1000);
+      //using mock up for developing
+      // console.log("fetching timelines from mockups");
+      // let timelines = this.toArray(mockup[publicTimelinesIndex]);
+      // window.setTimeout(function(){
+      //   callback(timelines);
+      // }, 1000);
     },
 
     addTimeline: function(timeline){
@@ -43,7 +43,7 @@ var firebaseUtils = {
       };
       let setIndex = (fbKey) => {
         timeline.ref = fbKey;
-        this.homeInstance().child(publicTimelinesIndex).push(timeline);
+        this.homeInstance().child(publicTimelinesIndex).child('index' + fbKey).set(timeline);
       };
 
     addIt(setIndex);
@@ -51,23 +51,29 @@ var firebaseUtils = {
     },
 
     loadTimeline(timelineId, cb){
-            console.log("fetching timeline from database");
-            ref.child(publicTimelines).child(timelineId)
-            .on("value", function(snapshot) {
-              let timelineObj = snapshot.val();
-              timelineObj.dots = this.toArray(timelineObj.dots);
-              cb(timelineObj);
-            }.bind(this), function(errorObject) {
-              console.log("The read failed: " + errorObject.code);
-            });
+
+      console.log("fetching timeline from database");
+      ref.child(publicTimelines).child(timelineId)
+      .on("value", function(snapshot) {
+        let timelineObj = snapshot.val();
+        timelineObj.dots = this.toArray(timelineObj.dots);
+        cb(timelineObj);
+      }.bind(this), function(errorObject) {
+        console.log("The read failed: " + errorObject.code);
+      });
 
       // FROM MOCKUP
-            // console.log("loading timeline from mockup");
-            // let timeline = mockup[publicTimelines][timelineId];
-            // timeline.dots = this.toArray(timeline.dots);
-            // window.setTimeout(function(){
-            //   cb(timeline);
-            // }, 1000);
+      // console.log("loading timeline from mockup");
+      // let timeline = mockup[publicTimelines][timelineId];
+      // timeline.dots = this.toArray(timeline.dots);
+      // window.setTimeout(function(){
+      //   cb(timeline);
+      // }, 1000);
+    },
+
+    editTimeline: function(updatedTl, tlId){
+      this.homeInstance().child(publicTimelines).child(tlId).update(updatedTl);
+      this.homeInstance().child(publicTimelinesIndex).child('index' + tlId).update(updatedTl);
     },
 
     addDot: function(dot, timelineId) {

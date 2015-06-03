@@ -11,12 +11,15 @@ class TimelineEdit extends React.Component {
     this.state = { warning: '' };
   }
 
-  handleSubmit() {
-    let newTimelineTitle = $('#edit-timelineTitle').html();
-    console.log(this.props);
+  handleDelete(dotRef){
+    console.log("handling delete");
+    console.log(dotRef);
+  }
 
+  handleSubmit() {
     timelineActions.editTimeline({
-      name: newTimelineTitle
+      name: $('#edit-timelineTitle').html(),
+      description: $('#edit-timelineDesc').html()
     }, this.props.timelineId);
 
     this.closeModal();
@@ -35,6 +38,18 @@ class TimelineEdit extends React.Component {
       </div>
     );
 
+    var dots = this.props.timeline.dots.map(function(dot){
+      console.log(dot);
+      return (
+        <li className='table-view-cell'>
+          { dot.name }
+          <br />
+          <small> { dot.timestamp }</small>
+          <button className='btn'>Delete</button>
+        </li>
+      );
+    });
+
     return (
       <div id="editTimelineModal" className="modal">
         <header className="bar bar-nav">
@@ -45,10 +60,15 @@ class TimelineEdit extends React.Component {
         <div className="content">
           <div className="content-padded">
             { this.state.warning ? warning : '' }
-            <p contentEditable='true' id='test'>Edit that timeline</p>
-            <h5 contentEditable='true' id='edit-timelineTitle'>
+            <h3 contentEditable id='edit-timelineTitle'>
               { this.props.timeline.name }
-            </h5>
+            </h3>
+            <p contentEditable id="edit-timelineDesc">
+              { this.props.timeline.description }
+            </p>
+            <ul className='table-view'>
+              { dots }
+            </ul>
           </div>
         </div>
 
