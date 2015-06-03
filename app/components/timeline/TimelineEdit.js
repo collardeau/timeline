@@ -13,8 +13,13 @@ class TimelineEdit extends React.Component {
 
   handleSubmit() {
     let newTimelineTitle = $('#edit-timelineTitle').html();
-    console.log(newTimelineTitle);
-    // this.closeModal();
+    console.log(this.props);
+
+    timelineActions.editTimeline({
+      name: newTimelineTitle
+    }, this.props.timelineId);
+
+    this.closeModal();
   }
 
   closeModal() {

@@ -38,6 +38,11 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
     return _store.timeline;
   },
 
+  editTimeline(data){
+    console.log(data);
+    _store.timeline.name = data.timeline.name;
+  },
+
   addTimeline(timeline){
     _store.timelines.push(timeline);
   },
@@ -62,6 +67,10 @@ AppDispatcher.register(function(payload){
           break;
         case appConstants.LOAD_TIMELINE:
           timelineStore.loadTimeline(action.data.timeline);
+          timelineStore.emit(CHANGE_EVENT);
+          break;
+        case appConstants.EDIT_TIMELINE:
+          timelineStore.editTimeline(action.data);
           timelineStore.emit(CHANGE_EVENT);
           break;
         case appConstants.ADD_DOT:

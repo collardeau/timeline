@@ -16,16 +16,6 @@ let timelineActions = {
     });
   },
 
-  addTimeline(timeline){
-    AppDispatcher.handleAction({
-      actionType: appConstants.ADD_TIMELINE,
-      data: {
-        timeline: timeline
-      }
-    });
-    firebaseUtils.addTimeline(timeline);
-  },
-
   loadTimeline(timelineId){
     firebaseUtils.loadTimeline(timelineId, function(timeline){
       AppDispatcher.handleAction({
@@ -37,27 +27,25 @@ let timelineActions = {
     });
   },
 
-  getTimelines(){
-    firebaseUtils.getTimelines(function(timelines){
-      AppDispatcher.handleAction({
-        actionType: appConstants.GET_TIMELINES,
-        data: {
-          timelines: timelines
-        }
-      });
+  addTimeline(timeline){
+    AppDispatcher.handleAction({
+      actionType: appConstants.ADD_TIMELINE,
+      data: {
+        timeline: timeline
+      }
     });
+    firebaseUtils.addTimeline(timeline);
   },
 
-  getOwnTimelines() {
+  editTimeline(newTimeline, timelineId) {
     AppDispatcher.handleAction({
-      actionType: appConstants.GET_OWN_TIMELINES
+      actionType: appConstants.EDIT_TIMELINE,
+      data: {
+        timelineId: timelineId,
+        timeline: newTimeline
+      }
     });
-  },
-
-  getPublicTimelines() {
-    AppDispatcher.handleAction({
-      actionType: appConstants.GET_PUBLIC_TIMELINES
-    });
+    firebaseUtils.editTimeline(newTimeline, timelineId);
   },
 
   addDot(dot, timelineId){

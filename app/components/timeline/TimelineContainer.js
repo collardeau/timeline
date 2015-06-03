@@ -87,7 +87,10 @@ class TimelineContainer extends React.Component {
           <Timeline dots={ this.state.timeline.dots || [] } />
 
           <TimelineAddDot timelineId = { this.props.params[0] }/>
-          <TimelineEdit timeline = { this.state.timeline }/>
+          <TimelineEdit
+            timeline = { this.state.timeline }
+            timelineId = { this.props.params[0] }
+          />
        </div>
 
       </div>
