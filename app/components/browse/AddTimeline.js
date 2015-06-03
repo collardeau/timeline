@@ -9,6 +9,10 @@ class AddTimeline extends React.Component {
     this.state = { warning: '' };
   }
 
+  componentDidMount() {
+    console.log("component will update");
+  }
+
   handleSubmit(e){
     e.preventDefault();
     let name = this.refs.name.getDOMNode().value;
@@ -30,12 +34,14 @@ class AddTimeline extends React.Component {
       }else {
         this.setState({ warning: 'Oops, description is missing' });
       }
-      console.log("you haven't put in a name");
     }
   }
 
   closeModal() {
+    this.setState({ warning: '' });
     $('#addTimelineModal').removeClass('active');
+    this.refs.name.getDOMNode().value = '';
+    this.refs.description.getDOMNode().value = '';
   }
 
   render(){
@@ -49,7 +55,7 @@ class AddTimeline extends React.Component {
     return (
       <div id="addTimelineModal" className="modal">
         <header className="bar bar-nav">
-          <a onClick={this.closeModal} className="closeModal icon icon-close pull-right"></a>
+          <a onClick={this.closeModal.bind(this)} className="closeModal icon icon-close pull-right"></a>
           <h1 className="title">Add New Timeline </h1>
         </header>
 
