@@ -17,7 +17,7 @@ class TimelineAddDot extends React.Component {
         unixTime = moment(this.refs.newDate.getDOMNode().value).unix();
 
     if (!name) {
-      this.setState({ warning: 'Oops, event name' });
+      this.setState({ warning: 'Oops, no event name' });
     } else if(!unixTime || typeof unixTime !== 'number') {
       this.setState( { warning: "Oops, not a valid date "});
     } else {
@@ -37,6 +37,7 @@ class TimelineAddDot extends React.Component {
 
   closeModal() {
     $('#addDotModal').removeClass('active');
+    this.setState({ warning: '' });
   }
 
   render(){
@@ -50,13 +51,14 @@ class TimelineAddDot extends React.Component {
     return (
       <div id="addDotModal" className="modal">
         <header className="bar bar-nav">
-          <a onClick={this.closeModal} className="closeModal icon icon-close pull-right"></a>
+          <a onClick={this.closeModal.bind(this)} className="closeModal icon icon-close pull-right"></a>
           <h1 className="title">Add New Event</h1>
         </header>
 
         <div className="content">
           <div className="content-padded">
             { this.state.warning ? warning : '' }
+            <p>Add a new dot or event to this timelnie</p>
             <input type="text" ref="newName" placeholder="new name" />
             <input type="date" ref="newDate" />
           </div>

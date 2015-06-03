@@ -9,12 +9,7 @@ class AddTimeline extends React.Component {
     this.state = { warning: '' };
   }
 
-  componentDidMount() {
-    console.log("component will update");
-  }
-
-  handleSubmit(e){
-    e.preventDefault();
+  handleSubmit(){
     let name = this.refs.name.getDOMNode().value;
     let desc = this.refs.description.getDOMNode().value;
 
