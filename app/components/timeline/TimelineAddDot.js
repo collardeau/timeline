@@ -28,6 +28,7 @@ class TimelineAddDot extends React.Component {
 
       timelineActions.addDot(dot, this.props.timelineId);
       this.refs.newName.getDOMNode().value = "";
+      this.setState( { warning: '' });
 
       this.closeModal();
 

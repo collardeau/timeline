@@ -23,7 +23,7 @@ class Login extends React.Component {
     let email = this.refs.regEmail.getDOMNode().value;
     let pw = this.refs.regPw.getDOMNode().value;
     let nickname = this.refs.nickname.getDOMNode().value;
-    if(nickname){
+    if(nickname && pw && email){
       authUtils.createUser({email: email, password: pw }, {
         nickname: nickname,
         warn: (error) => {
@@ -36,24 +36,39 @@ class Login extends React.Component {
       this.refs.regPw.getDOMNode().value = "";
 
     } else {
-      this.setState({ warning: "Oops, no nickname" });
+      if(!nickname) {
+        this.setState({ warning: 'Oops, no nickname' });
+      } else if (!email) {
+        this.setState({ warning: 'Oops, no email' });
+      } else if (!pw) {
+        this.setState({ warning: 'Oops, no password' });
+      }
     }
     e.preventDefault();
     }
 
-  handleLogin(e){
+  handleLogin(){
     let email = this.refs.loginEmail.getDOMNode().value;
     let pw = this.refs.loginPw.getDOMNode().value;
-    authUtils.loginWithPw({email: email, password: pw}, {
-      warn: (error) => {
-        this.setState({
-          warning: error.message
-        });
+
+    if (email && pw) {
+      authUtils.loginWithPw({email: email, password: pw}, {
+        warn: (error) => {
+          this.setState({
+            warning: error.message
+          });
+        }
+      });
+      this.refs.loginEmail.getDOMNode().value = "";
+      this.refs.loginPw.getDOMNode().value = "";
+    } else {
+      if(!email){
+        this.setState({ warning: 'Oops, no email' });
+      }else if (!pw){
+        this.setState({ warning: 'Oops, no password' });
       }
-    });
-    this.refs.loginEmail.getDOMNode().value = "";
-    this.refs.loginPw.getDOMNode().value = "";
-    e.preventDefault();
+    }
+
   }
 
     handleRoute(route){
