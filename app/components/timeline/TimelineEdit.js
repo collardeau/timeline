@@ -11,7 +11,7 @@ class TimelineEdit extends React.Component {
     super();
     this.state = {
       warning: '',
-      dotsToDelete: ['-JqvNl5ZzENIPiVmNTWh', 'gkad']
+      dotsToDelete: []
     };
   }
 
@@ -22,6 +22,19 @@ class TimelineEdit extends React.Component {
     }, this.props.timelineId);
 
     this.closeModal();
+  }
+
+  handleToggleDotDel(dotKey){
+    let index = this.state.dotsToDelete.indexOf(dotKey);
+    if (index > -1) {
+      let newDots = this.state.dotsToDelete.slice(); //copy array
+      newDots.splice(index, 1); //remove element
+      this.setState({dotsToDelete: newDots}); //update state
+    }else {
+      this.setState({
+        dotsToDelete: this.state.dotsToDelete.concat([dotKey])
+      });
+    }
   }
 
   closeModal() {
@@ -42,7 +55,13 @@ class TimelineEdit extends React.Component {
         return dot.key === d;
       });
 
-      return <TimelineEditItem dot={dot} toDelete={toDelete} />;
+      return (
+        <TimelineEditItem
+          dot={dot}
+          toDelete={toDelete}
+          toggleDel={this.handleToggleDotDel.bind(this)}
+        />
+      );
     });
 
     return (

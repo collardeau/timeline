@@ -4,7 +4,7 @@ const classNames = require('classnames');
 class TimelineEditItem extends React.Component {
 
   handleDelete(dotKey){
-    console.log(dotKey);
+    this.props.toggleDel(dotKey);
   };
 
   render(){
