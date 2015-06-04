@@ -2,18 +2,17 @@ const React = require("react");
 const moment = require('moment');
 const $ = require('jquery');
 
+let TimelineEditItem = require('./TimelineEditItem');
 let timelineActions = require('../../actions/timelineActions.js');
 
 class TimelineEdit extends React.Component {
 
   constructor() {
     super();
-    this.state = { warning: '' };
-  }
-
-  handleDelete(dotRef){
-    console.log("handling delete");
-    console.log(dotRef);
+    this.state = {
+      warning: '',
+      dotsToDelete: ['-JqvNl5ZzENIPiVmNTWh', 'gkad']
+    };
   }
 
   handleSubmit() {
@@ -32,22 +31,18 @@ class TimelineEdit extends React.Component {
 
   render(){
 
-    var warning = (
+    let warning = (
       <div className="flash-error">
         <span>{ this.state.warning }</span>
       </div>
     );
 
-    var dots = this.props.timeline.dots.map(function(dot){
-      console.log(dot);
-      return (
-        <li className='table-view-cell'>
-          { dot.name }
-          <br />
-          <small> { dot.timestamp }</small>
-          <button className='btn'>Delete</button>
-        </li>
-      );
+    let dots = this.props.timeline.dots.map(dot => {
+      let toDelete = this.state.dotsToDelete.some( d => {
+        return dot.key === d;
+      });
+
+      return <TimelineEditItem dot={dot} toDelete={toDelete} />;
     });
 
     return (
