@@ -16,11 +16,14 @@ class TimelineEdit extends React.Component {
   }
 
   handleSubmit() {
-    timelineActions.editTimeline({
-      name: $('#edit-timelineTitle').html(),
-      description: $('#edit-timelineDesc').html()
-    }, this.props.timelineId);
+    // timelineActions.editTimeline({
+    //   name: $('#edit-timelineTitle').html(),
+    //   description: $('#edit-timelineDesc').html()
+    // }, this.props.timelineId);
 
+    this.state.dotsToDelete.forEach((dotRef, i) => {
+      timelineActions.deleteDot(dotRef, this.props.timelineId);
+    });
     this.closeModal();
   }
 
@@ -50,14 +53,14 @@ class TimelineEdit extends React.Component {
       </div>
     );
 
-    let dots = this.props.timeline.dots.map(dot => {
+    let dots = this.props.timeline.dots.map((dot, i) => {
       let toDelete = this.state.dotsToDelete.some( d => {
         return dot.key === d;
       });
 
       return (
         <TimelineEditItem
-          dot={dot}
+          dot={dot} key={i}
           toDelete={toDelete}
           toggleDel={this.handleToggleDotDel.bind(this)}
         />

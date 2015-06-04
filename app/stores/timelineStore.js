@@ -6,13 +6,15 @@ let firebaseUtils = require('../utils/firebaseUtils');
 
 let _store = {
   timelines: [],
-  timeline: null
+  timeline: null  // timeline on display
 };
 
 const CHANGE_EVENT = 'change';
-// const SVG_EVENT = 'svg';
+const SVG_EVENT = 'svg';  // will reset the svg
 
 let timelineStore = objectAssign({}, EventEmitter.prototype, {
+
+  // dealing with browse page
 
   changeTimelines(timelines){
     _store.timelines = timelines;
@@ -30,6 +32,12 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
+  addTimeline(timeline){
+    _store.timelines.push(timeline);
+  },
+
+  //dealing with timeline page
+
   loadTimeline(timeline){
     _store.timeline = timeline;
   },
@@ -43,13 +51,27 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
     _store.timeline.name = data.timeline.name;
   },
 
-  addTimeline(timeline){
-    _store.timelines.push(timeline);
+  getDotIndex(dotRef){
+    let i = 0,
+        dots = _store.timeline.dots;
+    while(i < dots.length) {
+      if(dots[i].key === dotRef){
+        return i;
+      }
+      i++;
+    }
+  },
+
+  deleteDot(data){
+    let toDeleteIndex = this.getDotIndex(data.dotRef);
+    _store.timeline.dots.splice(toDeleteIndex, 1);
   },
 
   addChangeListener(cb) { this.on(CHANGE_EVENT, cb); },
+  addSVGListener(cb) { this.on(SVG_EVENT, cb); },
 
-  removeChangeListener(cb) { this.removeListener(CHANGE_EVENT, cb); }
+  removeChangeListener(cb) { this.removeListener(CHANGE_EVENT, cb); },
+  removeSVGListener(cb) { this.removeListener(SVG_EVENT, cb); }
 
 });
 
@@ -62,7 +84,7 @@ AppDispatcher.register(function(payload){
           break;
        case appConstants.ADD_TIMELINE:
           timelineStore.addTimeline(action.data.timeline);
-          //timelineStore.emit(CHANGE_EVENT);
+          // timelineStore.emit(CHANGE_EVENT);
           // we are going jumping to a new route anyway;
           break;
         case appConstants.LOAD_TIMELINE:
@@ -76,6 +98,10 @@ AppDispatcher.register(function(payload){
         case appConstants.ADD_DOT:
           //svgutils already updated store array
           timelineStore.emit(CHANGE_EVENT);
+          break;
+        case appConstants.DELETE_DOT:
+          timelineStore.deleteDot(action.data);
+          timelineStore.emit(SVG_EVENT);
           break;
        default:
             return true;

@@ -56,6 +56,19 @@ let timelineActions = {
     firebaseUtils.addDot(dot, timelineId);
   },
 
+  deleteDot(dotRef, timelineId){
+    AppDispatcher.handleAction({
+      actionType: appConstants.DELETE_DOT,
+      data: {
+        dotRef: dotRef,
+        timelineId: timelineId
+      }
+    });
+    firebaseUtils.removeDot(dotRef, timelineId);
+    // svg dot util too, or just draw svg
+    // svg.reset();
+  },
+
   toggleDates(){
     svgUtils.toggleDates();
   }

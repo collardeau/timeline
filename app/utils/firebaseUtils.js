@@ -80,6 +80,10 @@ var firebaseUtils = {
       this.homeInstance().child(publicTimelines).child(timelineId).child("dots").push(dot);
     },
 
+    removeDot: function(dotRef, timelineId) {
+      this.homeInstance().child(publicTimelines).child(timelineId).child('dots').child(dotRef).set({});
+    },
+
     getUserData: function(userId, cb ) {
       ref.child('user').child(userId).child('info')
       .on("value", function(snapshot) {

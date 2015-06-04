@@ -331,13 +331,10 @@ let SVG = {
 
     //API
     initialize: init,
-    placeDots: enterNewDots,  // no longer in API?
-    placeInfo: placeNewInfo,  // no longer in API?
     toggleDates: toggleDates,
     draw: draw,
     addDot: addDot,
     killSVG: killSVG
-
 };
 
 module.exports = SVG;
