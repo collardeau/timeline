@@ -26,7 +26,30 @@ class BrowseHeader extends React.Component {
  }
 
   render() {
-    //<button className='btn pull-left'><a href="#loggedOutPopup">pop</a></button>
+
+    let logout, login, account;
+
+    if (this.props.isLoggedIn){
+      logout = (
+        <li onClick={ this.handleLogout.bind(this) } className="table-view-cell">
+          <i className='fa fa-sign-out pull-left'></i>
+          Logout
+        </li>
+      );
+      account = (
+        <li className="table-view-cell">
+          <i className='fa fa-user pull-left'></i>
+          Account
+        </li>
+      );
+    }else{
+      login = (
+        <li onClick={ this.handleRoute.bind(this, 'login') } className="table-view-cell">
+          <i className='fa fa-sign-in pull-left'></i>
+          Register / Login
+        </li>
+      );
+    }
 
     return (
       <header className="bar bar-nav">
@@ -36,7 +59,6 @@ class BrowseHeader extends React.Component {
             <i className='fa fa-bars'></i>
           </button>
         </a>
-
         <button className="btn pull-right" onClick= { this.handleAddTimeline.bind(this) }>
           <i className='fa fa-pencil-square-o pull-left'></i>
         </button>
@@ -48,19 +70,15 @@ class BrowseHeader extends React.Component {
             <h1 className="title">Menu</h1>
           </header>
           <ul className="table-view">
+            { account }
+            { login }
             <li className="table-view-cell">
-              <i className='fa fa-user pull-left'></i>
-              Account
-            </li>
-            <li className="table-view-cell">
-              <i className='fa fa-info pull-left'></i>
+              <i className='fa fa-institution pull-left'></i>
               About Timelines
             </li>
-            <li onClick={ this.handleLogout.bind(this) } className="table-view-cell">
-              <i className='fa fa-sign-out pull-left'></i>
-              Logout
-            </li>
+            { logout }
           </ul>
+
         </div>
 
     </header>

@@ -8,7 +8,7 @@ let w = window.innerWidth   // width of window
 var h = window.innerHeight
 || document.documentElement.clientHeight
 || document.body.clientHeight;
-h = h;
+h = h / 4 * 3;
 // https://stackoverflow.com/questions/16265123/resize-svg-when-window-is-resized-in-d3-js/
 
 let r = 10,  // radius of dots

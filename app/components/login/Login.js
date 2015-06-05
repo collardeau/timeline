@@ -116,7 +116,7 @@ class Login extends React.Component {
 
         <div className="content-padded">
 
-          <p>With an account, you can bookmark timelines, and create your owns.</p>
+          <p>Log in with an account, and you can bookmark and create timelines.</p>
 
           {this.state.warning ? warning : ""}
 
