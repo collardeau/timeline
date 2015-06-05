@@ -5,7 +5,7 @@ let BrowseTable = require('./BrowseTable');
 let BrowseControls = require('./BrowseControls');
 let BrowseHeader = require('./BrowseHeader');
 let AddTimeline = require('./AddTimeline');
-let timelineStore = require('../../stores/timelineStore');
+let timelinesStore = require('../../stores/timelinesStore');
 let timelineActions = require('../../actions/timelineActions');
 
 class Browse extends React.Component {
@@ -15,7 +15,7 @@ class Browse extends React.Component {
     console.log("--------------");
     console.log("browse: constructor");
     this.state = {
-      timelines: timelineStore.getTimelines(),
+      timelines: timelinesStore.getTimelines(),
       activeTab: 'public'
     };
     this.changeContent = this.changeContent.bind(this);
@@ -28,17 +28,17 @@ class Browse extends React.Component {
 
   componentDidMount(){
     console.log("browse: mount");
-    timelineStore.addChangeListener(this.changeContent);
+    timelinesStore.addChangeListener(this.changeContent);
  }
 
   componentWillUnmount(){
     console.log('browse: unmount');
-    timelineStore.removeChangeListener(this.changeContent);
+    timelinesStore.removeChangeListener(this.changeContent);
   }
 
   filterTimelines(types) {
     this.setState({
-      timelines: timelineStore.getTimelines(types),
+      timelines: timelinesStore.getTimelines(types),
       activeTab: types
     });
   }
@@ -68,7 +68,7 @@ class Browse extends React.Component {
   changeContent(){
     console.log("browse callback: changing content");
     this.setState({
-      timelines: timelineStore.getTimelines()
+      timelines: timelinesStore.getTimelines()
     });
   }
 }

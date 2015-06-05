@@ -5,38 +5,19 @@ let appConstants = require('../constants/appConstants');
 let firebaseUtils = require('../utils/firebaseUtils');
 
 let _store = {
-  timelines: [],
-  timeline: null  // timeline on display
+  timeline: {
+    name: "Timeline",
+    description: "loading...",
+    owner: "",
+    ownerNickname: "",
+    dots: []
+  }
 };
 
 const CHANGE_EVENT = 'change';
 const SVG_EVENT = 'svg';  // will reset the svg
 
 let timelineStore = objectAssign({}, EventEmitter.prototype, {
-
-  // dealing with browse page
-
-  changeTimelines(timelines){
-    _store.timelines = timelines;
-  },
-
-  getTimelines( timelineType = "public"){
-    if (timelineType === "public") {
-      return _store.timelines.filter((tl) => {
-        if(tl.isPublic) { return tl; }
-      });
-    } else if (timelineType === "user") {
-      return _store.timelines.filter((tl) => {
-        if(!tl.isPublic){ return tl; }  // shortcut
-      });
-    }
-  },
-
-  addTimeline(timeline){
-    _store.timelines.push(timeline);
-  },
-
-  //dealing with timeline page
 
   loadTimeline(timeline){
     _store.timeline = timeline;
@@ -78,16 +59,7 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(payload){
     var action = payload.action;
     switch(action.actionType){
-        case appConstants.CHANGE_TIMELINES:
-          timelineStore.changeTimelines(action.data.timelines);
-          timelineStore.emit(CHANGE_EVENT);
-          break;
-       case appConstants.ADD_TIMELINE:
-          timelineStore.addTimeline(action.data.timeline);
-          // timelineStore.emit(CHANGE_EVENT);
-          // we are going jumping to a new route anyway;
-          break;
-        case appConstants.LOAD_TIMELINE:
+       case appConstants.LOAD_TIMELINE:
           timelineStore.loadTimeline(action.data.timeline);
           timelineStore.emit(CHANGE_EVENT);
           break;

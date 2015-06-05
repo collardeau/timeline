@@ -15,13 +15,7 @@ class TimelineContainer extends React.Component {
     console.log("---------------");
     console.log("tl container: contructor");
     this.state = {
-      timeline: {
-        name: "Timeline",
-        description: "loading...",
-        owner: "",
-        ownerNickname: "",
-        dots: []
-      }
+      timeline: timelineStore.getTimeline()
     };
     this.changeContent = this.changeContent.bind(this);
   }
@@ -29,7 +23,7 @@ class TimelineContainer extends React.Component {
   componentDidMount() {
     console.log("tl container: mount");
     timelineStore.addChangeListener(this.changeContent);
-    timelineActions.loadTimeline(this.props.params[0]);
+    timelineActions.loadTimeline(this.props.params[0]);  // sync
   }
 
   componentWillUnmount() {
