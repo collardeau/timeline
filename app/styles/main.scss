@@ -5,7 +5,7 @@
 @import "base/base";
 
 body {
-  background: darken(white, 3%);
+  background: darken(white, 10%);
 }
 
 .container {
@@ -15,6 +15,7 @@ body {
 .hidden {
   display: none;
 }
+
 h1 {
     font-size: 1.2em ;
     text-align: center;
@@ -47,6 +48,15 @@ h1 {
 //@import "./navigation";
 //@import "./slidingPanel";
 //@import "./modal";
+
+
+.popover:before {
+  display: none;  // use popover as alert
+}
+
+.flash-alert {
+  margin: 0 !important;
+}
 
 // flash bitter
 $base-spacing: 1.5em !default;

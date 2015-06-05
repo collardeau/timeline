@@ -16,14 +16,10 @@ class Browse extends React.Component {
     console.log("browse: constructor");
     this.state = {
       timelines: timelinesStore.getTimelines(),
-      activeTab: 'public'
+      activeTab: 'public',
+      notice: ''
     };
     this.changeContent = this.changeContent.bind(this);
-  }
-
-  componentWillMount(){
-    console.log("browse: will mount");
-    //timelineActions.changeTimelines();
   }
 
   componentDidMount(){
@@ -36,6 +32,12 @@ class Browse extends React.Component {
     timelinesStore.removeChangeListener(this.changeContent);
   }
 
+  notify(notice) {
+    this.setState({
+      notice: notice
+    });
+  }
+
   filterTimelines(types) {
     this.setState({
       timelines: timelinesStore.getTimelines(types),
@@ -45,16 +47,28 @@ class Browse extends React.Component {
 
   render() {
     console.log('browse: render');
+    let notice = (
+      <div className='flash-alert'>
+        { this.state.notice }
+      </div>
+    );
+
     return (
       <div>
 
-        <BrowseHeader />
+        <BrowseHeader
+          isLoggedIn={ Boolean(this.props.userAuth) }
+          notify = { this.notify.bind(this) }
+        />
 
         <div className="content">
+
+          { this.state.notice ? notice : '' }
 
           <BrowseControls active={ this.state.activeTab } filterFn={ this.filterTimelines.bind(this) }/>
 
           <BrowseTable timelines={ this.state.timelines } />
+
           <p className="content-padded">Hello { this.props.userData.nickname }</p>
 
           </div>
