@@ -19,51 +19,48 @@ class App extends React.Component {
 
     render() {
 
-      let browseRoute = (
-        <div>
-          <BrowseContainer
-            userAuth={ this.props.userAuth }
-            userData = { this.props.userData }
-          />
-        </div>
-      );
-
-      let loginRoute = (
-        <div>
-          <Login />
-        </div>
-      );
-
-      let timelineRoute = (
-        <div>
-          <TimelineContainer
-            params = { this.props.params }
-            userAuth = { this.props.userAuth }
-          />
-        </div>
-      );
-
-      let ui = null;
-
         switch(this.props.route) {
 
             case "browse":
-                ui = browseRoute;
-                break;
-
-            case "login":
-                ui = loginRoute;
-                break;
+              return (
+                <div>
+                  <BrowseContainer
+                    userAuth={ this.props.userAuth }
+                    userData = { this.props.userData }
+                  />
+                </div>
+              );
 
             case "timeline":
-                ui = timelineRoute;
-                break;
+              return (
+                <div>
+                  <TimelineContainer
+                    params = { this.props.params }
+                    userAuth = { this.props.userAuth }
+                  />
+                </div>
+
+              );
+
+            case "login":
+              return (
+                <div>
+                  <Login />
+                </div>
+              );
+
 
             default:
-              ui = browseRoute;
-        }
+              return (
+                 <div>
+                  <BrowseContainer
+                    userAuth={ this.props.userAuth }
+                    userData = { this.props.userData }
+                  />
+                </div>
 
-        return ui;
+            );
+        }
 
     }
 }
