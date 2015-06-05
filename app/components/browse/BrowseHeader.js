@@ -37,7 +37,7 @@ class BrowseHeader extends React.Component {
         </li>
       );
       account = (
-        <li className="table-view-cell">
+        <li onClick={this.handleRoute.bind(this, 'account')} className="table-view-cell">
           <i className='fa fa-user pull-left'></i>
           Account
         </li>
@@ -72,7 +72,7 @@ class BrowseHeader extends React.Component {
           <ul className="table-view">
             { account }
             { login }
-            <li className="table-view-cell">
+            <li onClick={this.handleRoute.bind(this, 'about')} className="table-view-cell">
               <i className='fa fa-institution pull-left'></i>
               About Timelines
             </li>
