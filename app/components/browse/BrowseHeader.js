@@ -31,9 +31,12 @@ class BrowseHeader extends React.Component {
     return (
       <header className="bar bar-nav">
 
-        <button className="btn pull-left" onClick= { this.handleLogout.bind(this) }>
-          <a href="#menuPopover"><i className='fa fa-bars'></i></a>
-        </button>
+        <a href='#menuPopover'>
+          <button className="btn pull-left">
+            <i className='fa fa-bars'></i>
+          </button>
+        </a>
+
         <button className="btn pull-right" onClick= { this.handleAddTimeline.bind(this) }>
           <i className='fa fa-pencil-square-o pull-left'></i>
         </button>
@@ -47,11 +50,11 @@ class BrowseHeader extends React.Component {
           <ul className="table-view">
             <li className="table-view-cell">
               <i className='fa fa-user pull-left'></i>
-              User Account
+              Account
             </li>
             <li className="table-view-cell">
               <i className='fa fa-info pull-left'></i>
-              About
+              About Timelines
             </li>
             <li onClick={ this.handleLogout.bind(this) } className="table-view-cell">
               <i className='fa fa-sign-out pull-left'></i>
