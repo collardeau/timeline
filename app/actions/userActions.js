@@ -6,7 +6,6 @@ let userActions = {
 
   changeUser(userId) {
     if(userId) {
-      console.log("fetching user data on firebase");
       firebaseUtils.getUserData(userId, function(userData){
         AppDispatcher.handleAction({
           actionType: appConstants.CHANGE_USER,

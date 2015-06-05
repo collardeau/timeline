@@ -7,8 +7,15 @@ const React = require('react');
 let Login = require('./components/login/Login');
 let TimelineContainer = require('./components/timeline/TimelineContainer');
 let BrowseContainer = require('./components/browse/BrowseContainer');
+let timelineActions = require('./actions/timelineActions');
 
 class App extends React.Component {
+
+  componentDidMount(){
+    console.log("**** app: mount");
+    console.log('app: sync timelines');
+    timelineActions.syncTimelines();
+  }
 
     render() {
 

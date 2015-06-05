@@ -1,6 +1,7 @@
 const React = require("react");
 const moment = require('moment');
 const $ = require('jquery');
+const hasher = require('hasher');
 
 let TimelineEditItem = require('./TimelineEditItem');
 let timelineActions = require('../../actions/timelineActions.js');
@@ -40,6 +41,15 @@ class TimelineEdit extends React.Component {
     }
   }
 
+  handleDeleteTimeline(){
+    let doDelete = confirm("Do you want to delete this timeline?");
+    if(doDelete){
+      console.log("deleting this shit, mate!");
+      timelineActions.deleteTimeline(this.props.timelineId);
+      hasher.setHash('browse');
+    }
+  }
+
   closeModal() {
     $('#editTimelineModal').removeClass('active');
     this.setState({ warning: '' });
@@ -54,6 +64,7 @@ class TimelineEdit extends React.Component {
     );
 
     let dots = this.props.timeline.dots.map((dot, i) => {
+
       let toDelete = this.state.dotsToDelete.some( d => {
         return dot.key === d;
       });
@@ -70,6 +81,10 @@ class TimelineEdit extends React.Component {
     return (
       <div id="editTimelineModal" className="modal">
         <header className="bar bar-nav">
+          <button className='btn pull-left'
+            onClick={this.handleDeleteTimeline.bind(this)}>
+            Delete
+          </button>
           <a onClick={this.closeModal.bind(this)} className="closeModal icon icon-close pull-right"></a>
           <h1 className="title">Edit Timeline</h1>
         </header>
@@ -77,10 +92,10 @@ class TimelineEdit extends React.Component {
         <div className="content">
           <div className="content-padded">
             { this.state.warning ? warning : '' }
-            <h3 contentEditable id='edit-timelineTitle'>
+            <h3 id='edit-timelineTitle'>
               { this.props.timeline.name }
             </h3>
-            <p contentEditable id="edit-timelineDesc">
+            <p id="edit-timelineDesc">
               { this.props.timeline.description }
             </p>
             <ul className='table-view'>

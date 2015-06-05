@@ -11,16 +11,23 @@ class Timeline extends React.Component {
   }
 
   componentDidMount(){
-    SVG.killSVG();
-    SVG.draw(this.props.dots);
+    // SVG.killSVG();
+    // SVG.draw(this.props.dots);
     timelineStore.addSVGListener(this.changeSVG);
   }
 
   componentWillUnMount(){
     timelineStore.removeSVGListener(this.changSVG);
+    SVG.killSVG();
+  }
+
+  shouldComponentUpdate(){
+    console.log("should timeline update?");
+    return this.props.dots.length ? false : true;
   }
 
   componentDidUpdate(){
+    console.log('timeline did update');
     SVG.killSVG();
     SVG.draw(this.props.dots);
   }

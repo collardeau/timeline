@@ -13,6 +13,7 @@ class Router extends React.Component {
 
   constructor() {
     super();
+    console.log("initializing hasher");
     hasher.init();
     this.state = {
       hashInfo: this.getHashInfo(),
@@ -24,11 +25,12 @@ class Router extends React.Component {
     }
 
   componentDidMount() {
-    console.log("the router mounted, adding userStore change listener");
+    console.log("router mount");
     hasher.changed.add(this.handleChanges);
     //hasher.initialized.add(this.handleChanges);
     userStore.addChangeListener(this.changeUserContent);
     if(this.state.userAuth){
+      console.log('router: user logged in');
       userActions.changeUser(this.state.userAuth.uid);
     }
   }
@@ -60,7 +62,7 @@ class Router extends React.Component {
     }
 
     changeUserContent(){
-      console.log("changing user content");
+      console.log("router callback: changing user content");
       this.setState({
         userData: {
           nickname: userStore.getNickname()

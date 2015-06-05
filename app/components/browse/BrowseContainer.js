@@ -12,19 +12,27 @@ class Browse extends React.Component {
 
   constructor(){
     super();
+    console.log("--------------");
+    console.log("browse: constructor");
     this.state = {
-      timelines: [],
+      timelines: timelineStore.getTimelines(),
       activeTab: 'public'
     };
     this.changeContent = this.changeContent.bind(this);
   }
 
+  componentWillMount(){
+    console.log("browse: will mount");
+    //timelineActions.changeTimelines();
+  }
+
   componentDidMount(){
+    console.log("browse: mount");
     timelineStore.addChangeListener(this.changeContent);
-    timelineActions.changeTimelines();
  }
 
   componentWillUnmount(){
+    console.log('browse: unmount');
     timelineStore.removeChangeListener(this.changeContent);
   }
 
@@ -36,6 +44,7 @@ class Browse extends React.Component {
   }
 
   render() {
+    console.log('browse: render');
     return (
       <div>
 
@@ -57,6 +66,7 @@ class Browse extends React.Component {
   }
 
   changeContent(){
+    console.log("browse callback: changing content");
     this.setState({
       timelines: timelineStore.getTimelines()
     });

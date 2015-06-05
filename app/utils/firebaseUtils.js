@@ -18,9 +18,9 @@ var firebaseUtils = {
     },
 
     changeTimelines: function(callback){  // indexes
-      console.log("fetching timelines in firebaseUtils");
       ref.child(publicTimelinesIndex)
       .on("value", function(snapshot) {
+        console.log('fb: NEW tl index data');
         callback(this.toArray(snapshot.val()));
       }.bind(this), function (errorObject) {
         console.log("The read failed: " + errorObject.code);
@@ -46,18 +46,21 @@ var firebaseUtils = {
         this.homeInstance().child(publicTimelinesIndex).child('index' + fbKey).set(timeline);
       };
 
-    addIt(setIndex);
+      addIt(setIndex);
 
     },
 
     loadTimeline(timelineId, cb){
 
-      console.log("fetching timeline from database");
+      console.log("fb: fetching timeline (loadingTimeline) ");
       ref.child(publicTimelines).child(timelineId)
       .on("value", function(snapshot) {
+        console.log("fb: NEW timeline data");
         let timelineObj = snapshot.val();
-        timelineObj.dots = this.toArray(timelineObj.dots);
-        cb(timelineObj);
+        if(timelineObj){
+          timelineObj.dots = this.toArray(timelineObj.dots);
+          cb(timelineObj);
+        }
       }.bind(this), function(errorObject) {
         console.log("The read failed: " + errorObject.code);
       });
@@ -76,6 +79,16 @@ var firebaseUtils = {
       this.homeInstance().child(publicTimelinesIndex).child('index' + tlId).update(updatedTl);
     },
 
+    ddeleteTimeline: function(timelineId){
+      //ref.child
+    },
+
+    deleteTimeline: function(timelineId){
+      console.log("firebase deleting timeline");
+      this.homeInstance().child(publicTimelinesIndex).child('index' + timelineId).set({});
+      this.homeInstance().child(publicTimelines).child(timelineId).set({});
+    },
+
     addDot: function(dot, timelineId) {
       this.homeInstance().child(publicTimelines).child(timelineId).child("dots").push(dot);
     },
@@ -87,7 +100,7 @@ var firebaseUtils = {
     getUserData: function(userId, cb ) {
       ref.child('user').child(userId).child('info')
       .on("value", function(snapshot) {
-        console.log(snapshot.val());
+        console.log("fb: NEW user data");
         cb(snapshot.val());
       }, function(errorObject){
         console.log("The read failed: " + errorObject.code);

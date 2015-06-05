@@ -12,6 +12,8 @@ class TimelineContainer extends React.Component {
 
   constructor() {
     super();
+    console.log("---------------");
+    console.log("tl container: contructor");
     this.state = {
       timeline: {
         name: "Timeline",
@@ -25,11 +27,13 @@ class TimelineContainer extends React.Component {
   }
 
   componentDidMount() {
+    console.log("tl container: mount");
     timelineStore.addChangeListener(this.changeContent);
     timelineActions.loadTimeline(this.props.params[0]);
   }
 
   componentWillUnmount() {
+    console.log("tl container: unmount");
     timelineStore.removeChangeListener(this.changeContent);
   }
 
@@ -98,6 +102,7 @@ class TimelineContainer extends React.Component {
   }
 
   changeContent() {
+    console.log("timeline container callback: change content");
     this.setState({
       timeline: timelineStore.getTimeline()
     });

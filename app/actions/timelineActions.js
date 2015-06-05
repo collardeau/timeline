@@ -5,7 +5,7 @@ let firebaseUtils = require('../utils/firebaseUtils');
 
 let timelineActions = {
 
-  changeTimelines(){
+  syncTimelines(){
     firebaseUtils.changeTimelines(function(timelines){
       AppDispatcher.handleAction({
         actionType: appConstants.CHANGE_TIMELINES,
@@ -37,6 +37,10 @@ let timelineActions = {
     firebaseUtils.addTimeline(timeline);
   },
 
+  deleteTimeline(timelineId){
+    firebaseUtils.deleteTimeline(timelineId);
+  },
+
   editTimeline(newTimeline, timelineId) {
     AppDispatcher.handleAction({
       actionType: appConstants.EDIT_TIMELINE,
@@ -65,8 +69,6 @@ let timelineActions = {
       }
     });
     firebaseUtils.removeDot(dotRef, timelineId);
-    // svg dot util too, or just draw svg
-    // svg.reset();
   },
 
   toggleDates(){
