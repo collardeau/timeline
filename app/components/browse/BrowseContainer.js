@@ -38,6 +38,12 @@ class Browse extends React.Component {
     });
   }
 
+  handleCloseNotice(){
+    this.setState({
+      notice: ''
+    });
+  }
+
   filterTimelines(types) {
     this.setState({
       timelines: timelinesStore.getTimelines(types),
@@ -46,10 +52,11 @@ class Browse extends React.Component {
   }
 
   render() {
-    console.log('browse: render');
+
     let notice = (
       <div className='flash-alert'>
         { this.state.notice }
+        <i onClick={this.handleCloseNotice.bind(this) } className='pull-right fa fa-times-circle'></i>
       </div>
     );
 
