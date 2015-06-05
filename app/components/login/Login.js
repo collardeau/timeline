@@ -8,6 +8,7 @@ class Login extends React.Component {
 
   constructor() {
     super();
+    console.log('login: constructor');
       this.state = {
         warning: ""
       };
@@ -52,6 +53,7 @@ class Login extends React.Component {
     let pw = this.refs.loginPw.getDOMNode().value;
 
     if (email && pw) {
+
       authUtils.loginWithPw({email: email, password: pw}, {
         warn: (error) => {
           this.setState({
@@ -59,9 +61,12 @@ class Login extends React.Component {
           });
         }
       });
+
       this.refs.loginEmail.getDOMNode().value = "";
       this.refs.loginPw.getDOMNode().value = "";
+
     } else {
+
       if(!email){
         this.setState({ warning: 'Oops, no email' });
       }else if (!pw){

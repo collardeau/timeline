@@ -66,7 +66,8 @@ class Router extends React.Component {
       this.setState({
         userData: {
           nickname: userStore.getNickname()
-        }
+        },
+          userAuth: authUtils.isLoggedIn()
       });
     }
 
