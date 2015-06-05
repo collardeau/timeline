@@ -93,7 +93,7 @@ class Login extends React.Component {
 
         <header className="bar bar-nav">
           <button className="btn pull-left" onClick={this.handleRoute.bind(this, "browse") }>
-            Browse
+            <i className='fa fa-home'></i>
           </button>
 
           <h1 className="title">TIMELINES</h1>

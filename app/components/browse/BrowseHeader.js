@@ -32,7 +32,7 @@ class BrowseHeader extends React.Component {
       <header className="bar bar-nav">
 
         <button className="btn pull-left" onClick= { this.handleLogout.bind(this) }>
-          <a href="#menuPopover">Menu</a>
+          <a href="#menuPopover"><i className='fa fa-bars'></i></a>
         </button>
         <button className="btn pull-right" onClick= { this.handleAddTimeline.bind(this) }>
           <i className='fa fa-pencil-square-o pull-left'></i>

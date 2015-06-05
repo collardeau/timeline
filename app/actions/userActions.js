@@ -15,7 +15,6 @@ let userActions = {
         });
       });
     } else {
-      console.log("empty out user data");
       AppDispatcher.handleAction({
         actionType: appConstants.CHANGE_USER,
         data: {
