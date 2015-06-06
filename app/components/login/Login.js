@@ -10,7 +10,8 @@ class Login extends React.Component {
     super();
     console.log('login: constructor');
       this.state = {
-        warning: ""
+        warning: "",
+        disabled: false
       };
   }
 
@@ -29,12 +30,14 @@ class Login extends React.Component {
         nickname: nickname,
         warn: (error) => {
           this.setState({
-            warning: error.message
+            warning: error.message,
+            disabled: false
           });
         }
       });
       this.refs.regEmail.getDOMNode().value = "";
       this.refs.regPw.getDOMNode().value = "";
+      this.setState({ disabled: true });
 
     } else {
       if(!nickname) {
@@ -52,25 +55,27 @@ class Login extends React.Component {
     let email = this.refs.loginEmail.getDOMNode().value;
     let pw = this.refs.loginPw.getDOMNode().value;
 
-    if (email && pw) {
+    if (email && pw) {  // check for valid email front end?
 
       authUtils.loginWithPw({email: email, password: pw}, {
         warn: (error) => {
           this.setState({
-            warning: error.message
+            warning: error.message,
+            disabled: false
           });
         }
       });
 
       this.refs.loginEmail.getDOMNode().value = "";
       this.refs.loginPw.getDOMNode().value = "";
+      this.setState({ disabled: true });
 
     } else {
 
       if(!email){
-        this.setState({ warning: 'Oops, no email' });
+        this.setState({ warning: 'Oopsie, no email' });
       }else if (!pw){
-        this.setState({ warning: 'Oops, no password' });
+        this.setState({ warning: 'Oopsie, no password' });
       }
     }
 
@@ -121,24 +126,24 @@ class Login extends React.Component {
           {this.state.warning ? warning : ""}
 
           <div id="loginTab" className="control-content active">
-            <form>
+            <form onSubmit={ this.handleLogin.bind(this) } >
               <input type="text" ref="loginEmail" placeholder="Email"/>
               <input type="password" ref="loginPw" placeholder="Password"/>
-              <button className="btn btn-positive btn-block"
-                onClick={ this.handleLogin.bind(this) }>
+              <button disabled={ this.state.disabled }
+                className="btn btn-positive btn-block">
                   Login
               </button>
             </form>
           </div>
 
           <div id="registerTab" className="control-content">
-            <form>
+            <form onSubmit= { this.handleRegister.bind(this) }>
               <input type="text" ref="nickname" placeholder="Your nickname"/>
               <input type="text" ref="regEmail" placeholder="Email"/>
               <input type="password" ref="regPw" placeholder="Password"/>
 
-              <button className="btn btn-positive btn-block"
-                onClick={ this.handleRegister.bind(this) }>
+              <button disabled= { this.state.disabled }
+                className="btn btn-positive btn-block">
                   Register
               </button>
             </form>
