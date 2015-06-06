@@ -11,8 +11,8 @@ class Timeline extends React.Component {
   }
 
   componentDidMount(){
-    // SVG.killSVG();
-    // SVG.draw(this.props.dots);
+    SVG.killSVG();
+    SVG.draw(this.props.dots);
     timelineStore.addSVGListener(this.changeSVG);
   }
 

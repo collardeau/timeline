@@ -33,6 +33,8 @@ class About extends React.Component {
               Pappelallee 78<br />
               10437 Berlin
             </address>
+            <h5>Contact</h5>
+            <a>info@collardeau.com</a>
           </div>
         </div>
       </div>
