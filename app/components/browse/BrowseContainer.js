@@ -60,6 +60,10 @@ class Browse extends React.Component {
       </div>
     );
 
+    let controls = (
+      <BrowseControls active={ this.state.activeTab } filterFn={ this.filterTimelines.bind(this) }/>
+    );
+
     return (
       <div>
 
@@ -72,7 +76,7 @@ class Browse extends React.Component {
 
           { this.state.notice ? notice : '' }
 
-          <BrowseControls active={ this.state.activeTab } filterFn={ this.filterTimelines.bind(this) }/>
+          { this.props.userAuth ? controls : '' }
 
           <BrowseTable timelines={ this.state.timelines } />
 
