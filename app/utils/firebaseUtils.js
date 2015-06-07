@@ -26,19 +26,30 @@ var firebaseUtils = {
         console.log("The read failed: " + errorObject.code);
       });
 
-      //using mock up for developing
-      // console.log("fetching timelines from mockups");
-      // let timelines = this.toArray(mockup[publicTimelinesIndex]);
-      // window.setTimeout(function(){
-      //   callback(timelines);
-      // }, 1000);
-    },
+   },
 
     addTimeline: function(timeline){
 
+      let addPrivateIndexPromise = new Promise( (resolve, reject) => {
+        let newRef = ref.child('user').child(timeline.owner).child('timelines').push(timeline);
+        if (newRef){
+          resolve(newRef.key());
+        }else {
+          reject();
+        }
+      });
+
+      addPrivateIndexPromise.then( result => console.log(result));
+
       // 2 write ops for timeline itself and an index
+      let fbRef;  // the firebase reference
       let addIt = (cb) => {
-        var fbRef = this.homeInstance().child(publicTimelines).push(timeline);
+        if ( timeline.isPublic){
+          fbRef = this.homeInstance().child(publicTimelines).push(timeline);
+        }else{
+          console.log("private timeline");
+          fbRef = this.homeInstance().child('user').child(timeline.owner).child('private-timelines').push(timeline);
+        }
         cb(fbRef.key());
       };
       let setIndex = (fbKey) => {
@@ -46,7 +57,7 @@ var firebaseUtils = {
         this.homeInstance().child(publicTimelinesIndex).child('index' + fbKey).set(timeline);
       };
 
-      addIt(setIndex);
+      // addIt(setIndex);
 
     },
 
@@ -118,4 +129,11 @@ var firebaseUtils = {
 };
 
 module.exports = firebaseUtils;
+
+      //using mock up for developing
+      // console.log("fetching timelines from mockups");
+      // let timelines = this.toArray(mockup[publicTimelinesIndex]);
+      // window.setTimeout(function(){
+      //   callback(timelines);
+      // }, 1000);
 
