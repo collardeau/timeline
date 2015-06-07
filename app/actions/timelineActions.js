@@ -16,6 +16,17 @@ let timelineActions = {
     });
   },
 
+  syncPrivateTimelines(uid){
+    firebaseUtils.changePrivateTimelines(uid, function(timelines){
+      AppDispatcher.handleAction({
+        actionType: appConstants.CHANGE_PRIVATE_TIMELINES,
+        data: {
+          timelines: timelines
+        }
+      });
+    });
+  },
+
   loadTimeline(timelineId){
     firebaseUtils.loadTimeline(timelineId, function(timeline){
       AppDispatcher.handleAction({

@@ -5,28 +5,27 @@ let appConstants = require('../constants/appConstants');
 let firebaseUtils = require('../utils/firebaseUtils');
 
 let _store = {
-  timelines: []
+  timelines: [],
+  privateTimelines: []
 };
 
 const CHANGE_EVENT = 'change';
 
 let timelineStore = objectAssign({}, EventEmitter.prototype, {
 
-  // dealing with browse page
-
   changeTimelines(timelines){
     _store.timelines = timelines;
   },
 
+  changePrivateTimelines(timelines){
+    _store.privateTimelines = timelines;
+  },
+
   getTimelines( timelineType = "public"){
-    if (timelineType === "public") {
-      return _store.timelines.filter((tl) => {
-        if(tl.isPublic) { return tl; }
-      });
-    } else if (timelineType === "user") {
-      return _store.timelines.filter((tl) => {
-        if(!tl.isPublic){ return tl; }  // shortcut
-      });
+    if (timelineType === "user") {
+      return _store.privateTimelines;
+    }else{
+      return _store.timelines;
     }
   },
 
@@ -45,6 +44,10 @@ AppDispatcher.register(function(payload){
     switch(action.actionType){
         case appConstants.CHANGE_TIMELINES:
           timelineStore.changeTimelines(action.data.timelines);
+          timelineStore.emit(CHANGE_EVENT);
+          break;
+        case appConstants.CHANGE_PRIVATE_TIMELINES:
+          timelineStore.changePrivateTimelines(action.data.timelines);
           timelineStore.emit(CHANGE_EVENT);
           break;
        case appConstants.ADD_TIMELINE:

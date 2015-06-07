@@ -26,8 +26,17 @@ var firebaseUtils = {
       }.bind(this), function (errorObject) {
         console.log("The read failed: " + errorObject.code);
       });
-
    },
+
+    changePrivateTimelines: function(uid, callback){  // indexes
+      userRef.child(uid).child('timelines-index')
+      .on("value", function(snapshot) {
+        console.log('fb: NEW PRIVATE tl index data');
+        callback(this.toArray(snapshot.val()));
+      }.bind(this), function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
+      });
+    },
 
     addTimeline: function(timeline){
 
@@ -41,8 +50,8 @@ var firebaseUtils = {
         // a timeline without dots is the index
         userRef.child(timeline.owner).child('timelines-index').child(key).set(timeline);
         if (timeline.isPublic){  // push timeline to public folders
-          ref.child('timelines').child(key).set(timeline);
-          ref.child('timelines-index').child(key).set(timeline);
+          ref.child(publicTimelines).child(key).set(timeline);
+          ref.child(publicTimelinesIndex).child(key).set(timeline);
         }
       }, (msg) => console.log(msg));
     },
