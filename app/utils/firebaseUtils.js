@@ -1,11 +1,12 @@
 var Firebase = require('firebase');
 var appConstants = require('../constants/appConstants');
 var ref = new Firebase(appConstants.FIREBASE_HOST);
+var userRef = ref.child('user');
 
 var mockup = require('./mockup.json');
 
-var publicTimelinesIndex = 'public-timelines-index';
-var publicTimelines = "public-timelines";
+var publicTimelinesIndex = 'timelines-index'; // temp
+var publicTimelines = "timelines";
 
 var addNewUserToFB = function(newUser){
     ref.child('user').child(newUser.uid).set(newUser);
@@ -30,35 +31,20 @@ var firebaseUtils = {
 
     addTimeline: function(timeline){
 
-      let addPrivateIndexPromise = new Promise( (resolve, reject) => {
-        let newRef = ref.child('user').child(timeline.owner).child('timelines').push(timeline);
-        if (newRef){
-          resolve(newRef.key());
-        }else {
-          reject();
-        }
+      let addTimelinePromise = new Promise((resolve, reject) => {
+        let newRef = userRef.child(timeline.owner).child('timelines').push(timeline);
+        if (newRef) { resolve( newRef.key()); }
+        else { reject('The write failed'); }
       });
 
-      addPrivateIndexPromise.then( result => console.log(result));
-
-      // 2 write ops for timeline itself and an index
-      let fbRef;  // the firebase reference
-      let addIt = (cb) => {
-        if ( timeline.isPublic){
-          fbRef = this.homeInstance().child(publicTimelines).push(timeline);
-        }else{
-          console.log("private timeline");
-          fbRef = this.homeInstance().child('user').child(timeline.owner).child('private-timelines').push(timeline);
+      addTimelinePromise.then( key => {
+        // a timeline without dots is the index
+        userRef.child(timeline.owner).child('timelines-index').child(key).set(timeline);
+        if (timeline.isPublic){  // push timeline to public folders
+          ref.child('timelines').child(key).set(timeline);
+          ref.child('timelines-index').child(key).set(timeline);
         }
-        cb(fbRef.key());
-      };
-      let setIndex = (fbKey) => {
-        timeline.ref = fbKey;
-        this.homeInstance().child(publicTimelinesIndex).child('index' + fbKey).set(timeline);
-      };
-
-      // addIt(setIndex);
-
+      }, (msg) => console.log(msg));
     },
 
     loadTimeline(timelineId, cb){
