@@ -7,7 +7,7 @@ let firebaseUtils = require('../utils/firebaseUtils');
 let _store = {
   timeline: {
     name: "Timeline",
-    description: "loading...",
+    description: "",
     owner: "",
     ownerNickname: "",
     dots: []

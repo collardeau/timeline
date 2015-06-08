@@ -5,10 +5,10 @@ let firebaseUtils = require('../utils/firebaseUtils');
 
 let timelineActions = {
 
-  syncTimelines(){
-    firebaseUtils.changeTimelines(function(timelines){
+  syncPublicTimelines(){
+    firebaseUtils.changePublicTimelines(function(timelines){
       AppDispatcher.handleAction({
-        actionType: appConstants.CHANGE_TIMELINES,
+        actionType: appConstants.CHANGE_PUBLIC_TIMELINES,
         data: {
           timelines: timelines
         }
@@ -16,10 +16,10 @@ let timelineActions = {
     });
   },
 
-  syncPrivateTimelines(uid){
-    firebaseUtils.changePrivateTimelines(uid, function(timelines){
+  syncTimelines(uid){
+    firebaseUtils.changeTimelines(uid, function(timelines){
       AppDispatcher.handleAction({
-        actionType: appConstants.CHANGE_PRIVATE_TIMELINES,
+        actionType: appConstants.CHANGE_TIMELINES,
         data: {
           timelines: timelines
         }

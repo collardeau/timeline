@@ -17,10 +17,10 @@ class App extends React.Component {
     console.log("**** app: mount");
     console.log('app: sync timelines');
 
-    timelineActions.syncTimelines();
+    timelineActions.syncPublicTimelines();
     if (this.props.userAuth){
       console.log('app: sync private timelines');
-      timelineActions.syncPrivateTimelines(this.props.userAuth.uid);
+      timelineActions.syncTimelines(this.props.userAuth.uid);
     }
   }
 

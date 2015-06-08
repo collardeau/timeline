@@ -18,7 +18,7 @@ let addUserTimelinePromise = (timeline) => {
 
 var firebaseUtils = {
 
-    changeTimelines: function(callback){  // public indexes
+    changePublicTimelines: function(callback){  // public indexes
       ref.child(publicTimelines)
       .on("value", function(snapshot) {
         console.log('fb: NEW tl index data');
@@ -28,8 +28,8 @@ var firebaseUtils = {
       });
    },
 
-    changePrivateTimelines: function(uid, callback){  // indexes
-      userRef.child(uid).child('timelines-index')
+    changeTimelines: function(uid, callback){  // own indexes
+      userRef.child(uid).child(timelines)
       .on("value", function(snapshot) {
         console.log('fb: NEW PRIVATE tl index data');
         callback(this.toArray(snapshot.val()));

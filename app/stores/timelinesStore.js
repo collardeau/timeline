@@ -6,26 +6,26 @@ let firebaseUtils = require('../utils/firebaseUtils');
 
 let _store = {
   timelines: [],
-  privateTimelines: []
+  publicTimelines: []
 };
 
 const CHANGE_EVENT = 'change';
 
 let timelineStore = objectAssign({}, EventEmitter.prototype, {
 
-  changeTimelines(timelines){
+ changeTimelines(timelines){
     _store.timelines = timelines;
   },
 
-  changePrivateTimelines(timelines){
-    _store.privateTimelines = timelines;
+  changePublicTimelines(timelines){
+    _store.publicTimelines = timelines;
   },
 
   getTimelines( timelineType = "public"){
     if (timelineType === "user") {
-      return _store.privateTimelines;
-    }else{
       return _store.timelines;
+    }else{
+      return _store.publicTimelines;
     }
   },
 
@@ -42,12 +42,12 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(payload){
     var action = payload.action;
     switch(action.actionType){
-        case appConstants.CHANGE_TIMELINES:
-          timelineStore.changeTimelines(action.data.timelines);
+        case appConstants.CHANGE_PUBLIC_TIMELINES:
+          timelineStore.changePublicTimelines(action.data.timelines);
           timelineStore.emit(CHANGE_EVENT);
           break;
-        case appConstants.CHANGE_PRIVATE_TIMELINES:
-          timelineStore.changePrivateTimelines(action.data.timelines);
+        case appConstants.CHANGE_TIMELINES:
+          timelineStore.changeTimelines(action.data.timelines);
           timelineStore.emit(CHANGE_EVENT);
           break;
        case appConstants.ADD_TIMELINE:
