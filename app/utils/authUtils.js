@@ -6,10 +6,6 @@ let userActions = require('../actions/userActions');
 
 let ref = new Firebase(appConstants.FIREBASE_HOST);
 
-let addNewUserToFB = (newUser) => {
-    ref.child('user').child(newUser.uid).child("info").set(newUser);
-};
-
 let saveUsername = (user) => {
   return new Promise(( resolve, reject) => {
     ref.child('username').child(user.username).set(true, (error) => {
@@ -43,54 +39,35 @@ let loginWithPw = (user) => {
   });
 };
 
+let register = (newUser, authData) => {
+  return new Promise(( resolve, reject) => {
+    let user = {
+      email: newUser.email,
+      username: newUser.username,
+      uid: authData.uid,
+      token: authData.token
+    };
+    ref.child('user').child(user.uid).child("info").set(user, (error) => {
+      if(error){ reject("Could not register"); }
+      resolve();
+    });
+
+  });
+};
+
+
 let firebaseAuth = {
 
   createUser: (user, cbOnFail, cbOnSuccess) => {
-
-    saveUsername(user)   // err if already exists
-      .then(createAuthUser)
-      .then(loginWithPw)
-      .then(cbOnSuccess, cbOnFail);
-
-
-      // .then(loginWithPw, options.warn);
-
-    //     this.loginWithPw(user, {
-
-    //       register: (authData) => {
-    //         addNewUserToFB({
-    //           email: user.email,
-    //           uid: authData.uid,
-    //           token: authData.token,
-    //           nickname: options.nickname
-    //         });
-    //       }
-    //     });
-    //   }
-    // }.bind(this));
+    saveUsername(user)
+    .then(createAuthUser)
+    .then(loginWithPw)
+    .then(register.bind(this, user))
+    .then(cbOnSuccess, cbOnFail);
   },
 
   login: (user, cbOnFail, cbOnSuccess) => {
     loginWithPw(user).then(cbOnSuccess, cbOnFail);
-  },
-
-  loginWithPw2: function(user, options){
-
-    ref.authWithPassword({
-      email: user.email,
-      password: user.password
-
-    }, function(error, authData) {
-      let dummy;  // to avoid eslint error
-      if (error) {
-        dummy = options.warn && options.warn(error);
-      } else {
-        dummy = options.register && options.register(authData);
-        hasher.setHash('browse');
-        userActions.changeUser(authData.uid);
-      }
-
-    });
   },
 
   isLoggedIn: function(){
