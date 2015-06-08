@@ -13,24 +13,48 @@ let addNewUserToFB = (newUser) => {
 let firebaseAuth = {
 
   createUser: function(user, options) {
-    ref.createUser(user, function(error) {
-      if (error) {
-        let dummy = options.warn && options.warn(error);
-      } else {
 
-        this.loginWithPw(user, {
-
-          register: (authData) => {
-            addNewUserToFB({
-              email: user.email,
-              uid: authData.uid,
-              token: authData.token,
-              nickname: options.nickname
-            });
-          }
+    let saveUsername = (username) => {
+      return new Promise(( resolve, reject) => {
+        ref.child('username').child(username).set(user.email, (error) => {
+          if(error){ reject('Username already exists'); } // or could be no connection
+          resolve();
         });
-      }
-    }.bind(this));
+      });
+    };
+
+    let createFbUser = (newUser) => {
+      return new Promise( (resolve, reject) => {
+        ref.createUser(newUser, function(error){
+          if(error) { reject(error.message); }
+          resolve();
+        });
+      });
+    };
+
+    saveUsername(options.nickname)
+      .then(createFbUser.bind(this, user))
+      .then(console.log, options.warn);
+      // .then(loginWithPw, options.warn);
+
+        // ref.createUser(user, function(error) {
+    //   if (error) {
+    //     let dummy = options.warn && options.warn(error);
+    //   } else {
+
+    //     this.loginWithPw(user, {
+
+    //       register: (authData) => {
+    //         addNewUserToFB({
+    //           email: user.email,
+    //           uid: authData.uid,
+    //           token: authData.token,
+    //           nickname: options.nickname
+    //         });
+    //       }
+    //     });
+    //   }
+    // }.bind(this));
   },
 
   loginWithPw: function(user, options){

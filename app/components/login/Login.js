@@ -28,9 +28,9 @@ class Login extends React.Component {
     if(nickname && pw && email){
       authUtils.createUser({email: email, password: pw }, {
         nickname: nickname,
-        warn: (error) => {
+        warn: (warning) => {
           this.setState({
-            warning: error.message,
+            warning: warning,
             disabled: false
           });
         }
