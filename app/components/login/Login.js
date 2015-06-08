@@ -24,23 +24,30 @@ class Login extends React.Component {
   handleRegister(e){
     let email = this.refs.regEmail.getDOMNode().value;
     let pw = this.refs.regPw.getDOMNode().value;
-    let nickname = this.refs.nickname.getDOMNode().value;
-    if(nickname && pw && email){
-      authUtils.createUser({email: email, password: pw }, {
-        nickname: nickname,
-        warn: (warning) => {
+    let username = this.refs.nickname.getDOMNode().value;
+
+    if(username && pw && email){
+      authUtils.createUser(
+        {
+          email: email,
+          password: pw,
+          username: username
+        }, (warning) => {
           this.setState({
             warning: warning,
             disabled: false
           });
+        }, () => {
+          hasher.setHash('browse');
         }
-      });
+      );
+
       this.refs.regEmail.getDOMNode().value = "";
       this.refs.regPw.getDOMNode().value = "";
       this.setState({ disabled: true });
 
     } else {
-      if(!nickname) {
+      if(!username) {
         this.setState({ warning: 'Oops, no nickname' });
       } else if (!email) {
         this.setState({ warning: 'Oops, no email' });
@@ -57,14 +64,17 @@ class Login extends React.Component {
 
     if (email && pw) {  // check for valid email front end?
 
-      authUtils.loginWithPw({email: email, password: pw}, {
-        warn: (error) => {
+      authUtils.login({email: email, password: pw},
+        (warning) => {
           this.setState({
-            warning: error.message,
+            warning: warning,
             disabled: false
           });
+        }, () => {
+          hasher.setHash('browse');
+          //userActions.changeUser(authData.uid);
         }
-      });
+      );
 
       this.refs.loginEmail.getDOMNode().value = "";
       this.refs.loginPw.getDOMNode().value = "";

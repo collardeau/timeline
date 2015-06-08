@@ -10,27 +10,28 @@ let addNewUserToFB = (newUser) => {
     ref.child('user').child(newUser.uid).child("info").set(newUser);
 };
 
-let saveUsername = (username) => {
-  console.log('checking user name');
+let saveUsername = (user) => {
   return new Promise(( resolve, reject) => {
-    ref.child('username').child(username).set(true, (error) => {
+    ref.child('username').child(user.username).set(true, (error) => {
       if(error){ reject('Username already exists'); } // or could be no connection
-      resolve();
+      resolve(user);
     });
   });
 };
 
-let createAuthUser = (newUser) => {
-  console.log('creating Auth User');
+let createAuthUser = (user) => {
   return new Promise( (resolve, reject) => {
-    ref.createUser(newUser, function(error){
+    ref.createUser({
+      email: user.email,
+      password: user.password
+    }, function(error){
       if(error) { console.log('error'); reject(error.message); }
-      resolve();
+      resolve(user);
     });
   });
 };
 
-let login = (user) => {
+let loginWithPw = (user) => {
   return new Promise(( resolve, reject) => {
     ref.authWithPassword({
       email: user.email,
@@ -44,11 +45,12 @@ let login = (user) => {
 
 let firebaseAuth = {
 
-  createUser: (user, options) => {
+  createUser: (user, cbOnFail, cbOnSuccess) => {
 
-    saveUsername(options.nickname)   // err if already exists
-      .then(createAuthUser.bind(this, user))
-      .then(login.bind(this, user), options.warn );
+    saveUsername(user)   // err if already exists
+      .then(createAuthUser)
+      .then(loginWithPw)
+      .then(cbOnSuccess, cbOnFail);
 
 
       // .then(loginWithPw, options.warn);
@@ -68,8 +70,11 @@ let firebaseAuth = {
     // }.bind(this));
   },
 
+  login: (user, cbOnFail, cbOnSuccess) => {
+    loginWithPw(user).then(cbOnSuccess, cbOnFail);
+  },
 
-  loginWithPw: function(user, options){
+  loginWithPw2: function(user, options){
 
     ref.authWithPassword({
       email: user.email,
