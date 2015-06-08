@@ -1,25 +1,25 @@
 var Firebase = require('firebase');
 var appConstants = require('../constants/appConstants');
-var ref = new Firebase(appConstants.FIREBASE_HOST);
-var userRef = ref.child('user');
-
 var mockup = require('./mockup.json');
 
-var publicTimelinesIndex = 'timelines-index'; // temp
-var publicTimelines = "timelines";
+var ref = new Firebase(appConstants.FIREBASE_HOST);
+var userRef = ref.child('user');
+let publicTimelines = 'timeline-public-index';
+let timelines = 'timeline';
+let timelineIndex = 'timeline-index';
 
-var addNewUserToFB = function(newUser){
-    ref.child('user').child(newUser.uid).set(newUser);
+let addUserTimelinePromise = (timeline) => {
+  return new Promise((resolve, reject) => {
+    let newRef = userRef.child(timeline.owner).child(timelines).push(timeline);
+    if (newRef) { resolve( newRef.key()); }
+    else { reject('The write failed'); }
+  });
 };
 
 var firebaseUtils = {
 
-    homeInstance: function () {
-        return new Firebase(appConstants.FIREBASE_HOST);
-    },
-
-    changeTimelines: function(callback){  // indexes
-      ref.child(publicTimelinesIndex)
+    changeTimelines: function(callback){  // public indexes
+      ref.child(publicTimelines)
       .on("value", function(snapshot) {
         console.log('fb: NEW tl index data');
         callback(this.toArray(snapshot.val()));
@@ -40,20 +40,12 @@ var firebaseUtils = {
 
     addTimeline: function(timeline){
 
-      let addTimelinePromise = new Promise((resolve, reject) => {
-        let newRef = userRef.child(timeline.owner).child('timelines').push(timeline);
-        if (newRef) { resolve( newRef.key()); }
-        else { reject('The write failed'); }
-      });
-
-      addTimelinePromise.then( key => {
-        // a timeline without dots is the index
-        userRef.child(timeline.owner).child('timelines-index').child(key).set(timeline);
-        if (timeline.isPublic){  // push timeline to public folders
-          ref.child(publicTimelines).child(key).set(timeline);
-          ref.child(publicTimelinesIndex).child(key).set(timeline);
+      addUserTimelinePromise(timeline).then(id => {
+        userRef.child(timeline.owner).child(timelineIndex).child(id).set(timeline);
+        if(timeline.isPublic){
+          ref.child(publicTimelines).child(id).set(timeline);
         }
-      }, (msg) => console.log(msg));
+      }, console.log);
     },
 
     loadTimeline(timelineId, cb){
@@ -71,18 +63,10 @@ var firebaseUtils = {
         console.log("The read failed: " + errorObject.code);
       });
 
-      // FROM MOCKUP
-      // console.log("loading timeline from mockup");
-      // let timeline = mockup[publicTimelines][timelineId];
-      // timeline.dots = this.toArray(timeline.dots);
-      // window.setTimeout(function(){
-      //   cb(timeline);
-      // }, 1000);
-    },
+   },
 
     editTimeline: function(updatedTl, tlId){
       this.homeInstance().child(publicTimelines).child(tlId).update(updatedTl);
-      this.homeInstance().child(publicTimelinesIndex).child('index' + tlId).update(updatedTl);
     },
 
     ddeleteTimeline: function(timelineId){
@@ -91,7 +75,6 @@ var firebaseUtils = {
 
     deleteTimeline: function(timelineId){
       console.log("firebase deleting timeline");
-      this.homeInstance().child(publicTimelinesIndex).child('index' + timelineId).set({});
       this.homeInstance().child(publicTimelines).child(timelineId).set({});
     },
 
@@ -130,5 +113,12 @@ module.exports = firebaseUtils;
       // let timelines = this.toArray(mockup[publicTimelinesIndex]);
       // window.setTimeout(function(){
       //   callback(timelines);
+      // }, 1000);
+      // FROM MOCKUP
+      // console.log("loading timeline from mockup");
+      // let timeline = mockup[publicTimelines][timelineId];
+      // timeline.dots = this.toArray(timeline.dots);
+      // window.setTimeout(function(){
+      //   cb(timeline);
       // }, 1000);
 
