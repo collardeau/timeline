@@ -16,9 +16,9 @@ let saveUsername = (username) => {
   });
 };
 
-let removeUsername = (user) => {
+let removeUsername = (username) => {
   return new Promise( (resolve, reject) => {
-    usernameRef.child(user.username).set({}, (error) => {
+    usernameRef.child(username).set({}, (error) => {
       if(error) { reject('could not delete username'); }
       resolve();
     });
@@ -57,6 +57,11 @@ let register = (newUser, authData) => {
       uid: authData.uid,
       token: authData.token
     };
+
+    ref.child('username-index').child(user.username).set(user.uid, (error) => {
+      if(error){ reject("Error registering"); }
+    });
+
     ref.child('user').child(user.uid).child("info").set(user, (error) => {
       if(error){ reject("Could not register"); }
       resolve();
@@ -73,9 +78,11 @@ let firebaseAuth = {
     .then(() => {
       createAuthUser(user)
       .then(loginWithPw)
-      .then(register.bind(this, user))
-      .then(cbOnSuccess, function(error) {
-        removeUsername( user )
+      .then((auth) => {
+        register(user, auth);
+        cbOnSuccess();
+      }, (error) => {
+        removeUsername(user.username)
         .then(cbOnFail.bind(this, error), console.log);
       });
     }, cbOnFail);

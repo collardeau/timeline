@@ -36,7 +36,7 @@ class App extends React.Component {
                 />
               );
 
-            case "timeline":
+           case "u":
               return (
                 <TimelineContainer
                   params = { this.props.params }
@@ -57,10 +57,10 @@ class App extends React.Component {
 
             default:
               return (
-                  <BrowseContainer
-                    userAuth={ this.props.userAuth }
-                    userData = { this.props.userData }
-                  />
+                <BrowseContainer
+                  userAuth={ this.props.userAuth }
+                  userData = { this.props.userData }
+                />
             );
         }
 

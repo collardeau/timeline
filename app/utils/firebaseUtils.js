@@ -16,6 +16,15 @@ let addUserTimelinePromise = (timeline) => {
   });
 };
 
+let getUserUidPromise = (username) => {
+  return new Promise(( resolve, reject) => {
+    ref.child('username-index').child(username).once('value', snapshot => {
+     resolve(snapshot.val());
+    }, (err) => reject(err.code));
+  });
+};
+
+
 var firebaseUtils = {
 
     changePublicTimelines: function(callback){  // public indexes
@@ -48,20 +57,22 @@ var firebaseUtils = {
       }, console.log);
     },
 
-    loadTimeline(timelineId, cb){
+    loadTimeline(timelineId, user, cb){
 
-      console.log("fb: fetching timeline (loadingTimeline) ");
-      ref.child(publicTimelines).child(timelineId)
-      .on("value", function(snapshot) {
-        console.log("fb: NEW timeline data");
-        let timelineObj = snapshot.val();
-        if(timelineObj){
-          timelineObj.dots = this.toArray(timelineObj.dots);
-          cb(timelineObj);
-        }
-      }.bind(this), function(errorObject) {
-        console.log("The read failed: " + errorObject.code);
-      });
+      getUserUidPromise(user).then(uid => {
+        userRef.child(uid).child(timelines).child(timelineId)
+        .on("value", snapshot => {
+          console.log("fb: NEW timeline data");
+          let timelineObj = snapshot.val();
+          if(timelineObj){
+            timelineObj.dots = this.toArray(timelineObj.dots);
+            cb(timelineObj);
+          }
+        }, errorObject => {
+          console.log("The read failed: " + errorObject.code);
+        });
+
+      }, console.log);
 
    },
 

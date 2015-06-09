@@ -27,8 +27,8 @@ let timelineActions = {
     });
   },
 
-  loadTimeline(timelineId){
-    firebaseUtils.loadTimeline(timelineId, function(timeline){
+  loadTimeline(timelineId, owner){
+    firebaseUtils.loadTimeline(timelineId, owner, function(timeline){
       AppDispatcher.handleAction({
         actionType: appConstants.LOAD_TIMELINE,
           data: {

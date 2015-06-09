@@ -4,7 +4,7 @@ let AppDispatcher = require('../dispatcher/AppDispatcher');
 let appConstants = require('../constants/appConstants');
 
 let emptyStore = {
-  nickname: '',
+  username: '',
   bookmarks: []
 };
 
@@ -19,7 +19,7 @@ let userStore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getNickname(){
-    return _store.nickname;
+    return _store.username;
   },
 
   getUserData() {

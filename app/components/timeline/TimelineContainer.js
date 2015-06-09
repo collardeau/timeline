@@ -23,7 +23,9 @@ class TimelineContainer extends React.Component {
   componentDidMount() {
     console.log("tl container: mount");
     timelineStore.addChangeListener(this.changeContent);
-    timelineActions.loadTimeline(this.props.params[0]);  // sync
+    let owner = this.props.params[0],
+        timelineId = this.props.params[1];
+    timelineActions.loadTimeline(timelineId, owner);  // sync
   }
 
   componentWillUnmount() {
@@ -43,6 +45,7 @@ class TimelineContainer extends React.Component {
     }
     let dateToggle, info;
     let numDots = this.state.timeline.dots.length;
+    let timelineId = this.props.params[1];
 
     if (numDots) {    // there are items in the timeline
       dateToggle = (
@@ -73,7 +76,7 @@ class TimelineContainer extends React.Component {
 
             <p>{ this.state.timeline.description }.
               <br />
-              A Public Timeline curated by
+              A timeline curated by
               <b> { this.state.timeline.ownerNickname }</b>.
             </p>
 
@@ -84,10 +87,10 @@ class TimelineContainer extends React.Component {
 
           <Timeline dots={ this.state.timeline.dots || [] } />
 
-          <TimelineAddDot timelineId = { this.props.params[0] }/>
+          <TimelineAddDot timelineId = { timelineId }/>
           <TimelineEdit
             timeline = { this.state.timeline }
-            timelineId = { this.props.params[0] }
+            timelineId = { timelineId }
           />
        </div>
 
