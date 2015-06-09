@@ -8,7 +8,6 @@ class BrowseTable extends React.Component {
   }
 
   handleTimelineLink(timeline){
-    console.log(timeline);
     hasher.setHash('u/' + timeline.ownerName + '/' + timeline.key);
   }
 

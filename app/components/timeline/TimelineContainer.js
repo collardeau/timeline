@@ -1,4 +1,5 @@
 const React = require('react');
+const $ = require('jquery');
 
 let TimelineHeader = require('./TimelineHeader');
 let Timeline = require('./Timeline');
@@ -15,12 +16,16 @@ class TimelineContainer extends React.Component {
     console.log("---------------");
     console.log("tl container: contructor");
     this.state = {
-      timeline: timelineStore.getTimeline()
+      timeline: {
+        dots: [],
+        name: ''
+      }
     };
     this.changeContent = this.changeContent.bind(this);
   }
 
   componentDidMount() {
+    $('#timelineSpinner').removeClass('hidden');
     console.log("tl container: mount");
     timelineStore.addChangeListener(this.changeContent);
     let owner = this.props.params[0],
@@ -61,6 +66,15 @@ class TimelineContainer extends React.Component {
       info = <p>No item in this list!</p>;
     }
 
+    let timelineInfo = (
+      <div>
+        <h4>{ this.state.timeline.name }</h4>
+        <p> { this.state.timeline.description }</p>
+        <p> A timeline curated by <b>{ this.state.timeline.ownerName }</b></p>
+        { info }
+      </div>
+    );
+
     return (
       <div>
 
@@ -70,17 +84,13 @@ class TimelineContainer extends React.Component {
 
           <TimelineControls owner={ isOwner } />
 
+          <p id='timelineSpinner' className="content-padded hidden">
+            Fetching Timeline... <i className="fa fa-2x fa-spinner fa-spin pull-right"></i>
+          </p>
+
           <div className="content-padded">
 
-            <h4>{ this.state.timeline.name }</h4>
-
-            <p>{ this.state.timeline.description }.
-              <br />
-              A timeline curated by
-              <b> { this.state.timeline.ownerNickname }</b>.
-            </p>
-
-            { info }
+            { this.state.timeline.name ? timelineInfo : '' }
             { dateToggle }
 
           </div>
@@ -103,6 +113,7 @@ class TimelineContainer extends React.Component {
     this.setState({
       timeline: timelineStore.getTimeline()
     });
+    $('#timelineSpinner').addClass('hidden');
   }
 }
 

@@ -169,11 +169,10 @@ class Login extends React.Component {
             </form>
 
           </div>
+
           <p id='loginSpinner' className="content-padded hidden">
             Logging in...<i className="fa fa-2x fa-spinner fa-spin pull-right"></i>
           </p>
-
-
 
         </div>
 
