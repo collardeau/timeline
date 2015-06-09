@@ -26,7 +26,7 @@ let getUserUidPromise = (username) => {
 
 var firebaseUtils = {
 
-    changePublicTimelines: function(callback){  // public indexes
+    changePublicTimelines(callback){  // public indexes
       ref.child(publicTimelines)
       .on("value", function(snapshot) {
         console.log('fb: NEW tl index data');
@@ -36,7 +36,7 @@ var firebaseUtils = {
       });
    },
 
-    changeTimelines: function(uid, callback){  // own indexes
+    changeTimelines(uid, callback){  // own indexes
       userRef.child(uid).child(timelines)
       .on("value", function(snapshot) {
         console.log('fb: NEW PRIVATE tl index data');
@@ -46,7 +46,7 @@ var firebaseUtils = {
       });
     },
 
-    addTimeline: function(timeline){
+    addTimeline(timeline){
 
       addUserTimelinePromise(timeline).then(id => {
         userRef.child(timeline.owner).child(timelineIndex).child(id).set(timeline);
@@ -79,26 +79,22 @@ var firebaseUtils = {
       this.homeInstance().child(publicTimelines).child(tlId).update(updatedTl);
     },
 
-    ddeleteTimeline: function(timelineId){
-      //ref.child
-    },
-
     deleteTimeline: function(timelineId){
       console.log("firebase deleting timeline");
       this.homeInstance().child(publicTimelines).child(timelineId).set({});
     },
 
-    addDot: function(dot, timelineId) {
-      this.homeInstance().child(publicTimelines).child(timelineId).child("dots").push(dot);
+    addDot: (dot, timelineId, uid) => {
+      userRef.child(uid).child(timelines).child(timelineId).child("dots").push(dot);
     },
 
     removeDot: function(dotRef, timelineId) {
       this.homeInstance().child(publicTimelines).child(timelineId).child('dots').child(dotRef).set({});
     },
 
-    getUserData: function(userId, cb ) {
+    getUserData: function(userId, cb ) {  // firebase data, not auth
       ref.child('user').child(userId).child('info')
-      .on("value", function(snapshot) {
+      .on("value", function(snapshot) {  // could be once?
         console.log("fb: NEW user data");
         cb(snapshot.val());
       }, function(errorObject){

@@ -18,7 +18,8 @@ class TimelineContainer extends React.Component {
     this.state = {
       timeline: {
         dots: [],
-        name: ''
+        name: '',
+        owner: ''
       }
     };
     this.changeContent = this.changeContent.bind(this);
@@ -66,6 +67,8 @@ class TimelineContainer extends React.Component {
       info = <p>No item in this list!</p>;
     }
 
+    console.log(this.state.timeline);
+
     let timelineInfo = (
       <div>
         <h4>{ this.state.timeline.name }</h4>
@@ -97,7 +100,11 @@ class TimelineContainer extends React.Component {
 
           <Timeline dots={ this.state.timeline.dots || [] } />
 
-          <TimelineAddDot timelineId = { timelineId }/>
+          <TimelineAddDot
+            timelineId = { timelineId }
+            timelineOwner = { this.state.timeline.owner }
+          />
+
           <TimelineEdit
             timeline = { this.state.timeline }
             timelineId = { timelineId }

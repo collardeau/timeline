@@ -63,12 +63,12 @@ let timelineActions = {
     firebaseUtils.editTimeline(newTimeline, timelineId);
   },
 
-  addDot(dot, timelineId){
+  addDot(dot, timelineId, timelineOwner){
     svgUtils.addDot(dot);
     AppDispatcher.handleAction({
       actionType: appConstants.ADD_DOT
     });
-    firebaseUtils.addDot(dot, timelineId);
+    firebaseUtils.addDot(dot, timelineId, timelineOwner);
   },
 
   deleteDot(dotRef, timelineId){
