@@ -23,11 +23,13 @@ class Login extends React.Component {
   }
 
   handleRegister(){
+    this.setState({warning: ''});
     let email = this.refs.regEmail.getDOMNode().value;
     let pw = this.refs.regPw.getDOMNode().value;
     let username = this.refs.nickname.getDOMNode().value;
 
     if(username && pw && email){
+      $('#loginSpinner').removeClass('hidden');
       authUtils.createUser(
         {
           email: email,
@@ -38,9 +40,11 @@ class Login extends React.Component {
             warning: warning,
             disabled: false
           });
+          $('#loginSpinner').addClass('hidden');
         }, (uid) => {
           hasher.setHash('browse');
           userActions.changeUser(uid);
+          $('#loginSpinner').addClass('hidden');
         }
       );
 
@@ -60,18 +64,23 @@ class Login extends React.Component {
   }
 
   handleLogin(){
+
+    this.setState({warning: ''});
     let email = this.refs.loginEmail.getDOMNode().value;
     let pw = this.refs.loginPw.getDOMNode().value;
 
     if (email && pw) {  // check for valid email front end?
 
+      $('#loginSpinner').removeClass('hidden');
       authUtils.login({email: email, password: pw},
         (warning) => {
+          $('#loginSpinner').addClass('hidden');
           this.setState({
             warning: warning,
             disabled: false
           });
         }, (uid) => {
+          $('#loginSpinner').addClass('hidden');
           hasher.setHash('browse');
           userActions.changeUser(uid);
         }
@@ -112,7 +121,7 @@ class Login extends React.Component {
             <i className='fa fa-home'></i>
           </button>
 
-          <h1 className="title">TIMELINES</h1>
+        <h1 className="title">TIMELINES</h1>
         </header>
 
         <div className="content">
@@ -160,6 +169,11 @@ class Login extends React.Component {
             </form>
 
           </div>
+          <p id='loginSpinner' className="content-padded hidden">
+            Logging in...<i className="fa fa-2x fa-spinner fa-spin pull-right"></i>
+          </p>
+
+
 
         </div>
 

@@ -90,10 +90,11 @@ let firebaseAuth = {
   },
 
   login: (user, cbOnFail, cbOnSuccess) => {
+    console.log(user);
     loginWithPw(user).then(auth => {
       console.log('logged in');
       cbOnSuccess(auth.uid);
-    }, cbOnFail());
+    }, cbOnFail);
   },
 
   logout: (cb) => {
