@@ -64,6 +64,13 @@ class Browse extends React.Component {
       <BrowseControls active={ this.state.activeTab } filterFn={ this.filterTimelines.bind(this) }/>
     );
 
+    let empty = (
+      <p className='content-padded'>Hello <b>{ this.props.userData.nickname }</b>,
+        <br />
+        No timelines here. Start creating your own: Create <a>one</a>
+      </p>
+    );
+
     return (
       <div>
 
@@ -80,7 +87,7 @@ class Browse extends React.Component {
 
           <BrowseTable timelines={ this.state.timelines } />
 
-          <p className="content-padded">Hello { this.props.userData.nickname }</p>
+          { this.state.timelines.length || this.state.activeTab === 'public' ? '' : empty }
 
           </div>
 
