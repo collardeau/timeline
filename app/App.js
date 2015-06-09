@@ -2,6 +2,7 @@ require('normalize.css/normalize.css');
 require('./styles/main.scss');
 
 const React = require('react');
+const $ = require('jquery');
 
 let Login = require('./components/login/Login');
 let TimelineContainer = require('./components/timeline/TimelineContainer');
@@ -17,6 +18,7 @@ class App extends React.Component {
     console.log("**** app: mount");
     console.log('app: sync timelines');
 
+    $('#timelines-loading').removeClass('hidden');
     timelineActions.syncPublicTimelines();
     if (this.props.userAuth){
       console.log('app: sync private timelines');
@@ -37,7 +39,7 @@ class App extends React.Component {
               );
 
            case "u":
-              return (
+               return (
                 <TimelineContainer
                   params = { this.props.params }
                   userAuth = { this.props.userAuth }

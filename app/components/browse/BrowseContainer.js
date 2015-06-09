@@ -87,6 +87,10 @@ class Browse extends React.Component {
 
           <BrowseTable timelines={ this.state.timelines } />
 
+          <p id='timelines-loading' className="content-padded hidden">
+            <i className="fa fa-2x fa-spinner fa-spin"></i><br /> Loading...
+          </p>
+
           { this.state.timelines.length || this.state.activeTab === 'public' ? '' : empty }
 
           </div>
@@ -108,6 +112,7 @@ class Browse extends React.Component {
         timelines: timelinesStore.getTimelines()
       });
     }
+    $('#timelines-loading').addClass('hidden');
   }
 
 }
