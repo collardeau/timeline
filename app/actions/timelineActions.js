@@ -71,7 +71,7 @@ let timelineActions = {
     firebaseUtils.addDot(dot, timelineId, timelineOwner);
   },
 
-  deleteDot(dotRef, timelineId){
+  deleteDot(dotRef, timelineId, timelineOwner){
     AppDispatcher.handleAction({
       actionType: appConstants.DELETE_DOT,
       data: {
@@ -79,7 +79,7 @@ let timelineActions = {
         timelineId: timelineId
       }
     });
-    firebaseUtils.removeDot(dotRef, timelineId);
+    firebaseUtils.removeDot(dotRef, timelineId, timelineOwner);
   },
 
   toggleDates(){

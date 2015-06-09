@@ -85,14 +85,15 @@ var firebaseUtils = {
     },
 
     addDot: (dot, timelineId, uid) => {
+      // async?
       userRef.child(uid).child(timelines).child(timelineId).child("dots").push(dot);
     },
 
-    removeDot: function(dotRef, timelineId) {
-      this.homeInstance().child(publicTimelines).child(timelineId).child('dots').child(dotRef).set({});
+    removeDot(dotRef, timelineId, uid) {
+      userRef.child(uid).child(timelines).child(timelineId).child("dots").child(dotRef).set({});
     },
 
-    getUserData: function(userId, cb ) {  // firebase data, not auth
+    getUserData(userId, cb ) {  // firebase data, not auth
       ref.child('user').child(userId).child('info')
       .on("value", function(snapshot) {  // could be once?
         console.log("fb: NEW user data");

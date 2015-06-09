@@ -67,8 +67,6 @@ class TimelineContainer extends React.Component {
       info = <p>No item in this list!</p>;
     }
 
-    console.log(this.state.timeline);
-
     let timelineInfo = (
       <div>
         <h4>{ this.state.timeline.name }</h4>

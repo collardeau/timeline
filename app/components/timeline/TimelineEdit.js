@@ -23,7 +23,7 @@ class TimelineEdit extends React.Component {
     // }, this.props.timelineId);
 
     this.state.dotsToDelete.forEach((dotRef, i) => {
-      timelineActions.deleteDot(dotRef, this.props.timelineId);
+      timelineActions.deleteDot(dotRef, this.props.timelineId, this.props.timeline.owner);
     });
     this.closeModal();
   }
@@ -42,12 +42,12 @@ class TimelineEdit extends React.Component {
   }
 
   handleDeleteTimeline(){
-    let doDelete = confirm("Do you want to delete this timeline?");
-    if(doDelete){
-      console.log("deleting this shit, mate!");
-      timelineActions.deleteTimeline(this.props.timelineId);
-      hasher.setHash('browse');
-    }
+    //let doDelete = confirm("Do you want to delete this timeline?");
+    //if(doDelete){
+    //  console.log("deleting this shit, mate!");
+    //  timelineActions.deleteTimeline(this.props.timelineId);
+    //  hasher.setHash('browse');
+    //}
   }
 
   closeModal() {
