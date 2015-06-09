@@ -13,13 +13,15 @@ class AddTimeline extends React.Component {
     let name = this.refs.name.getDOMNode().value;
     let desc = this.refs.description.getDOMNode().value;
 
+    console.log(this.props);
+
     if(name && desc) {
       let timeline = {
         name: name,
         description: desc,
         isPublic: this.refs.privacy.getDOMNode().checked,
         owner: this.props.userAuth.uid,
-        ownerNickname: this.props.userData.nickname
+        ownerName: this.props.userData.username
       };
       timelineActions.addTimeline(timeline);
       this.closeModal();

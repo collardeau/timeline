@@ -18,7 +18,7 @@ let userStore = objectAssign({}, EventEmitter.prototype, {
     _store = user ? user : emptyStore;
   },
 
-  getNickname(){
+  getUsername(){
     return _store.username;
   },
 

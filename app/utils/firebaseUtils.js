@@ -24,7 +24,6 @@ let getUserUidPromise = (username) => {
   });
 };
 
-
 var firebaseUtils = {
 
     changePublicTimelines: function(callback){  // public indexes

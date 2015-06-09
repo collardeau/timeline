@@ -18,7 +18,7 @@ class Router extends React.Component {
     this.state = {
       hashInfo: this.getHashInfo(),
       userAuth: authUtils.isLoggedIn(),
-      userData: { nickname: "" }
+      userData: { username: "" }
     };
     this.handleChanges = this.handleChanges.bind(this); // hash changes
     this.changeUserContent = this.changeUserContent.bind(this);
@@ -65,7 +65,7 @@ class Router extends React.Component {
       console.log("router callback: changing user content");
       this.setState({
         userData: {
-          nickname: userStore.getNickname()
+          username: userStore.getUsername()
         },
           userAuth: authUtils.isLoggedIn()
       });
