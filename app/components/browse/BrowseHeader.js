@@ -2,6 +2,7 @@ const React = require('react');
 const hasher = require('hasher');
 const $ = require('jquery');
 let authUtils = require('../../utils/authUtils');
+let userActions = require('../../actions/userActions');
 
 class BrowseHeader extends React.Component {
 
@@ -22,7 +23,10 @@ class BrowseHeader extends React.Component {
   }
 
   handleLogout(){
-    authUtils.logout();
+    authUtils.logout(() => {
+      hasher.setHash('login');
+      userActions.changeUser();
+    });
  }
 
   render() {

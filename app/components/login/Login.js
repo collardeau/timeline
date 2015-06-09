@@ -3,6 +3,7 @@ const $ = require('jquery');
 const hasher = require('hasher');
 
 let authUtils = require('../../utils/authUtils');
+let userActions = require('../../actions/userActions');
 
 class Login extends React.Component {
 
@@ -21,7 +22,7 @@ class Login extends React.Component {
     this.setState({ warning: '' });
   }
 
-  handleRegister(e){
+  handleRegister(){
     let email = this.refs.regEmail.getDOMNode().value;
     let pw = this.refs.regPw.getDOMNode().value;
     let username = this.refs.nickname.getDOMNode().value;
@@ -37,8 +38,9 @@ class Login extends React.Component {
             warning: warning,
             disabled: false
           });
-        }, () => {
+        }, (uid) => {
           hasher.setHash('browse');
+          userActions.changeUser(uid);
         }
       );
 
@@ -55,8 +57,7 @@ class Login extends React.Component {
         this.setState({ warning: 'Oops, no password' });
       }
     }
-    e.preventDefault();
-    }
+  }
 
   handleLogin(){
     let email = this.refs.loginEmail.getDOMNode().value;
@@ -70,9 +71,9 @@ class Login extends React.Component {
             warning: warning,
             disabled: false
           });
-        }, () => {
+        }, (uid) => {
           hasher.setHash('browse');
-          //userActions.changeUser(authData.uid);
+          userActions.changeUser(uid);
         }
       );
 

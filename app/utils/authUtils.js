@@ -90,7 +90,17 @@ let firebaseAuth = {
   },
 
   login: (user, cbOnFail, cbOnSuccess) => {
-    loginWithPw(user).then(cbOnSuccess, cbOnFail);
+    loginWithPw(user).then(auth => {
+      console.log('logged in');
+      cbOnSuccess(auth.uid);
+    }, cbOnFail());
+  },
+
+  logout: (cb) => {
+    ref.unauth(() => {
+      console.log("logged out");
+      cb();
+    });
   },
 
   isLoggedIn: function(){
@@ -99,14 +109,6 @@ let firebaseAuth = {
 
   isLoggedOut: function(){
     return !this.isLoggedIn();
-  },
-
-  logout: function(){  // should be passing user callbacks here
-    ref.unauth(function(){
-      console.log("logged out");
-      userActions.changeUser();
-    });
-    hasher.setHash('login');
   }
 
 };
