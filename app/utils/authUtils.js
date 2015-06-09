@@ -7,11 +7,11 @@ let userActions = require('../actions/userActions');
 let ref = new Firebase(appConstants.FIREBASE_HOST),
     usernameRef = ref.child('username');
 
-let saveUsername = (user) => {
+let saveUsername = (username) => {
   return new Promise(( resolve, reject) => {
-    ref.child('username').child(user.username).set(true, (error) => {
+    ref.child('username').child(username).set(true, (error) => {
       if(error){ reject('Username already exists'); } // or could be no connection
-      resolve(user);
+      resolve(username);
     });
   });
 };
@@ -69,9 +69,9 @@ let firebaseAuth = {
 
   createUser: (user, cbOnFail, cbOnSuccess) => {
 
-    saveUsername(user)
-    .then(newUser => {
-      createAuthUser(newUser)
+    saveUsername(user.username)
+    .then(() => {
+      createAuthUser(user)
       .then(loginWithPw)
       .then(register.bind(this, user))
       .then(cbOnSuccess, function(error) {

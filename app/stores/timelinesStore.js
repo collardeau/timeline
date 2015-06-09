@@ -29,7 +29,7 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  addTimeline(timeline){
+  addTimeline(timeline){ // always push to private tl?
     _store.timelines.push(timeline);
   },
 
