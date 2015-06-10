@@ -16,6 +16,12 @@ class TimelineEdit extends React.Component {
     };
   }
 
+  componentWillReceiveProps(){
+    this.refs.name.getDOMNode().value = this.props.timeline.name;
+    this.refs.description.getDOMNode().value = this.props.timeline.description;
+    this.refs.privacy.getDOMNode().checked = this.props.timeline.isPublic;
+  }
+
   handleSubmit() {
     // timelineActions.editTimeline({
     //   name: $('#edit-timelineTitle').html(),
@@ -63,11 +69,10 @@ class TimelineEdit extends React.Component {
       </div>
     );
 
+
     let dots = this.props.timeline.dots.map((dot, i) => {
 
-      let toDelete = this.state.dotsToDelete.some( d => {
-        return dot.key === d;
-      });
+      let toDelete = this.state.dotsToDelete.some( d => dot.key === d );
 
       return (
         <TimelineEditItem
@@ -91,13 +96,16 @@ class TimelineEdit extends React.Component {
 
         <div className="content">
           <div className="content-padded">
-            { this.state.warning ? warning : '' }
-            <h3 id='edit-timelineTitle'>
-              { this.props.timeline.name }
-            </h3>
-            <p id="edit-timelineDesc">
-              { this.props.timeline.description }
-            </p>
+           <form onSubmit={this.handleSubmit.bind(this)}>
+              <input ref="name" type="text" placeholder="Name" />
+              <input ref="description" type="text" placeholder="Description" />
+              <span>Make it Public?</span>
+              <label className="label-switch pull-right">
+                <input ref="privacy" type="checkbox" />
+                <div className="checkbox"></div>
+              </label>
+            </form>
+
             <ul className='table-view'>
               { dots }
             </ul>

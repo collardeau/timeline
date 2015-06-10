@@ -1,4 +1,5 @@
 const React = require('react');
+const moment = require('moment');
 const classNames = require('classnames');
 
 class TimelineEditItem extends React.Component {
@@ -14,7 +15,7 @@ class TimelineEditItem extends React.Component {
       <li className='table-view-cell'>
         { dot.name }
         <br />
-        <small> { dot.timestamp }</small>
+        <small>{ moment.unix(dot.timestamp).format("MM-DD-YYYY") }</small>
         <button onClick={ this.handleDelete.bind(this, dot.key)}
           className={ btnClasses }>
             Delete

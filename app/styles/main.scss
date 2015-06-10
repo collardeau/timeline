@@ -24,14 +24,17 @@ h1 {
   letter-spacing: 0.5px;
 }
 
+#editTimelineModal ul {
+  margin-top: 30px;
+}
+
+
 #line {
   transition: all 3s ease;
 }
 #line:hover {
   stroke: green !important;
 }
-
-
 
 .dot-info {
   //font-size: 2em;

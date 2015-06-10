@@ -19,7 +19,8 @@ class TimelineContainer extends React.Component {
       timeline: {
         dots: [],
         name: '',
-        owner: ''
+        owner: '',
+        isPublic: false
       }
     };
     this.changeContent = this.changeContent.bind(this);
@@ -119,6 +120,7 @@ class TimelineContainer extends React.Component {
       timeline: timelineStore.getTimeline()
     });
     $('#timelineSpinner').addClass('hidden');
+    console.log(this.state.timeline);
   }
 }
 
