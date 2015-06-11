@@ -1,10 +1,19 @@
 const React = require('react');
 const hasher = require('hasher');
 const $ = require('jquery');
+const classNames = require('classnames');
+
 let authUtils = require('../../utils/authUtils');
 let userActions = require('../../actions/userActions');
 
 class BrowseHeader extends React.Component {
+
+  constructor(){
+    super();
+    this.state = {
+      menuIsOpen: false
+    };
+  }
 
   handleRoute(route) {
     hasher.setHash(route);
@@ -22,6 +31,12 @@ class BrowseHeader extends React.Component {
     }
   }
 
+  handleMenuPopover(){
+    this.setState({
+      menuIsOpen: !this.state.menuIsOpen
+    });
+  }
+
   handleLogout(){
     authUtils.logout(() => {
       hasher.setHash('login');
@@ -30,6 +45,11 @@ class BrowseHeader extends React.Component {
  }
 
   render() {
+
+    let popoverClasses = classNames( {
+      'popover': true,
+      'visible': this.state.menuIsOpen
+    });
 
     let logout, login, account;
 
@@ -58,21 +78,22 @@ class BrowseHeader extends React.Component {
     return (
       <header className="bar bar-nav">
 
-        <a href='#menuPopover'>
-          <button className="btn pull-left">
-            <i className='fa fa-bars'></i>
-          </button>
-        </a>
+        <button onClick={ this.handleMenuPopover.bind(this) } className="btn pull-left">
+          <i className='fa fa-bars'></i>
+        </button>
         <button className="btn pull-right" onClick= { this.handleAddTimeline.bind(this) }>
           <i className='fa fa-pencil-square-o pull-left'></i>
         </button>
 
         <h1 className="title">Timelines</h1>
 
-        <div id="menuPopover" className="popover">
+        <div id="menuPopover" className={popoverClasses}
+          style={{ display: this.state.menuIsOpen ? 'block' : '' }}>
+
           <header className="bar bar-nav">
             <h1 className="title">Menu</h1>
           </header>
+
           <ul className="table-view">
             { account }
             { login }
@@ -84,6 +105,11 @@ class BrowseHeader extends React.Component {
           </ul>
 
         </div>
+
+        { this.state.menuIsOpen ?
+        <div onClick={this.handleMenuPopover.bind(this)} className='backdrop'></div> :
+        ''
+        }
 
     </header>
 

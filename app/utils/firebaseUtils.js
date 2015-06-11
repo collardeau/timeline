@@ -8,7 +8,7 @@ let publicTimelines = 'timeline-public-index';
 let timelines = 'timeline';
 let timelineIndex = 'timeline-index';
 
-let addUserTimelinePromise = (timeline) => {
+let addTimelinePromise = (timeline) => {
   return new Promise((resolve, reject) => {
     let newRef = userRef.child(timeline.owner).child(timelines).push(timeline);
     if (newRef) { resolve( newRef.key()); }
@@ -57,7 +57,7 @@ var firebaseUtils = {
 
     addTimeline(timeline){
 
-      addUserTimelinePromise(timeline).then(id => {
+      addTimelinePromise(timeline).then(id => {
         userRef.child(timeline.owner).child(timelineIndex).child(id).set(timeline);
         if(timeline.isPublic){
           ref.child(publicTimelines).child(id).set(timeline);
@@ -86,7 +86,7 @@ var firebaseUtils = {
 
     editTimeline(updatedTl, tlId){
 
-      // update user folder and user index folder, wrap in promise? is this sync?
+      // update user folder and user index folder
       userRef.child(updatedTl.owner).child(timelines).child(tlId).update(updatedTl);
       userRef.child(updatedTl.owner).child(timelineIndex).child(tlId).update(updatedTl);
 
@@ -94,11 +94,9 @@ var firebaseUtils = {
 
       isPublicTimeline(tlId).then(wasPublic => {
         if(wasPublic && !isNowPublic){
-          console.log('delete the public one');
           ref.child(publicTimelines).child(tlId).set({});
         }
         if(!wasPublic && isNowPublic){
-          console.log('save public index');
           ref.child(publicTimelines).child(tlId).set(updatedTl);
         }
       });
@@ -112,7 +110,6 @@ var firebaseUtils = {
     },
 
     addDot: (dot, timelineId, uid) => {
-      // async?
       userRef.child(uid).child(timelines).child(timelineId).child("dots").push(dot);
     },
 

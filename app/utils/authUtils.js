@@ -49,7 +49,7 @@ let loginWithPw = (user) => {
   });
 };
 
-let register = (newUser, authData) => {
+let register = (newUser, authData) => { // doesn't need to be a promise
   return new Promise(( resolve, reject) => {
     let user = {
       email: newUser.email,
@@ -90,7 +90,6 @@ let firebaseAuth = {
   },
 
   login: (user, cbOnFail, cbOnSuccess) => {
-    console.log(user);
     loginWithPw(user).then(auth => {
       console.log('logged in');
       cbOnSuccess(auth.uid);
