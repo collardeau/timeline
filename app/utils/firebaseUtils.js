@@ -46,7 +46,7 @@ var firebaseUtils = {
    },
 
     changeTimelines(uid, callback){  // own indexes
-      userRef.child(uid).child(timelines)
+      userRef.child(uid).child(timelineIndex)
       .on("value", function(snapshot) {
         console.log('fb: NEW PRIVATE tl index data');
         callback(this.toArray(snapshot.val()));
@@ -104,9 +104,11 @@ var firebaseUtils = {
       });
     },
 
-    deleteTimeline: function(timelineId){
+    deleteTimeline(timelineId, timelineOwner){
       console.log("firebase deleting timeline");
-      this.homeInstance().child(publicTimelines).child(timelineId).set({});
+      ref.child(publicTimelines).child(timelineId).set({});
+      userRef.child(timelineOwner).child(timelineIndex).child(timelineId).set({});
+      userRef.child(timelineOwner).child(timelines).child(timelineId).update({ deleted: true });
     },
 
     addDot: (dot, timelineId, uid) => {

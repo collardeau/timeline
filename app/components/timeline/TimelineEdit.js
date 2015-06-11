@@ -61,12 +61,12 @@ class TimelineEdit extends React.Component {
   }
 
   handleDeleteTimeline(){
-    //let doDelete = confirm("Do you want to delete this timeline?");
-    //if(doDelete){
-    //  console.log("deleting this shit, mate!");
-    //  timelineActions.deleteTimeline(this.props.timelineId);
-    //  hasher.setHash('browse');
-    //}
+    let doDelete = confirm("Do you want to delete this timeline?");
+    if(doDelete){
+      console.log("deleting this shit, mate!");
+      timelineActions.deleteTimeline(this.props.timelineId, this.props.timeline.owner );
+      hasher.setHash('browse');
+    }
   }
 
   closeModal() {

@@ -48,12 +48,12 @@ let timelineActions = {
     firebaseUtils.addTimeline(timeline);
   },
 
-  deleteTimeline(timelineId){
-    firebaseUtils.deleteTimeline(timelineId);
+  deleteTimeline(timelineId, timelineOwner){
+    firebaseUtils.deleteTimeline(timelineId, timelineOwner);
   },
 
   editTimeline(timeline, timelineId) {
-    AppDispatcher.handleAction({
+    AppDispatcher.handleAction({ // need dispatcher here or is firebase pushing changes?
       actionType: appConstants.EDIT_TIMELINE,
       data: {
         timeline: timeline
