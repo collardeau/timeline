@@ -10,13 +10,14 @@ class TimelineEdit extends React.Component {
 
   constructor() {
     super();
+    console.log("timelinedEdit: constructor");
     this.state = {
       warning: '',
       dotsToDelete: []
     };
   }
 
-  componentWillReceiveProps(){
+  componentDidUpdate(){
     this.refs.name.getDOMNode().value = this.props.timeline.name;
     this.refs.description.getDOMNode().value = this.props.timeline.description;
     this.refs.privacy.getDOMNode().checked = this.props.timeline.isPublic;
@@ -135,9 +136,9 @@ class TimelineEdit extends React.Component {
   }
 }
 
-//TimelineEdit.propTypes = {
-//  timelineId: React.PropTypes.string.isRequired
-//};
+TimelineEdit.propTypes = {
+  timelineId: React.PropTypes.string.isRequired
+};
 
 module.exports = TimelineEdit;
 

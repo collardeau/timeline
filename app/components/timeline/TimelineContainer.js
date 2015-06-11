@@ -103,7 +103,6 @@ class TimelineContainer extends React.Component {
             timelineId = { timelineId }
             timelineOwner = { this.state.timeline.owner }
           />
-
           <TimelineEdit
             timeline = { this.state.timeline }
             timelineId = { timelineId }
@@ -120,7 +119,6 @@ class TimelineContainer extends React.Component {
       timeline: timelineStore.getTimeline()
     });
     $('#timelineSpinner').addClass('hidden');
-    console.log(this.state.timeline);
   }
 }
 
