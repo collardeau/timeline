@@ -23,15 +23,27 @@ class TimelineEdit extends React.Component {
   }
 
   handleSubmit() {
-    // timelineActions.editTimeline({
-    //   name: $('#edit-timelineTitle').html(),
-    //   description: $('#edit-timelineDesc').html()
-    // }, this.props.timelineId);
+    let name = this.refs.name.getDOMNode().value,
+      desc = this.refs.description.getDOMNode().value,
+      isPublic = this.refs.privacy.getDOMNode().checked;
 
-    this.state.dotsToDelete.forEach((dotRef, i) => {
-      timelineActions.deleteDot(dotRef, this.props.timelineId, this.props.timeline.owner);
-    });
-    this.closeModal();
+    if(name && desc) {
+      let timeline = {
+        name: name,
+        description: desc,
+        isPublic: this.refs.privacy.getDOMNode().checked,
+        owner: this.props.timeline.owner,
+        ownerName: this.props.timeline.ownerName
+      };
+
+      timelineActions.editTimeline(timeline, this.props.timelineId);
+      this.closeModal();
+
+      this.state.dotsToDelete.forEach((dotRef, i) => {
+        timelineActions.deleteDot(dotRef, this.props.timelineId, this.props.timeline.owner);
+      });
+    }
+
   }
 
   handleToggleDotDel(dotKey){

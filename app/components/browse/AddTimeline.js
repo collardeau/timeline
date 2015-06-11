@@ -13,8 +13,6 @@ class AddTimeline extends React.Component {
     let name = this.refs.name.getDOMNode().value;
     let desc = this.refs.description.getDOMNode().value;
 
-    console.log(this.props);
-
     if(name && desc) {
       let timeline = {
         name: name,
@@ -62,7 +60,7 @@ class AddTimeline extends React.Component {
             <form onSubmit={this.handleSubmit.bind(this)}>
               <input ref="name" type="text" placeholder="Name" />
               <input ref="description" type="text" placeholder="Description" />
-              <span>Make it open to public?</span>
+              <span>Make it Public?</span>
               <label className="label-switch pull-right">
                 <input ref="privacy" type="checkbox" />
                 <div className="checkbox"></div>

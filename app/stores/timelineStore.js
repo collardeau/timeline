@@ -10,6 +10,7 @@ let _store = {
     description: "",
     owner: "",
     ownerNickname: "",
+    isPublic: false,
     dots: []
   }
 };
@@ -28,8 +29,10 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
   },
 
   editTimeline(data){
-    console.log(data);
+    // could check first what actually changed?
     _store.timeline.name = data.timeline.name;
+    _store.timeline.description = data.timeline.description;
+    _store.timeline.isPublic = data.timeline.isPublic;
   },
 
   getDotIndex(dotRef){

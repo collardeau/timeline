@@ -52,15 +52,14 @@ let timelineActions = {
     firebaseUtils.deleteTimeline(timelineId);
   },
 
-  editTimeline(newTimeline, timelineId) {
+  editTimeline(timeline, timelineId) {
     AppDispatcher.handleAction({
       actionType: appConstants.EDIT_TIMELINE,
       data: {
-        timelineId: timelineId,
-        timeline: newTimeline
+        timeline: timeline
       }
     });
-    firebaseUtils.editTimeline(newTimeline, timelineId);
+    firebaseUtils.editTimeline(timeline, timelineId);
   },
 
   addDot(dot, timelineId, timelineOwner){

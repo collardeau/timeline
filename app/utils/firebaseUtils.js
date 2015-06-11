@@ -24,6 +24,15 @@ let getUserUidPromise = (username) => {
   });
 };
 
+let isPublicTimeline = (tlId) => {
+  return new Promise(( resolve, reject) => {
+    ref.child(publicTimelines).child(tlId).once('value', snapshot => {
+      if(snapshot.val()){ resolve(true); }
+      resolve(false);
+    });
+  });
+};
+
 var firebaseUtils = {
 
     changePublicTimelines(callback){  // public indexes
@@ -75,8 +84,24 @@ var firebaseUtils = {
 
    },
 
-    editTimeline: function(updatedTl, tlId){
-      this.homeInstance().child(publicTimelines).child(tlId).update(updatedTl);
+    editTimeline(updatedTl, tlId){
+
+      // update user folder and user index folder, wrap in promise? is this sync?
+      userRef.child(updatedTl.owner).child(timelines).child(tlId).update(updatedTl);
+      userRef.child(updatedTl.owner).child(timelineIndex).child(tlId).update(updatedTl);
+
+      let isNowPublic = updatedTl.isPublic;
+
+      isPublicTimeline(tlId).then(wasPublic => {
+        if(wasPublic && !isNowPublic){
+          console.log('delete the public one');
+          ref.child(publicTimelines).child(tlId).set({});
+        }
+        if(!wasPublic && isNowPublic){
+          console.log('save public index');
+          ref.child(publicTimelines).child(tlId).set(updatedTl);
+        }
+      });
     },
 
     deleteTimeline: function(timelineId){
