@@ -2,7 +2,6 @@ const React = require('react');
 const $ = require('jquery');
 const hasher = require('hasher');
 
-let authUtils = require('../../utils/authUtils');
 let userActions = require('../../actions/userActions');
 
 class Login extends React.Component {
@@ -30,7 +29,7 @@ class Login extends React.Component {
 
     if(username && pw && email){
       $('#loginSpinner').removeClass('hidden');
-      authUtils.createUser(
+      userActions.createUser(
         {
           email: email,
           password: pw,
@@ -43,7 +42,6 @@ class Login extends React.Component {
           $('#loginSpinner').addClass('hidden');
         }, (uid) => {
           hasher.setHash('browse');
-          userActions.changeUser(uid);
           $('#loginSpinner').addClass('hidden');
         }
       );

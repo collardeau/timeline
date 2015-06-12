@@ -31,8 +31,8 @@ let createAuthUser = (user) => {
     ref.createUser({
       email: user.email,
       password: user.password
-    }, function(error){
-      if(error) { reject(error.message); }
+    }, (error) => {
+      if(error) { reject(error); }
       resolve(user);
     });
   });
@@ -74,32 +74,29 @@ let register = (newUser, authData) => { // doesn't need to be a promise
 
 let firebaseAuth = {
 
-  createUser: (user, cbOnFail, cbOnSuccess) => {
-
-    saveUsername(user.username)
-    .then(() => {
-      createAuthUser(user)
-      .then(loginWithPw)
-      .then((auth) => {
-        register(user, auth);
-        cbOnSuccess();
-      }, (error) => {
-        removeUsername(user.username)
-        .then(cbOnFail.bind(this, error), console.log);
-      });
-    }, cbOnFail);
+  createUser: (user) => {
+    return new Promise( (resolve, reject) => {
+      saveUsername(user.username)
+      .then(() => {
+        createAuthUser(user)
+        .then(loginWithPw)
+        .then((auth) => {
+          register(user, auth);
+          resolve(auth);
+        }, (error) => {
+          removeUsername(user.username);
+          reject(error.message);
+        });
+      }, (error) => reject(error));
+    });
 
   },
 
-  login: function(user, cbOnFail, cbOnSuccess) {
-    console.log('authUtils promise');
+  login: function(user) {
     return new Promise(( resolve, reject) => {
       loginWithPw(user).then(auth => {
-        console.log(auth);
         resolve(auth);
       }, error => {
-        console.log(error);
-        console.log(error.message);
         reject(error.message);
       });
     });
