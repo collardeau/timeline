@@ -14,6 +14,7 @@ var appConstants = {
     ADD_DOT: "ADD_DOT",
     REMOVE_DOT: "REMOVE_DOT",
 
+    LOGIN_USER: "LOGIN_USER",
     CHANGE_USER: "CHANGE_USER",
     LOGOUT_USER: "LOGOUT_USER"
 };

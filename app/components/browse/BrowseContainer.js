@@ -7,6 +7,7 @@ let BrowseHeader = require('./BrowseHeader');
 let AddTimeline = require('./AddTimeline');
 let timelinesStore = require('../../stores/timelinesStore');
 let timelineActions = require('../../actions/timelineActions');
+let userActions = require('../../actions/userActions');
 
 class Browse extends React.Component {
 
@@ -25,13 +26,12 @@ class Browse extends React.Component {
   componentDidMount(){
     console.log("browse: mount");
     timelinesStore.addChangeListener(this.changeContent);
-    console.log('browse: sync timelines');
 
     $('#timelines-loading').removeClass('hidden');
     timelineActions.syncPublicTimelines();
+
     if (this.props.userAuth){
-      console.log('app: browse  private timelines');
-      timelineActions.syncTimelines(this.props.userAuth.uid);
+      userActions.initUserData(this.props.userAuth.uid);
     } else {
       console.log('not logged in');
     }

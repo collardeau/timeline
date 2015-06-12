@@ -17,6 +17,7 @@ let timelineActions = {
   },
 
   syncTimelines(uid){
+    console.log('timeline action: sync');
     firebaseUtils.changeTimelines(uid, timelines => {
       AppDispatcher.handleAction({
         actionType: appConstants.CHANGE_TIMELINES,

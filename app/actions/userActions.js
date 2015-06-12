@@ -6,6 +6,33 @@ let firebaseUtils = require('../utils/firebaseUtils');
 
 let userActions = {
 
+  // register?
+
+  initUserData(uid){
+
+    firebaseUtils.getUserData(uid, userData => {
+      AppDispatcher.handleAction({
+        actionType: appConstants.CHANGE_USER,
+        data: { userData: userData }
+      });
+    });
+
+   firebaseUtils.changeTimelines(uid, timelines => {
+      AppDispatcher.handleAction({
+        actionType: appConstants.CHANGE_TIMELINES,
+        data: { timelines: timelines }
+      });
+    });
+
+  },
+
+  loginUser(user, uiError, ui){
+    authUtils.login(user).then(auth => {
+      this.initUserData(auth.uid);
+      ui();
+    }, uiError );
+  },
+
   logoutUser(ui) {
     console.log('user action: logoutUser');
     authUtils.logout();

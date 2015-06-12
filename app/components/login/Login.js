@@ -72,7 +72,8 @@ class Login extends React.Component {
     if (email && pw) {  // check for valid email front end?
 
       $('#loginSpinner').removeClass('hidden');
-      authUtils.login({email: email, password: pw},
+
+      userActions.loginUser({email: email, password: pw},
         (warning) => {
           $('#loginSpinner').addClass('hidden');
           this.setState({
@@ -82,7 +83,6 @@ class Login extends React.Component {
         }, (uid) => {
           $('#loginSpinner').addClass('hidden');
           hasher.setHash('browse');
-          userActions.changeUser(uid);
         }
       );
 

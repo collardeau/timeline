@@ -39,12 +39,13 @@ let createAuthUser = (user) => {
 };
 
 let loginWithPw = (user) => {
+  console.log('login with password');
   return new Promise(( resolve, reject) => {
     ref.authWithPassword({
       email: user.email,
       password: user.password
     }, (error, authData) => {
-      if(error) { reject(error.message); }
+      if(error) { reject(error); }
       resolve(authData);
     });
   });
@@ -91,10 +92,23 @@ let firebaseAuth = {
   },
 
   login: function(user, cbOnFail, cbOnSuccess) {
-    loginWithPw(user).then(auth => {
-      console.log('logged in');
-      cbOnSuccess(auth.uid);
-    }, cbOnFail);
+    console.log('authUtils promise');
+    return new Promise(( resolve, reject) => {
+      loginWithPw(user).then(auth => {
+        console.log(auth);
+        resolve(auth);
+      }, error => {
+        console.log(error);
+        console.log(error.message);
+        reject(error.message);
+      });
+    });
+
+    //loginWithPw(user).then(auth => {
+    //  return Promise.resolve(auth);
+      //console.log('logged in');
+      // cbOnSuccess(auth.uid);
+    //}, cbOnFail);
   },
 
   logout: function() {

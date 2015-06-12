@@ -37,7 +37,8 @@ AppDispatcher.register(function(payload){
       userStore.emit(CHANGE_EVENT);
       break;
     default:
-      return true;
+
+    return true;
   }
 });
 
