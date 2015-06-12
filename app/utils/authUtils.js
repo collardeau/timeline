@@ -2,7 +2,6 @@ const Firebase = require('firebase');
 const appConstants = require('../constants/appConstants');
 let hasher = require('hasher');
 let firebaseUtils = require('./firebaseUtils');
-let userActions = require('../actions/userActions');
 
 let ref = new Firebase(appConstants.FIREBASE_HOST),
     usernameRef = ref.child('username');
