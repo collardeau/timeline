@@ -16,23 +16,6 @@ let timelineActions = {
     });
   },
 
-  syncTimelines(uid){
-    console.log('timeline action: sync');
-    firebaseUtils.changeTimelines(uid, timelines => {
-      AppDispatcher.handleAction({
-        actionType: appConstants.CHANGE_TIMELINES,
-        data: {
-          timelines: timelines
-        }
-      });
-    });
-  },
-
-  killTimelines(){
-    console.log('timeline action: killTimelines !');
-    firebaseUtils.killTimelines();
-  },
-
   loadTimeline(timelineId, owner){
     firebaseUtils.loadTimeline(timelineId, owner, timeline => {
       AppDispatcher.handleAction({
@@ -41,13 +24,6 @@ let timelineActions = {
           timeline: timeline
         }
       });
-    });
-  },
-
-  emptyUserData(){
-    console.log('timeline action: empty user data');
-    AppDispatcher.handleAction({
-      actionType: appConstants.EMPTY_USER_DATA
     });
   },
 

@@ -6,8 +6,6 @@ let firebaseUtils = require('./firebaseUtils');
 let ref = new Firebase(appConstants.FIREBASE_HOST),
     usernameRef = ref.child('username');
 
-console.log('the authUtils is disappearing!');
-
 let saveUsername = (username) => {
   return new Promise(( resolve, reject) => {
     ref.child('username').child(username).set(true, (error) => {
@@ -51,25 +49,15 @@ let loginWithPw = (user) => {
   });
 };
 
-let register = (newUser, authData) => { // doesn't need to be a promise
-  return new Promise(( resolve, reject) => {
+let register = (newUser, authData) => {
     let user = {
       email: newUser.email,
       username: newUser.username,
       uid: authData.uid,
       token: authData.token
     };
-
-    ref.child('username-index').child(user.username).set(user.uid, (error) => {
-      if(error){ reject("Error registering"); }
-    });
-
-    ref.child('user').child(user.uid).child("info").set(user, (error) => {
-      if(error){ reject("Could not register"); }
-      resolve();
-    });
-
-  });
+    ref.child('username-index').child(user.username).set(user.uid);
+    ref.child('user').child(user.uid).child("info").set(user);
 };
 
 let firebaseAuth = {
@@ -92,7 +80,7 @@ let firebaseAuth = {
 
   },
 
-  login: function(user) {
+  login: (user) => {
     return new Promise(( resolve, reject) => {
       loginWithPw(user).then(auth => {
         resolve(auth);
