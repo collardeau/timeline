@@ -5,13 +5,14 @@ let w = window.innerWidth   // width of window
 || document.documentElement.clientWidth
 || document.body.clientWidth;
 
-var h = window.innerHeight
+var screenH = window.innerHeight
 || document.documentElement.clientHeight
 || document.body.clientHeight;
-h = h / 4 * 3;
 // https://stackoverflow.com/questions/16265123/resize-svg-when-window-is-resized-in-d3-js/
 
-let r = 10,  // radius of dots
+let h = screenH / 2;
+
+let r = 7,  // radius of dots
     data = [],  // the dots
     dotsCY = [], // keeping track of dots already drawn
     lineX = [ w / 4 ];  // horizontal pos of timeline
@@ -42,7 +43,7 @@ let drawLine = (svg) => {
         "id": "line"
     })
     .style({
-        stroke: "black",
+        stroke: "#428bca",
         "stroke-width": 5,
         "stroke-linecap": 'round'
     })
@@ -55,14 +56,20 @@ let drawLine = (svg) => {
 
 };
 
+let calcH = (numDots) => {
+  console.log('calculate h: ', numDots);
+  console.log("calculating the height of the svg");
+  if(numDots < 2) { h = h / 2; }
+};
+
 let init = (dataset) => {
 
   data = dataset; // keep track of data locally (pass by ref)
-  reorderData(data, "timestamp");
+  reorderData(data, "timestamp"); // firebase priority?
 
   let svg = d3.select('.d3-container').append("svg")
     .attr({ 'width': w, 'height': h })
-    .style({'background-color': 'white'});
+    .style({'background-color': '#EEE'});
 
 };
 
@@ -105,7 +112,7 @@ let enterNewDots = () => {
             'cy': (d, i) => scale(d.timestamp),
             'r': 0  // animated in
         }).style({
-          "fill": "#FA9248",
+          "fill": "#428bca",
           "stroke": "black",
           "strokeWidth": 5
         })
@@ -315,6 +322,12 @@ let killSVG = () => {
 };
 
 let draw = (dataset) => {
+  let dataLen = dataset.length;
+  if(dataLen < 3) { h = screenH / 2; }
+  else if (dataLen < 9 ) { h = screenH; }
+  else if (dataLen < 20) { h = screenH * 3 / 2; }
+  else { h = screenH * 2; }
+
   init(dataset);  // pass by ref, now this is Timeline state
   enterNewDots();
   placeNewInfo();

@@ -96,8 +96,9 @@ class Browse extends React.Component {
 
           { this.props.userAuth ? controls : '' }
 
-          Hello, { this.props.userData.username }
           <BrowseTable timelines={ this.state.timelines } />
+
+          <p className='content-padded'>Hello, { this.props.userData.username }</p>
 
           <p id='timelines-loading' className="content-padded hidden">
             <i className="fa fa-2x fa-spinner fa-spin"></i><br /> Loading...

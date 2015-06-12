@@ -69,7 +69,7 @@ class AddTimeline extends React.Component {
 
           </div>
             <div className="bar bar-standard bar-footer">
-              <button className="btn btn-primary btn-outlined btn-block" onClick={ this.handleSubmit.bind(this) }>Create</button>
+              <button className="btn btn-primary btn-block" onClick={ this.handleSubmit.bind(this) }>Create</button>
             </div>
         </div>
 
