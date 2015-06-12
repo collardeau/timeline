@@ -38,9 +38,8 @@ class BrowseHeader extends React.Component {
   }
 
   handleLogout(){
-    authUtils.logout(() => {
+    userActions.logoutUser(() => {
       hasher.setHash('login');
-      userActions.changeUser();
     });
  }
 

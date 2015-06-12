@@ -25,6 +25,17 @@ class Browse extends React.Component {
   componentDidMount(){
     console.log("browse: mount");
     timelinesStore.addChangeListener(this.changeContent);
+    console.log('browse: sync timelines');
+
+    $('#timelines-loading').removeClass('hidden');
+    timelineActions.syncPublicTimelines();
+    if (this.props.userAuth){
+      console.log('app: browse  private timelines');
+      timelineActions.syncTimelines(this.props.userAuth.uid);
+    } else {
+      console.log('not logged in');
+    }
+
  }
 
   componentWillUnmount(){
@@ -85,6 +96,7 @@ class Browse extends React.Component {
 
           { this.props.userAuth ? controls : '' }
 
+          Hello, { this.props.userData.username }
           <BrowseTable timelines={ this.state.timelines } />
 
           <p id='timelines-loading' className="content-padded hidden">

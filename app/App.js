@@ -16,15 +16,7 @@ class App extends React.Component {
 
   componentDidMount(){
     console.log("**** app: mount");
-    console.log('app: sync timelines');
-
-    $('#timelines-loading').removeClass('hidden');
-    timelineActions.syncPublicTimelines();
-    if (this.props.userAuth){
-      console.log('app: sync private timelines');
-      timelineActions.syncTimelines(this.props.userAuth.uid);
-    }
-  }
+ }
 
     render() {
 

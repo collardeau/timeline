@@ -96,10 +96,9 @@ let firebaseAuth = {
     }, cbOnFail);
   },
 
-  logout: (cb) => {
+  logout: () => {
     ref.unauth(() => {
       console.log("logged out");
-      cb();
     });
   },
 

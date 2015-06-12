@@ -1,8 +1,17 @@
 const AppDispatcher = require('../dispatcher/AppDispatcher');
 let appConstants = require('../constants/appConstants');
 let firebaseUtils = require('../utils/firebaseUtils');
+let authUtils = require('../utils/authUtils');
 
 let userActions = {
+
+  logoutUser(ui) {
+    console.log('user action: logoutUser');
+    authUtils.logout();
+    ui();
+  },
+    // kill the sync
+    // empty the store
 
   changeUser(userId) {
     if(userId) {
