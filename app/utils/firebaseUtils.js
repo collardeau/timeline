@@ -45,14 +45,19 @@ var firebaseUtils = {
       });
    },
 
-    changeTimelines(uid, callback){  // own indexes
+   changeTimelines: function(uid, cb) {  // own indexes
       userRef.child(uid).child(timelineIndex)
-      .on("value", function(snapshot) {
+      .on("value", snapshot => {
         console.log('fb: NEW PRIVATE tl index data');
-        callback(this.toArray(snapshot.val()));
-      }.bind(this), function (errorObject) {
+        cb(this.toArray(snapshot.val()));
+      }.bind(this), errorObject => {
         console.log("The read failed: " + errorObject.code);
       });
+    },
+
+    killTimelines: function() {
+      console.log('fbUtils: killing timelines');
+      userRef.off('value', this.changeTimelines);
     },
 
     addTimeline(timeline){

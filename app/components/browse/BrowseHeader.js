@@ -3,7 +3,6 @@ const hasher = require('hasher');
 const $ = require('jquery');
 const classNames = require('classnames');
 
-let authUtils = require('../../utils/authUtils');
 let userActions = require('../../actions/userActions');
 
 class BrowseHeader extends React.Component {

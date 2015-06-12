@@ -4,7 +4,6 @@ const hasher = require('hasher');
 let App = require('./App');
 let authUtils = require('./utils/authUtils');
 let userStore = require('./stores/userStore');
-let userActions = require('./actions/userActions');
 
 let privateViews = [''];
 let isPrivateRoute = (route) => privateViews.some((view) => view === route);
@@ -31,7 +30,7 @@ class Router extends React.Component {
     userStore.addChangeListener(this.changeUserContent);
     if(this.state.userAuth){
       console.log('router: user logged in');
-      userActions.changeUser(this.state.userAuth.uid);
+      //userActions.changeUser(this.state.userAuth.uid);
     }
   }
 

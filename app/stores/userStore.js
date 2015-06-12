@@ -14,17 +14,11 @@ const CHANGE_EVENT = 'change';
 
 let userStore = objectAssign({}, EventEmitter.prototype, {
 
-  changeUser(user) {
-    _store = user ? user : emptyStore;
-  },
+  changeUser(user) { _store = user ? user : emptyStore; },
 
-  getUsername(){
-    return _store.username;
-  },
+  getUsername(){ return _store.username; },
 
-  getUserData() {
-    return _store;
-  },
+  getUserData() { return _store; },
 
   addChangeListener(cb) { this.on(CHANGE_EVENT, cb); },
   removeChangeListener(cb) { this.removeListner(CHANGE_EVENT, cb); }
@@ -36,6 +30,10 @@ AppDispatcher.register(function(payload){
   switch(action.actionType){
     case appConstants.CHANGE_USER:
       userStore.changeUser(action.data.userData);
+      userStore.emit(CHANGE_EVENT);
+      break;
+    case appConstants.LOGOUT_USER:
+      userStore.changeUser();
       userStore.emit(CHANGE_EVENT);
       break;
     default:

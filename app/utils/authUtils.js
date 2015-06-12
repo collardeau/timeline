@@ -6,6 +6,8 @@ let firebaseUtils = require('./firebaseUtils');
 let ref = new Firebase(appConstants.FIREBASE_HOST),
     usernameRef = ref.child('username');
 
+console.log('the authUtils is disappearing!');
+
 let saveUsername = (username) => {
   return new Promise(( resolve, reject) => {
     ref.child('username').child(username).set(true, (error) => {
@@ -88,14 +90,14 @@ let firebaseAuth = {
 
   },
 
-  login: (user, cbOnFail, cbOnSuccess) => {
+  login: function(user, cbOnFail, cbOnSuccess) {
     loginWithPw(user).then(auth => {
       console.log('logged in');
       cbOnSuccess(auth.uid);
     }, cbOnFail);
   },
 
-  logout: () => {
+  logout: function() {
     ref.unauth(() => {
       console.log("logged out");
     });

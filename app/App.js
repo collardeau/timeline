@@ -10,12 +10,10 @@ let BrowseContainer = require('./components/browse/BrowseContainer');
 let Account = require('./components/Account.js');
 let About = require('./components/About.js');
 
-let timelineActions = require('./actions/timelineActions');
-
 class App extends React.Component {
 
   componentDidMount(){
-    console.log("**** app: mount");
+    console.log("app: mount");
  }
 
     render() {

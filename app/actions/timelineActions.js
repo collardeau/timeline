@@ -6,7 +6,7 @@ let firebaseUtils = require('../utils/firebaseUtils');
 let timelineActions = {
 
   syncPublicTimelines(){
-    firebaseUtils.changePublicTimelines(function(timelines){
+    firebaseUtils.changePublicTimelines(timelines => {
       AppDispatcher.handleAction({
         actionType: appConstants.CHANGE_PUBLIC_TIMELINES,
         data: {
@@ -17,7 +17,7 @@ let timelineActions = {
   },
 
   syncTimelines(uid){
-    firebaseUtils.changeTimelines(uid, function(timelines){
+    firebaseUtils.changeTimelines(uid, timelines => {
       AppDispatcher.handleAction({
         actionType: appConstants.CHANGE_TIMELINES,
         data: {
@@ -27,14 +27,26 @@ let timelineActions = {
     });
   },
 
+  killTimelines(){
+    console.log('timeline action: killTimelines !');
+    firebaseUtils.killTimelines();
+  },
+
   loadTimeline(timelineId, owner){
-    firebaseUtils.loadTimeline(timelineId, owner, function(timeline){
+    firebaseUtils.loadTimeline(timelineId, owner, timeline => {
       AppDispatcher.handleAction({
         actionType: appConstants.LOAD_TIMELINE,
-          data: {
-            timeline: timeline
-          }
-        });
+        data: {
+          timeline: timeline
+        }
+      });
+    });
+  },
+
+  emptyUserData(){
+    console.log('timeline action: empty user data');
+    AppDispatcher.handleAction({
+      actionType: appConstants.EMPTY_USER_DATA
     });
   },
 
