@@ -77,13 +77,13 @@ class BrowseHeader extends React.Component {
       <header className="bar bar-nav">
 
         <button onClick={ this.handleMenuPopover.bind(this) } className="btn pull-left">
-          <i className='fa fa-bars'></i>
+          <i className='fa fa-toggle-down'></i>
         </button>
         <button className="btn pull-right" onClick= { this.handleAddTimeline.bind(this) }>
           <i className='fa fa-pencil-square-o pull-left'></i>
         </button>
 
-        <h1 className="title">Timelines</h1>
+        <h1 className="title">Browse</h1>
 
         <div id="menuPopover" className={popoverClasses}
           style={{ display: this.state.menuIsOpen ? 'block' : '' }}>
@@ -96,7 +96,7 @@ class BrowseHeader extends React.Component {
             { account }
             { login }
             <li onClick={this.handleRoute.bind(this, 'about')} className="table-view-cell">
-              <i className='fa fa-institution pull-left'></i>
+              <i className='fa fa-info pull-left'></i>
               About Timelines
             </li>
             { logout }

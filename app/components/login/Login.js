@@ -116,7 +116,7 @@ class Login extends React.Component {
 
         <header className="bar bar-nav">
           <button className="btn pull-left" onClick={this.handleRoute.bind(this, "browse") }>
-            <i className='fa fa-home'></i>
+            <i className='fa fa-institution'></i>
           </button>
 
         <h1 className="title">TIMELINES</h1>

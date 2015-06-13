@@ -12,14 +12,14 @@ class About extends React.Component {
       <div>
         <header className="bar bar-nav">
           <button className="btn pull-left" onClick={this.handleRoute.bind(this, "browse") }>
-            <i className='fa fa-home'></i>
+            <i className='fa fa-institution'></i>
           </button>
           <h1 className="title">About</h1>
         </header>
 
         <div className="content">
           <div className="content-padded">
-            <h1>Timelines</h1>
+            <h3>Timelines</h3>
             <p>Available in the web browser.</p>
             <h5>Latest Updates</h5>
             <ul>
