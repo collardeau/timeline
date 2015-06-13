@@ -16,10 +16,11 @@ class BrowseTable extends React.Component {
     let timelines = this.props.timelines.map(( t, i ) => {
       return (
         <li key={i} className="table-view-cell">
-          <a className="navigate-right"
-            onClick={this.handleTimelineLink.bind(this, t )} >
+          <a onClick={this.handleTimelineLink.bind(this, t )} >
             { t.name }
           </a>
+          <small>by { t.ownerName }</small>
+          <span className='badge'>0</span>
         </li>
       );
     });

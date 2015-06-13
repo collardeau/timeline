@@ -72,7 +72,11 @@ class Browse extends React.Component {
     );
 
     let controls = (
-      <BrowseControls active={ this.state.activeTab } filterFn={ this.filterTimelines.bind(this) }/>
+      <BrowseControls
+        active={ this.state.activeTab }
+        filterFn={ this.filterTimelines.bind(this) }
+        userData={ this.props.userData }
+      />
     );
 
     let empty = (
@@ -97,8 +101,6 @@ class Browse extends React.Component {
           { this.props.userAuth ? controls : '' }
 
           <BrowseTable timelines={ this.state.timelines } />
-
-          <p className='content-padded'>Hello, { this.props.userData.username }</p>
 
           <p id='timelines-loading' className="content-padded hidden">
             <i className="fa fa-2x fa-spinner fa-spin"></i><br /> Loading...

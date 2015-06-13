@@ -15,6 +15,7 @@ class BrowseControls extends React.Component {
 
       classString = "control-item";
       if (control === this.props.active) { classString += " active"; }
+      if ( control === 'user') { control = this.props.userData.username; }
 
       return (
         <a key={i} className={classString}
