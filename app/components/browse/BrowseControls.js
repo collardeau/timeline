@@ -15,12 +15,14 @@ class BrowseControls extends React.Component {
 
       classString = "control-item";
       if (control === this.props.active) { classString += " active"; }
-      if ( control === 'user') { control = this.props.userData.username; }
+
+      let controlName = 'Public';
+      if ( control === 'user') { controlName = this.props.userData.username; }
 
       return (
         <a key={i} className={classString}
           onClick= { this.handleFilter.bind(this, control) }>
-          { control.toUpperCase() }
+          { controlName.toUpperCase() }
         </a>
       );
 
