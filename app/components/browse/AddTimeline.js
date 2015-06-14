@@ -10,8 +10,13 @@ class AddTimeline extends React.Component {
   }
 
   handleSubmit(){
-    let name = this.refs.name.getDOMNode().value;
-    let desc = this.refs.description.getDOMNode().value;
+    let name = this.refs.name.getDOMNode().value,
+        desc = this.refs.description.getDOMNode().value,
+        firstDot = {
+          name: this.refs.firstDotName.getDOMNode().value,
+          timestamp: this.refs.firstDotDate.getDOMNode().value //unix?
+    };
+    console.log(firstDot);
 
     if(name && desc) {
       let timeline = {
@@ -21,7 +26,7 @@ class AddTimeline extends React.Component {
         owner: this.props.userAuth.uid,
         ownerName: this.props.userData.username
       };
-      timelineActions.addTimeline(timeline);
+      // timelineActions.addTimeline(timeline);
       this.closeModal();
     }else {
       if(!name){
@@ -57,17 +62,31 @@ class AddTimeline extends React.Component {
         <div className="content">
           <div className="content-padded">
             { this.state.warning ? warning : '' }
+            <p>Hey { this.props.userData.username }, create a brand new timeline.</p>
             <form onSubmit={this.handleSubmit.bind(this)}>
-              <input ref="name" type="text" placeholder="Name" />
-              <input ref="description" type="text" placeholder="Description" />
-              <span>Make it Public?</span>
-              <label className="label-switch pull-right">
-                <input ref="privacy" type="checkbox" />
-                <div className="checkbox"></div>
-              </label>
+              <input ref="name" type="text" placeholder="Timeline Name" />
+              <input ref="description" type="text" placeholder="Timeline Description" />
+              <input ref="privacy" type="checkbox" />
+              <span>List Publicly</span>
             </form>
-
           </div>
+          <div className='card'>
+            <h5 className='content-padded'>First Dot</h5>
+            <p className='content-padded'>Type in your first data point,
+              <br /> you can add more later :)
+            </p>
+            <form className="input-group">
+              <div className="input-row">
+                <label>Name</label>
+                <input ref='firstDotName' type="text" placeholder="dot (event) name" />
+              </div>
+              <div className="input-row">
+                <label>Date</label>
+                <input ref='firstDotDate' type="date" />
+              </div>
+           </form>
+          </div>
+
             <div className="bar bar-standard bar-footer">
               <button className="btn btn-primary btn-block" onClick={ this.handleSubmit.bind(this) }>Create</button>
             </div>
