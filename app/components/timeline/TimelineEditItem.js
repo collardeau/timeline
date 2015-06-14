@@ -19,7 +19,7 @@ class TimelineEditItem extends React.Component {
         <small>{ moment.unix(dot.timestamp).format("MM-DD-YYYY") }</small>
         <button onClick={ this.handleDelete.bind(this, dot.key)}
           className={ btnClasses }>
-            Delete
+            Mark for Delete
         </button>
       </li>
     );

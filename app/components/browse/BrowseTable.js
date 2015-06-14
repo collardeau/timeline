@@ -15,7 +15,7 @@ class BrowseTable extends React.Component {
 
     let timelines = this.props.timelines.map(( t, i ) => {
       return (
-        <li key={i} className="table-view-cell">
+        <li key={i} className="table-view-cell timeline">
           <a onClick={this.handleTimelineLink.bind(this, t )} >
             { t.name }
           </a>

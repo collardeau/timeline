@@ -4,22 +4,32 @@
 @import 'neat';
 @import "base/base";
 
+body, header, #addTimelineModal, #addDotModal, #editTimelineModal { // for better laptop view
+  max-width: 650px;
+  margin: 0 auto !important;
+}
+
 body {
-  background: darken(white, 10%);
+  background-color: darken(white, 8%) !important;
 }
 
-.container {
-  @include padding(em(34px) em(55px));  // bourbon
+.timeline {
+  cursor: pointer;
 }
 
+svg {
+  background-color: darken(white, 2%);
+  //background-image: url("../../img/swirl_pattern.png");
+}
+ 
 .hidden {
   display: none;
 }
 
 h1 {
-    font-size: 1.2em ;
-    text-align: center;
-    margin: 10px 0 ;
+  font-size: 1.2em ;
+  text-align: center;
+  margin: 10px 0 ;
   //padding-left: 5px;
   letter-spacing: 0.5px;
 }
@@ -181,4 +191,6 @@ $success-color: #e6efc2 !default;
     }
   }
 }
+
+
 

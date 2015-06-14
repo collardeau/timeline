@@ -103,8 +103,9 @@ class Browse extends React.Component {
           <BrowseTable timelines={ this.state.timelines } />
 
           <p id='timelines-loading' className="content-padded hidden">
-            <i className="fa fa-2x fa-spinner fa-spin"></i><br /> Loading...
+            Fetching Timeline... <i className="fa fa-2x fa-spinner fa-spin pull-right"></i>
           </p>
+
 
           { this.state.timelines.length || this.state.activeTab === 'public' ? '' : empty }
 

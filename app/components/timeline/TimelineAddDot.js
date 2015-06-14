@@ -56,20 +56,20 @@ class TimelineAddDot extends React.Component {
       <div id="addDotModal" className="modal">
         <header className="bar bar-nav">
           <a onClick={this.closeModal.bind(this)} className="closeModal icon icon-close pull-right"></a>
-          <h1 className="title">Add New Event</h1>
+          <h1 className="title">NEW DOT</h1>
         </header>
 
         <div className="content">
           <div className="content-padded">
             { this.state.warning ? warning : '' }
-            <p>Add a new dot or event to this timelnie</p>
+            <p>Add a new dot (event) to this timeline</p>
             <input type="text" ref="newName" placeholder="new name" />
             <input type="date" ref="newDate" />
           </div>
         </div>
 
         <div className="bar bar-standard bar-footer">
-          <button className="btn btn-primary btn-outlined btn-block"
+          <button className="btn btn-primary btn-block"
             onClick={ this.handleSubmit.bind(this) }>
               Add
             </button>

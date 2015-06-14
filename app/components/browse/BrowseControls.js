@@ -22,7 +22,7 @@ class BrowseControls extends React.Component {
       return (
         <a key={i} className={classString}
           onClick= { this.handleFilter.bind(this, control) }>
-          { controlName.toUpperCase() }
+          { controlName.toUpperCase() || 'USER' }
         </a>
       );
 

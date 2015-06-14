@@ -68,8 +68,7 @@ let init = (dataset) => {
   reorderData(data, "timestamp"); // firebase priority?
 
   let svg = d3.select('.d3-container').append("svg")
-    .attr({ 'width': w, 'height': h })
-    .style({'background-color': '#EEE'});
+    .attr({ 'width': w, 'height': h });
 
 };
 

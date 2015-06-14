@@ -18,7 +18,7 @@ class TimelineHeader extends React.Component {
           </button>
 
           <h1 className="title">
-            Timeline
+            TIMELINE
           </h1>
 
       </header>

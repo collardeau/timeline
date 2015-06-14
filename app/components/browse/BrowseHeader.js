@@ -83,7 +83,7 @@ class BrowseHeader extends React.Component {
           <i className='fa fa-pencil-square-o pull-left'></i>
         </button>
 
-        <h1 className="title">Browse</h1>
+        <h1 className="title">BROWSE</h1>
 
         <div id="menuPopover" className={popoverClasses}
           style={{ display: this.state.menuIsOpen ? 'block' : '' }}>

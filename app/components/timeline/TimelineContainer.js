@@ -71,9 +71,9 @@ class TimelineContainer extends React.Component {
 
     let timelineInfo = (
       <div>
-        <h4>{ this.state.timeline.name }</h4>
-        <p> { this.state.timeline.description }</p>
-        <p> A timeline curated by <b>{ this.state.timeline.ownerName }</b></p>
+        <h3>{ this.state.timeline.name }</h3>
+        <p> { this.state.timeline.description }.
+        <br />Timeline curated by <b>{ this.state.timeline.ownerName }</b>.</p>
         { info }
       </div>
     );
@@ -99,6 +99,10 @@ class TimelineContainer extends React.Component {
           </div>
 
           <Timeline dots={ this.state.timeline.dots } />
+
+          <p className='content-padded'>
+            Hope you enjoyed the { this.state.timeline.name } visualization! Give us some <a>feedback</a>
+          </p>
 
           <TimelineAddDot
             timelineId = { timelineId }

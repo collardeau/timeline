@@ -61,7 +61,7 @@ class TimelineEdit extends React.Component {
   }
 
   handleDeleteTimeline(){
-    let doDelete = confirm("Do you want to delete this timeline?");
+    let doDelete = confirm("Are you sure you want to delete this timeline?");
     if(doDelete){
       console.log("deleting this shit, mate!");
       timelineActions.deleteTimeline(this.props.timelineId, this.props.timeline.owner );
@@ -101,10 +101,10 @@ class TimelineEdit extends React.Component {
         <header className="bar bar-nav">
           <button className='btn pull-left'
             onClick={this.handleDeleteTimeline.bind(this)}>
-            Delete
+            Delete Timeline
           </button>
           <a onClick={this.closeModal.bind(this)} className="closeModal icon icon-close pull-right"></a>
-          <h1 className="title">Edit Timeline</h1>
+          <h1 className="title">EDIT</h1>
         </header>
 
         <div className="content">
@@ -112,11 +112,8 @@ class TimelineEdit extends React.Component {
            <form onSubmit={this.handleSubmit.bind(this)}>
               <input ref="name" type="text" placeholder="Name" />
               <input ref="description" type="text" placeholder="Description" />
-              <span>Make it Public?</span>
-              <label className="label-switch pull-right">
-                <input ref="privacy" type="checkbox" />
-                <div className="checkbox"></div>
-              </label>
+              <input ref="privacy" type="checkbox" />
+              <span>List Publicly</span>
             </form>
 
             <ul className='table-view'>
