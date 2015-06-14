@@ -260,13 +260,12 @@ let addDot = (dot) => {
 let addDateLabel = ( elem, timestamp, cy ) => {
 
     d3.select(elem).append('text')
-        .text(moment.unix(timestamp).format("MMM YYYY"))
+        .text('')
         .attr({
             'x': 10,
             'y': cy + 5
         })
         .classed("date-label", true)
-        .classed("hidden", true)
         .style({
             'opacity': 0
         })
@@ -276,8 +275,19 @@ let addDateLabel = ( elem, timestamp, cy ) => {
             });
 };
 
+let dateFormat = 0;
 let toggleDates = () => {
-  d3.selectAll('.date-label').classed("hidden", !d3.select('.date-label').classed("hidden"));
+  dateFormat = ++dateFormat > 3 ? 0 : dateFormat;
+  d3.selectAll('.date-label').each(function(d, i){
+    let timestamp = d.timestamp;  // how is d the dot here? convenient
+    let dateTxt = '';
+
+    if(dateFormat === 1){ dateTxt = moment.unix(timestamp).format("YYYY"); }
+    if(dateFormat === 2){ dateTxt = moment.unix(timestamp).format("MMM YYYY"); }
+    if(dateFormat === 3){ dateTxt = moment.unix(timestamp).format("DD MMM YYYY"); }
+    d3.select(this).text(dateTxt);
+  });
+
 };
 
 // tested
