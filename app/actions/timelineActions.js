@@ -3,6 +3,8 @@ let appConstants = require('../constants/appConstants');
 let svgUtils = require('../utils/svgUtils');
 let firebaseUtils = require('../utils/firebaseUtils');
 
+//todo separate svgActions
+
 let timelineActions = {
 
   syncPublicTimelines(){
@@ -11,6 +13,18 @@ let timelineActions = {
         actionType: appConstants.CHANGE_PUBLIC_TIMELINES,
         data: {
           timelines: timelines
+        }
+      });
+    });
+  },
+
+  addTimeline(timeline){
+    firebaseUtils.addTimeline(timeline, timelineId => {
+      AppDispatcher.handleAction({
+        actionType: appConstants.ADD_TIMELINE,
+        data: {
+          timeline: timeline,
+          timelineId: timelineId
         }
       });
     });
@@ -27,15 +41,6 @@ let timelineActions = {
     });
   },
 
-  addTimeline(timeline){
-    AppDispatcher.handleAction({
-      actionType: appConstants.ADD_TIMELINE,
-      data: {
-        timeline: timeline
-      }
-    });
-    firebaseUtils.addTimeline(timeline);
-  },
 
   deleteTimeline(timelineId, timelineOwner){
     firebaseUtils.deleteTimeline(timelineId, timelineOwner);

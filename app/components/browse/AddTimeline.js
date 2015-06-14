@@ -1,13 +1,26 @@
 const React = require("react");
 const $ = require('jquery');
 const moment = require('moment');
+const hasher = require('hasher');
+
 let timelineActions = require('../../actions/timelineActions');
+let timelinesStore = require('../../stores/timelinesStore');
 
 class AddTimeline extends React.Component {
 
   constructor(){
     super();
     this.state = { warning: '' };
+    this.newContent = this.newContent.bind(this);
+  }
+
+  componentDidMount(){
+    timelinesStore.addNewListener(this.newContent);
+  }
+
+  componentWillUnmount(){
+    timelinesStore.removeChangeListener(this.newContent);
+
   }
 
   handleSubmit(){
@@ -22,7 +35,7 @@ class AddTimeline extends React.Component {
           timestamp: moment(this.refs.secondDotDate.getDOMNode().value).unix()
     };
 
-    if(name && desc
+    if(name && desc // todo: create proper sanitizing utils
       && firstDot.name && firstDot.timestamp
       && secondDot.name && secondDot.timestamp ) {
 
@@ -36,7 +49,8 @@ class AddTimeline extends React.Component {
     };
 
     timelineActions.addTimeline(timeline);
-    this.closeModal();
+    // this.closeModal();
+
     }else {
       if(!name){
       this.setState({ warning: 'Oops, name is missing' });
@@ -120,6 +134,12 @@ class AddTimeline extends React.Component {
       </div>
     );
   }
+
+  newContent(){
+    let newId = timelinesStore.getNewest();
+    hasher.setHash('u/' + this.props.userData.username + "/" + newId);
+  };
+
 }
 
 AddTimeline.propTypes = {

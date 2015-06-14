@@ -6,10 +6,12 @@ let firebaseUtils = require('../utils/firebaseUtils');
 
 let _store = {
   timelines: [],
-  publicTimelines: []
+  publicTimelines: [],
+  newestAdded: ''
 };
 
 const CHANGE_EVENT = 'change';
+const NEW_EVENT = 'new';
 
 let timelineStore = objectAssign({}, EventEmitter.prototype, {
 
@@ -30,13 +32,18 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  addTimeline(timeline){ // always push to private tl?
+  getNewest() { return _store.newestAdded; },
+
+  addTimeline(timeline, timelineId ){ // always push to private tl?
     _store.timelines.push(timeline);
+    _store.newestAdded = timelineId;
   },
 
   addChangeListener(cb) { this.on(CHANGE_EVENT, cb); },
+  removeChangeListener(cb) { this.removeListener(CHANGE_EVENT, cb); },
 
-  removeChangeListener(cb) { this.removeListener(CHANGE_EVENT, cb); }
+  addNewListener(cb) { this.on(NEW_EVENT, cb); },
+  removeNewListener(cb) { this.removeListener(NEW_EVENT, cb); }
 
 });
 
@@ -52,9 +59,8 @@ AppDispatcher.register(function(payload){
       timelineStore.emit(CHANGE_EVENT);
       break;
     case appConstants.ADD_TIMELINE:
-      timelineStore.addTimeline(action.data.timeline);
-      // timelineStore.emit(CHANGE_EVENT);
-      // we are going jumping to a new route anyway;
+      timelineStore.addTimeline(action.data.timeline, action.data.timelineId);
+      timelineStore.emit(NEW_EVENT);
       break;
     case appConstants.LOGOUT_USER:
       timelineStore.emptyUserData();
