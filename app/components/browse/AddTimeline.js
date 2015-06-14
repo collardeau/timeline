@@ -81,13 +81,13 @@ class AddTimeline extends React.Component {
       <div id="addTimelineModal" className="modal">
         <header className="bar bar-nav">
           <a onClick={this.closeModal.bind(this)} className="closeModal icon icon-close pull-right"></a>
-          <h1 className="title">Add New Timeline </h1>
+          <h1 className="title">NEW TIMELINE</h1>
         </header>
 
         <div className="content">
           <div className="content-padded">
             { this.state.warning ? warning : '' }
-            <p>Hey { this.props.userData.username }, create a brand new timeline.</p>
+            <p>Hey <b>{ this.props.userData.username }</b>, create a brand new timeline.</p>
             <form onSubmit={this.handleSubmit.bind(this)}>
               <input ref="name" type="text" placeholder="Timeline Name" />
               <input ref="description" type="text" placeholder="Timeline Description" />
@@ -95,7 +95,6 @@ class AddTimeline extends React.Component {
               <span>List Publicly</span>
             </form>
           </div>
-          <p className='content-padded'>Type in your first two data points:</p>
 
           <div className='card'>
             <h5 className='content-padded'>First Dot</h5>

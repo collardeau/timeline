@@ -3,6 +3,7 @@ const moment = require('moment');
 const $ = require('jquery');
 
 let timelineActions = require('../../actions/timelineActions.js');
+let svgActions = require('../../actions/svgActions.js');
 
 class TimelineAddDot extends React.Component {
 
@@ -28,6 +29,8 @@ class TimelineAddDot extends React.Component {
 
     console.log(this.props.timelineOwner);
     timelineActions.addDot(dot, this.props.timelineId, this.props.timelineOwner);
+    svgActions.addDot(dot);
+
     this.refs.newName.getDOMNode().value = "";
     this.setState( { warning: '' });
 

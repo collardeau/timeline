@@ -1,6 +1,5 @@
 let AppDispatcher = require('../dispatcher/AppDispatcher');
 let appConstants = require('../constants/appConstants');
-let svgUtils = require('../utils/svgUtils');
 let firebaseUtils = require('../utils/firebaseUtils');
 
 //todo separate svgActions
@@ -57,7 +56,6 @@ let timelineActions = {
   },
 
   addDot(dot, timelineId, timelineOwner){
-    svgUtils.addDot(dot);
     AppDispatcher.handleAction({
       actionType: appConstants.ADD_DOT
     });
@@ -73,10 +71,6 @@ let timelineActions = {
       }
     });
     firebaseUtils.removeDot(dotRef, timelineId, timelineOwner);
-  },
-
-  toggleDates(){
-    svgUtils.toggleDates();
   }
 
 };

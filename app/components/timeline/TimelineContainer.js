@@ -8,6 +8,7 @@ let TimelineAddDot = require('./TimelineAddDot');
 let TimelineEdit = require('./TimelineEdit');
 let timelineStore = require('../../stores/timelineStore');
 let timelineActions = require('../../actions/timelineActions');
+let svgActions = require('../../actions/svgActions');
 
 class TimelineContainer extends React.Component {
 
@@ -41,7 +42,7 @@ class TimelineContainer extends React.Component {
   }
 
   handleDateToggle(){
-    timelineActions.toggleDates();
+    svgActions.toggleDates();
   }
 
   render(){

@@ -9,7 +9,7 @@ let _store = {
     name: "Timeline",
     description: "",
     owner: "",
-    ownerNickname: "",
+    ownerName: "",
     isPublic: false,
     dots: []
   }
