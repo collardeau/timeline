@@ -39,7 +39,7 @@ var firebaseUtils = {
       ref.child(publicTimelines)
       .on("value", function(snapshot) {
         console.log('fb: NEW tl index data');
-        callback(this.toArray(snapshot.val()));
+        callback(this.toArray(snapshot.val()).reverse());
       }.bind(this), function (errorObject) {
         console.log("The read failed: " + errorObject.code);
       });
@@ -49,7 +49,7 @@ var firebaseUtils = {
       userRef.child(uid).child(timelineIndex)
       .on("value", snapshot => {
         console.log('fb: NEW PRIVATE tl index data');
-        cb(this.toArray(snapshot.val()));
+        cb(this.toArray(snapshot.val()).reverse());
       }.bind(this), errorObject => {
         console.log("The read failed: " + errorObject.code);
       });
