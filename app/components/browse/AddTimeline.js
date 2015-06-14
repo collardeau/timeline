@@ -1,5 +1,6 @@
 const React = require("react");
 const $ = require('jquery');
+const moment = require('moment');
 let timelineActions = require('../../actions/timelineActions');
 
 class AddTimeline extends React.Component {
@@ -14,25 +15,27 @@ class AddTimeline extends React.Component {
         desc = this.refs.description.getDOMNode().value,
         firstDot = {
           name: this.refs.firstDotName.getDOMNode().value,
-          timestamp: this.refs.firstDotDate.getDOMNode().value //unix?
+          timestamp: moment(this.refs.firstDotDate.getDOMNode().value).unix()
     };
-    console.log(firstDot);
 
-    if(name && desc) {
+    if(name && desc && firstDot.name && firstDot.timestamp) {
       let timeline = {
         name: name,
         description: desc,
         isPublic: this.refs.privacy.getDOMNode().checked,
         owner: this.props.userAuth.uid,
-        ownerName: this.props.userData.username
+        ownerName: this.props.userData.username,
+        dots: [firstDot]
       };
-      // timelineActions.addTimeline(timeline);
+      timelineActions.addTimeline(timeline);
       this.closeModal();
     }else {
       if(!name){
       this.setState({ warning: 'Oops, name is missing' });
-      }else {
+      }else if (!desc) {
         this.setState({ warning: 'Oops, description is missing' });
+      }else {
+        this.setState({ warning: 'Oops, invalid dot'});
       }
     }
   }

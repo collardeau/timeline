@@ -62,8 +62,18 @@ var firebaseUtils = {
 
     addTimeline(timeline){
 
+      let dots = timeline.dots;
+      let owner = timeline.owner;
+      delete timeline.dots;
+
       addTimelinePromise(timeline).then(id => {
-        userRef.child(timeline.owner).child(timelineIndex).child(id).set(timeline);
+        for(let dot of dots) {
+          this.addDot(dot, id, owner);
+        }
+
+        //indexes
+        userRef.child(owner).child(timelineIndex).child(id).set(timeline);
+
         if(timeline.isPublic){
           ref.child(publicTimelines).child(id).set(timeline);
         }
