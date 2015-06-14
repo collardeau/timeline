@@ -323,10 +323,10 @@ let killSVG = () => {
 
 let draw = (dataset) => {
   let dataLen = dataset.length;
-  if(dataLen < 3) { h = screenH / 2; }
-  else if (dataLen < 9 ) { h = screenH; }
-  else if (dataLen < 20) { h = screenH * 3 / 2; }
-  else { h = screenH * 2; }
+  if(dataLen < 3) { h = screenH / 3 * 2; }
+  else if (dataLen < 12 ) { h = screenH / 2 * 3; }
+  else if (dataLen < 20) { h = screenH * 2; }
+  else { h = screenH * 3; }
 
   init(dataset);  // pass by ref, now this is Timeline state
   enterNewDots();
