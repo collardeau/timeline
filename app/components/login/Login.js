@@ -33,7 +33,7 @@ class Login extends React.Component {
         {
           email: email,
           password: pw,
-          username: username
+          username: username.toLowerCase()
         }, (warning) => {
           this.setState({
             warning: warning,

@@ -64,7 +64,8 @@ let firebaseAuth = {
 
   createUser: (user) => {
     return new Promise( (resolve, reject) => {
-      saveUsername(user.username)
+      let username = user.username.toLowerCase();
+      saveUsername(username)
       .then(() => {
         createAuthUser(user)
         .then(loginWithPw)
@@ -75,7 +76,7 @@ let firebaseAuth = {
           removeUsername(user.username);
           reject(error.message);
         });
-      }, (error) => reject(error));
+      }, reject);
     });
 
   },
@@ -88,13 +89,7 @@ let firebaseAuth = {
         reject(error.message);
       });
     });
-
-    //loginWithPw(user).then(auth => {
-    //  return Promise.resolve(auth);
-      //console.log('logged in');
-      // cbOnSuccess(auth.uid);
-    //}, cbOnFail);
-  },
+ },
 
   logout: function() {
     ref.unauth(() => {
