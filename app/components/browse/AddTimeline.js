@@ -16,19 +16,27 @@ class AddTimeline extends React.Component {
         firstDot = {
           name: this.refs.firstDotName.getDOMNode().value,
           timestamp: moment(this.refs.firstDotDate.getDOMNode().value).unix()
+    },
+        secondDot = {
+          name: this.refs.secondDotName.getDOMNode().value,
+          timestamp: moment(this.refs.secondDotDate.getDOMNode().value).unix()
     };
 
-    if(name && desc && firstDot.name && firstDot.timestamp) {
-      let timeline = {
-        name: name,
-        description: desc,
-        isPublic: this.refs.privacy.getDOMNode().checked,
-        owner: this.props.userAuth.uid,
-        ownerName: this.props.userData.username,
-        dots: [firstDot]
-      };
-      timelineActions.addTimeline(timeline);
-      this.closeModal();
+    if(name && desc
+      && firstDot.name && firstDot.timestamp
+      && secondDot.name && secondDot.timestamp ) {
+
+    let timeline = {
+      name: name,
+      description: desc,
+      isPublic: this.refs.privacy.getDOMNode().checked,
+      owner: this.props.userAuth.uid,
+      ownerName: this.props.userData.username,
+      dots: [firstDot, secondDot]
+    };
+
+    timelineActions.addTimeline(timeline);
+    this.closeModal();
     }else {
       if(!name){
       this.setState({ warning: 'Oops, name is missing' });
@@ -73,11 +81,10 @@ class AddTimeline extends React.Component {
               <span>List Publicly</span>
             </form>
           </div>
+          <p className='content-padded'>Type in your first two data points:</p>
+
           <div className='card'>
             <h5 className='content-padded'>First Dot</h5>
-            <p className='content-padded'>Type in your first data point,
-              <br /> you can add more later :)
-            </p>
             <form className="input-group">
               <div className="input-row">
                 <label>Name</label>
@@ -89,6 +96,21 @@ class AddTimeline extends React.Component {
               </div>
            </form>
           </div>
+          <div className='card'>
+            <h5 className='content-padded'>Second Dot</h5>
+            <form className="input-group">
+              <div className="input-row">
+                <label>Name</label>
+                <input ref='secondDotName' type="text" placeholder="dot (event) name" />
+              </div>
+              <div className="input-row">
+                <label>Date</label>
+                <input ref='secondDotDate' type="date" />
+              </div>
+           </form>
+          </div>
+          <p className='content-padded'>No worries: you can add more dots later.</p>
+
 
             <div className="bar bar-standard bar-footer">
               <button className="btn btn-primary btn-block" onClick={ this.handleSubmit.bind(this) }>Create</button>
