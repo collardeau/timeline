@@ -4,6 +4,7 @@ const hasher = require('hasher');
 let App = require('./App');
 let authUtils = require('./utils/authUtils');
 let userStore = require('./stores/userStore');
+let userActions = require('./actions/userActions');
 
 let privateViews = [''];
 let isPrivateRoute = (route) => privateViews.some((view) => view === route);
@@ -17,7 +18,7 @@ class Router extends React.Component {
     this.state = {
       hashInfo: this.getHashInfo(),
       userAuth: authUtils.isLoggedIn(),
-      userData: { username: "" }
+      userData: { username: "", bookmarks: [] }
     };
     this.handleChanges = this.handleChanges.bind(this); // hash changes
     this.changeUserContent = this.changeUserContent.bind(this);
@@ -63,11 +64,14 @@ class Router extends React.Component {
     changeUserContent(){
       console.log("router callback: changing user content");
       this.setState({
-        userData: {
-          username: userStore.getUsername()
-        },
-          userAuth: authUtils.isLoggedIn()
+        userData: userStore.getUserData()
+        // {
+        //   username: userStore.getUsername(),
+        //   bookmarks: userStore.getBookmarks()   // should be actions??
+        // },
+        //   userAuth: authUtils.isLoggedIn()
       });
+      console.log(this.state);
     }
 
     render () {

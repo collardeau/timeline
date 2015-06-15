@@ -26,17 +26,9 @@ class Browse extends React.Component {
   componentDidMount(){
     console.log("browse: mount");
     timelinesStore.addChangeListener(this.changeContent);
-
     $('#timelines-loading').removeClass('hidden');
     timelineActions.syncPublicTimelines();
-
-    if (this.props.userAuth){
-      userActions.initUserData(this.props.userAuth.uid);
-    } else {
-      console.log('not logged in');
-    }
-
- }
+  }
 
   componentWillUnmount(){
     console.log('browse: unmount');

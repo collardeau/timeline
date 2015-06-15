@@ -108,12 +108,16 @@ var firebaseUtils = {
    },
 
   bookmarkTimeline(bookmark, tl, tlId, user){
-    if(bookmark){
-      delete tl.dots;  // this is a clone of original timeline
-      // or fetch (latest?) from firebase
+    if(bookmark){ // add bookmark
+
+      delete tl.dots;  // this is a clone of original timeline .... or fetch (latest?) from firebase
       userRef.child(user).child('bookmark-index').child(tlId).set(tl);
-    }else {
+      userRef.child(user).child('info').child('bookmark').child(tlId).set(true);
+
+    }else { // remove bookmark
+
       userRef.child(user).child('bookmark-index').child(tlId).set({});
+      userRef.child(user).child('info').child('bookmark').child(tlId).set({});
 
     }
   },

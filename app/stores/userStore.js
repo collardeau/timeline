@@ -16,8 +16,6 @@ let userStore = objectAssign({}, EventEmitter.prototype, {
 
   changeUser(user) { _store = user ? user : emptyStore; },
 
-  getUsername(){ return _store.username; },
-
   getUserData() { return _store; },
 
   addChangeListener(cb) { this.on(CHANGE_EVENT, cb); },

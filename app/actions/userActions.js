@@ -5,7 +5,7 @@ let firebaseUtils = require('../utils/firebaseUtils');
 
 let userActions = {
 
-  initUserData(uid){
+  initUserData(uid){  // syncs
 
     firebaseUtils.getUserData(uid, userData => {
       AppDispatcher.handleAction({

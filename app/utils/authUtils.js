@@ -53,8 +53,8 @@ let register = (newUser, authData) => {
     let user = {
       email: newUser.email,
       username: newUser.username,
-      uid: authData.uid,
-      token: authData.token
+      uid: authData.uid
+      // token: authData.token
     };
     ref.child('username-index').child(user.username).set(user.uid);
     ref.child('user').child(user.uid).child("info").set(user);

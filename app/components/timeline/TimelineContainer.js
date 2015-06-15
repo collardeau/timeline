@@ -42,13 +42,9 @@ class TimelineContainer extends React.Component {
   }
 
   handleBookmark(){
-    this.setState({
-      isBookmarked: !this.state.isBookmarked
-    });
     let tlClone = JSON.parse(JSON.stringify(this.state.timeline));
-    timelineActions.bookmarkTimeline(this.state.isBookmarked, tlClone, this.props.params[1], this.props.userAuth.uid);
+    timelineActions.bookmarkTimeline(!this.state.isBookmarked, tlClone, this.props.params[1], this.props.userAuth.uid);
   }
-
 
   handleDateToggle(){
     svgActions.toggleDates();
@@ -78,9 +74,12 @@ class TimelineContainer extends React.Component {
       info = <p>No item in this list!</p>;
     }
 
+    //console.log(this.props.userData.bookmarks);
+
     let timelineInfo = (
       <div id='timelineInfo'>
         <div className='timelineDetails'>
+          You have { this.props.userData.bookmarks ? this.props.userData.bookmarks.length : 0} bookmarks
           <h3> { this.state.timeline.name }</h3>
           <p> { this.state.timeline.description }.
             <br />Timeline curated by <b>{ this.state.timeline.ownerName }</b>.
@@ -138,7 +137,8 @@ class TimelineContainer extends React.Component {
   changeContent() {
     console.log("timeline container callback: change content");
     this.setState({
-      timeline: timelineStore.getTimeline()
+      timeline: timelineStore.getTimeline(),
+      isBookmarked: timelineStore.isBookmarked()
     });
     $('#timelineSpinner').addClass('hidden');
   }

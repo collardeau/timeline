@@ -25,9 +25,9 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
 
   getTimeline() { return _store.timeline; },
 
-  getBookmarkStatus() { return _store.isBookmarked; },
-
   changeBookmark(status) { _store.isBookmarked = status; },
+
+  isBookmarked() { return _store.isBookmarked; },
 
   editTimeline(data){
     // could check first what actually changed?
