@@ -1,6 +1,7 @@
 let AppDispatcher = require('../dispatcher/AppDispatcher');
 let appConstants = require('../constants/appConstants');
 let firebaseUtils = require('../utils/firebaseUtils');
+let bmActions = require('../actions/bmActions.js');
 
 //todo separate svgActions
 
@@ -38,6 +39,7 @@ let timelineActions = {
         }
       });
     });
+    bmActions.changeBm(timelineId);
   },
 
   bookmarkTimeline(toBookmark, timeline, timelineId, user) {

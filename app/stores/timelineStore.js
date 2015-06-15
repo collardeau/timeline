@@ -6,13 +6,11 @@ let firebaseUtils = require('../utils/firebaseUtils');
 
 let _store = {
   timeline: {
-    name: "Timeline",
-    description: "",
-    owner: "",
-    ownerName: "",
+    name: "Timeline", description: "", owner: "", ownerName: "",
     isPublic: false,
     dots: []
   },
+  bmCount: 0,
   isBookmarked: false
 };
 
@@ -24,6 +22,10 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
   loadTimeline(timeline){ _store.timeline = timeline; },
 
   getTimeline() { return _store.timeline; },
+
+  changeBmCount(count) { _store.bmCount = count; },
+
+  getBmCount() { return _store.bmCount; },
 
   changeBookmark(status) { _store.isBookmarked = status; },
 
@@ -67,6 +69,10 @@ AppDispatcher.register(function(payload){
           timelineStore.loadTimeline(action.data.timeline);
           timelineStore.emit(CHANGE_EVENT);
           break;
+      case appConstants.CHANGE_BM_COUNT:
+        timelineStore.changeBmCount(action.data.count);
+        timelineStore.emit(CHANGE_EVENT);
+        break;
       case appConstants.TOGGLE_TIMELINE_BOOKMARK:
         timelineStore.changeBookmark(action.data);
         timelineStore.emit(CHANGE_EVENT);
