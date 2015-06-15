@@ -10,6 +10,7 @@ class TimelineControls extends React.Component {
   openEditModal(){
     $("#editTimelineModal").addClass('active');
   }
+
   render(){
 
     let edit, addDot;

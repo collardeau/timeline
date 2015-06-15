@@ -3,7 +3,6 @@ const $ = require('jquery');
 
 let TimelineHeader = require('./TimelineHeader');
 let Timeline = require('./Timeline');
-let TimelineControls = require('./TimelineControls');
 let TimelineAddDot = require('./TimelineAddDot');
 let TimelineEdit = require('./TimelineEdit');
 let timelineStore = require('../../stores/timelineStore');
@@ -22,7 +21,8 @@ class TimelineContainer extends React.Component {
         name: '',
         owner: '',
         isPublic: false
-      }
+      },
+      isBookmarked: false
     };
     this.changeContent = this.changeContent.bind(this);
   }
@@ -40,6 +40,17 @@ class TimelineContainer extends React.Component {
     console.log("tl container: unmount");
     timelineStore.removeChangeListener(this.changeContent);
   }
+
+  handleBookmark(){
+    console.log('handling bookmark');
+    console.log(this.state.isBookmarked);
+    this.setState({
+      isBookmarked: !this.state.isBookmarked
+    });
+
+    //timelineActions.bookmarkTimeline(this.state.isBookmarked); // timeline id and owner?
+  }
+
 
   handleDateToggle(){
     svgActions.toggleDates();
@@ -70,12 +81,21 @@ class TimelineContainer extends React.Component {
     }
 
     let timelineInfo = (
-      <div>
-        <h3>{ this.state.timeline.name }</h3>
-        <p> { this.state.timeline.description }.
-        <br />Timeline curated by <b>{ this.state.timeline.ownerName }</b>.</p>
+      <div id='timelineInfo'>
+        <div className='timelineDetails'>
+          <h3> { this.state.timeline.name }</h3>
+          <p> { this.state.timeline.description }.
+            <br />Timeline curated by <b>{ this.state.timeline.ownerName }</b>.
+          </p>
+
         { info }
+
       </div>
+
+      <div onClick={this.handleBookmark.bind(this)} className='pull-right timelineBookmark'>
+        13 { this.state.isBookmarked ? <i className='fa fa-bookmark' /> : <i className='fa fa-bookmark-o' />}
+      </div>
+    </div>
     );
 
     return (
@@ -84,8 +104,6 @@ class TimelineContainer extends React.Component {
         <TimelineHeader />
 
         <div className="content">
-
-          <TimelineControls owner={ isOwner } />
 
           <p id='timelineSpinner' className="content-padded hidden">
             Fetching Timeline... <i className="fa fa-2x fa-spinner fa-spin pull-right"></i>
@@ -101,7 +119,8 @@ class TimelineContainer extends React.Component {
           <Timeline dots={ this.state.timeline.dots } />
 
           <p className='content-padded'>
-            Hope you enjoyed the { this.state.timeline.name } visualization! Give us some <a>feedback</a>
+            Hope you enjoyed the { this.state.timeline.name } visualization!<br />
+            Give us some <a>feedback</a>
           </p>
 
           <TimelineAddDot
