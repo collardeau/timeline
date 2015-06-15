@@ -7,7 +7,6 @@ let TimelineAddDot = require('./TimelineAddDot');
 let TimelineEdit = require('./TimelineEdit');
 let timelineStore = require('../../stores/timelineStore');
 let timelineActions = require('../../actions/timelineActions');
-let bmActions = require('../../actions/bmActions');
 let svgActions = require('../../actions/svgActions');
 
 class TimelineContainer extends React.Component {
@@ -15,7 +14,7 @@ class TimelineContainer extends React.Component {
   constructor() {
     super();
     this.state = {
-      timeline: { dots: [], name: '', owner: '', isPublic: false, bookmarkNum: 0 },
+      timeline: { dots: [], name: '', owner: '', isPublic: false },
       isBookmarked: false,
       bmCount: 0
     };
@@ -29,7 +28,6 @@ class TimelineContainer extends React.Component {
     let owner = this.props.params[0],
         timelineId = this.props.params[1];
     timelineActions.loadTimeline(timelineId, owner);  // sync
-    // bmActions.changeBm(timelineId);
   }
 
   componentWillUnmount() {
@@ -85,7 +83,7 @@ class TimelineContainer extends React.Component {
       <div onClick={this.handleBookmark.bind(this)} className='pull-right timelineBookmark'>
         { this.state.bmCount }
         <span> </span>
-        { this.state.bmCount ? <i className='fa fa-2x fa-bookmark' /> : <i className='fa fa-2x fa-bookmark-o' />}
+        { this.state.isBookmarked ? <i className='fa fa-2x fa-bookmark' /> : <i className='fa fa-2x fa-bookmark-o' />}
       </div>
     </div>
     );
