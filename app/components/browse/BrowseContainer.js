@@ -1,13 +1,12 @@
 const React = require('react');
 const $ = require('jquery');
 
-let BrowseTable = require('./BrowseTable');
-let BrowseControls = require('./BrowseControls');
 let BrowseHeader = require('./BrowseHeader');
+let BrowseControls = require('./BrowseControls');
+let BrowseItem = require('./BrowseItem');
 let AddTimeline = require('./AddTimeline');
 let timelinesStore = require('../../stores/timelinesStore');
 let timelineActions = require('../../actions/timelineActions');
-let userActions = require('../../actions/userActions');
 
 class Browse extends React.Component {
 
@@ -78,6 +77,13 @@ class Browse extends React.Component {
       </p>
     );
 
+    let timelines = this.state.timelines.map(( t, i ) => {
+      return (
+        <BrowseItem timeline={t} key={t.key} />
+      );
+    });
+
+
     return (
       <div>
 
@@ -92,7 +98,9 @@ class Browse extends React.Component {
 
           { this.props.userAuth ? controls : '' }
 
-          <BrowseTable timelines={ this.state.timelines } />
+          <ul className="table-view">
+            { timelines }
+          </ul>
 
           <p id='timelines-loading' className="content-padded hidden">
             Fetching Timeline... <i className="fa fa-2x fa-spinner fa-spin pull-right"></i>

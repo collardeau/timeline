@@ -55,6 +55,16 @@ var firebaseUtils = {
       });
     },
 
+    changeBmCount: function(tlId, cb) {
+      console.log('fb: NEW bookmark data for: ', tlId);
+      ref.child('bmCount').child(tlId)
+      .on("value", snapshot => {
+        cb(snapshot.val());
+      }, errorObject => {
+        console.log('The read failed: ' + errorObject.code);
+      });
+    },
+
     changeBookmarks: function(uid, cb) {
       userRef.child(uid).child('bookmark-index')
       .on("value", snapshot => {
