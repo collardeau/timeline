@@ -97,6 +97,17 @@ var firebaseUtils = {
 
    },
 
+  bookmarkTimeline(bookmark, tl, tlId, user){
+    if(bookmark){
+      delete tl.dots;  // this is a clone of original timeline
+      // or fetch (latest?) from firebase
+      userRef.child(user).child('bookmark-index').child(tlId).set(tl);
+    }else {
+      userRef.child(user).child('bookmark-index').child(tlId).set({});
+
+    }
+  },
+
     editTimeline(updatedTl, tlId){
 
       // update user folder and user index folder

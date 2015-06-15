@@ -40,6 +40,10 @@ let timelineActions = {
     });
   },
 
+  bookmarkTimeline(bookmark, timeline, timelineId, user) {
+    firebaseUtils.bookmarkTimeline(bookmark, timeline, timelineId, user);
+
+  },
 
   deleteTimeline(timelineId, timelineOwner){
     firebaseUtils.deleteTimeline(timelineId, timelineOwner);

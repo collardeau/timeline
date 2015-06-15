@@ -42,13 +42,11 @@ class TimelineContainer extends React.Component {
   }
 
   handleBookmark(){
-    console.log('handling bookmark');
-    console.log(this.state.isBookmarked);
     this.setState({
       isBookmarked: !this.state.isBookmarked
     });
-
-    //timelineActions.bookmarkTimeline(this.state.isBookmarked); // timeline id and owner?
+    let tlClone = JSON.parse(JSON.stringify(this.state.timeline));
+    timelineActions.bookmarkTimeline(this.state.isBookmarked, tlClone, this.props.params[1], this.props.userAuth.uid);
   }
 
 
