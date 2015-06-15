@@ -26,8 +26,8 @@ class BrowseItem extends React.Component {
     bmStore.removeChangeListener(this.changeContent);
   }
 
-  handleTimelineLink(timeline){
-    hasher.setHash('u/' + timeline.ownerName + '/' + timeline.key);
+  handleTimelineLink(){
+    hasher.setHash('u/' + this.props.timeline.ownerName + '/' + this.props.timeline.key);
   }
 
   render() {
@@ -36,7 +36,7 @@ class BrowseItem extends React.Component {
 
     return (
 
-      <li onClick={this.handleTimelineLink} className="table-view-cell timeline">
+      <li onClick={this.handleTimelineLink.bind(this)} className="table-view-cell timeline">
         { t.name }
         <br />
         <small>by { t.ownerName }</small>
