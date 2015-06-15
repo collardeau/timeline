@@ -16,7 +16,7 @@ class BrowseControls extends React.Component {
       classString = "control-item";
       if (control === this.props.active) { classString += " active"; }
 
-      let controlName = 'Public';
+      let controlName = control;
       if ( control === 'user') { controlName = this.props.userData.username; }
 
       return (
@@ -38,7 +38,7 @@ class BrowseControls extends React.Component {
 
 BrowseControls.defaultProps = {
   active: 'public',
-  controls: ['public', 'user']
+  controls: ['public', 'bookmarks', 'user']
 };
 
 BrowseControls.propTypes = {

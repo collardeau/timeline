@@ -40,8 +40,12 @@ let timelineActions = {
     });
   },
 
-  bookmarkTimeline(bookmark, timeline, timelineId, user) {
-    firebaseUtils.bookmarkTimeline(bookmark, timeline, timelineId, user);
+  bookmarkTimeline(isBookmarked, timeline, timelineId, user) {
+    AppDispatcher.handleAction({
+      actionType: appConstants.TOGGLE_TIMELINE_BOOKMARK,
+      data: isBookmarked
+    });
+    firebaseUtils.bookmarkTimeline(isBookmarked, timeline, timelineId, user);
 
   },
 

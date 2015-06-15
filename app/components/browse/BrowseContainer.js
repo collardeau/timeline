@@ -120,13 +120,11 @@ class Browse extends React.Component {
   changeContent(){
     console.log("browse callback: changing content");
     if(this.state.activeTab === 'user'){
-      this.setState({
-        timelines: timelinesStore.getTimelines('user')
-      });
+      this.setState({ timelines: timelinesStore.getTimelines('user') });
+    } else if ( this.state.activeTab === 'bookmarks') {
+      this.setState({ timelines: timelinesStore.getTimelines('bookmarks')});
     } else {
-      this.setState({
-        timelines: timelinesStore.getTimelines()
-      });
+      this.setState({ timelines: timelinesStore.getTimelines() });
     }
     $('#timelines-loading').addClass('hidden');
   }

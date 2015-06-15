@@ -7,6 +7,7 @@ let firebaseUtils = require('../utils/firebaseUtils');
 let _store = {
   timelines: [],
   publicTimelines: [],
+  bookmarks: [],
   newestAdded: ''
 };
 
@@ -19,17 +20,17 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
 
   changePublicTimelines(timelines){ _store.publicTimelines = timelines; },
 
+  changeBookmarks(timelines){ _store.bookmarks = timelines; },
+
   emptyUserData(){
     console.log("timelinesStore: emptying user data");
-    _store.timelines = [];
+    _store.timelines = [];  // empty bookmarks also?
   },
 
   getTimelines( timelineType = "public"){
-    if (timelineType === "user") {
-      return _store.timelines;
-    }else{
-      return _store.publicTimelines;
-    }
+    if (timelineType === "user") { return _store.timelines; }
+    else if (timelineType === "bookmarks") { return _store.bookmarks; }
+    else { return _store.publicTimelines; }
   },
 
   getNewest() { return _store.newestAdded; },
@@ -56,6 +57,10 @@ AppDispatcher.register(function(payload){
       break;
     case appConstants.CHANGE_TIMELINES:
       timelineStore.changeTimelines(action.data.timelines);
+      timelineStore.emit(CHANGE_EVENT);
+      break;
+    case appConstants.CHANGE_BOOKMARKS:
+      timelineStore.changeBookmarks(action.data.timelines);
       timelineStore.emit(CHANGE_EVENT);
       break;
     case appConstants.ADD_TIMELINE:

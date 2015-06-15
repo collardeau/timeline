@@ -12,7 +12,8 @@ let _store = {
     ownerName: "",
     isPublic: false,
     dots: []
-  }
+  },
+  isBookmarked: false
 };
 
 const CHANGE_EVENT = 'change';
@@ -20,13 +21,13 @@ const SVG_EVENT = 'svg';  // will reset the svg
 
 let timelineStore = objectAssign({}, EventEmitter.prototype, {
 
-  loadTimeline(timeline){
-    _store.timeline = timeline;
-  },
+  loadTimeline(timeline){ _store.timeline = timeline; },
 
- getTimeline() {
-    return _store.timeline;
-  },
+  getTimeline() { return _store.timeline; },
+
+  getBookmarkStatus() { return _store.isBookmarked; },
+
+  changeBookmark(status) { _store.isBookmarked = status; },
 
   editTimeline(data){
     // could check first what actually changed?
@@ -66,20 +67,24 @@ AppDispatcher.register(function(payload){
           timelineStore.loadTimeline(action.data.timeline);
           timelineStore.emit(CHANGE_EVENT);
           break;
-        case appConstants.EDIT_TIMELINE:
-          timelineStore.editTimeline(action.data);
-          timelineStore.emit(CHANGE_EVENT);
-          break;
-        case appConstants.ADD_DOT:
-          //svgutils already updated store array
-          timelineStore.emit(CHANGE_EVENT);
-          break;
-        case appConstants.DELETE_DOT:
-          timelineStore.deleteDot(action.data);
-          timelineStore.emit(SVG_EVENT);
-          break;
-       default:
-            return true;
+      case appConstants.TOGGLE_TIMELINE_BOOKMARK:
+        timelineStore.changeBookmark(action.data);
+        timelineStore.emit(CHANGE_EVENT);
+        break;
+      case appConstants.EDIT_TIMELINE:
+        timelineStore.editTimeline(action.data);
+        timelineStore.emit(CHANGE_EVENT);
+        break;
+      case appConstants.ADD_DOT:
+        //svgutils already updated store array
+        timelineStore.emit(CHANGE_EVENT);
+        break;
+      case appConstants.DELETE_DOT:
+        timelineStore.deleteDot(action.data);
+        timelineStore.emit(SVG_EVENT);
+        break;
+      default:
+        return true;
     }
 });
 

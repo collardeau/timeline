@@ -21,6 +21,13 @@ let userActions = {
       });
     });
 
+    firebaseUtils.changeBookmarks(uid, timelines => {
+      AppDispatcher.handleAction({
+        actionType: appConstants.CHANGE_BOOKMARKS,
+        data: { timelines: timelines }
+      });
+    });
+
   },
 
   createUser(user, uiError, ui) {

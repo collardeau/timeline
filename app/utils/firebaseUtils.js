@@ -55,6 +55,16 @@ var firebaseUtils = {
       });
     },
 
+    changeBookmarks: function(uid, cb) {
+      userRef.child(uid).child('bookmark-index')
+      .on("value", snapshot => {
+        console.log('fb: NEW bookmark data');
+        cb(this.toArray(snapshot.val()).reverse());
+      }.bind(this), errorObject => {
+        console.log("The read failed: " + errorObject.code);
+      });
+    },
+
     killTimelines: function() {
       console.log('fbUtils: killing timelines');
       userRef.off('value', this.changeTimelines);
