@@ -13,15 +13,8 @@ class TimelineContainer extends React.Component {
 
   constructor() {
     super();
-    console.log("---------------");
-    console.log("tl container: contructor");
     this.state = {
-      timeline: {
-        dots: [],
-        name: '',
-        owner: '',
-        isPublic: false
-      },
+      timeline: { dots: [], name: '', owner: '', isPublic: false },
       isBookmarked: false
     };
     this.changeContent = this.changeContent.bind(this);
@@ -74,12 +67,9 @@ class TimelineContainer extends React.Component {
       info = <p>No item in this list!</p>;
     }
 
-    //console.log(this.props.userData.bookmarks);
-
     let timelineInfo = (
       <div id='timelineInfo'>
         <div className='timelineDetails'>
-          You have { this.props.userData.bookmarks ? this.props.userData.bookmarks.length : 0} bookmarks
           <h3> { this.state.timeline.name }</h3>
           <p> { this.state.timeline.description }.
             <br />Timeline curated by <b>{ this.state.timeline.ownerName }</b>.
