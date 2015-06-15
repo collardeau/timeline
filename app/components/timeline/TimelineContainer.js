@@ -14,7 +14,7 @@ class TimelineContainer extends React.Component {
   constructor() {
     super();
     this.state = {
-      timeline: { dots: [], name: '', owner: '', isPublic: false },
+      timeline: { dots: [], name: '', owner: '', isPublic: false, bookmarkNum: 0 },
       isBookmarked: false
     };
     this.changeContent = this.changeContent.bind(this);
@@ -70,9 +70,9 @@ class TimelineContainer extends React.Component {
     let timelineInfo = (
       <div id='timelineInfo'>
         <div className='timelineDetails'>
-          <h3> { this.state.timeline.name }</h3>
-          <p> { this.state.timeline.description }.
-            <br />Timeline curated by <b>{ this.state.timeline.ownerName }</b>.
+          <h3> {this.state.timeline.name}</h3>
+          <p> {this.state.timeline.description}.
+            <br />Timeline curated by <b>{ this.state.timeline.ownerName}</b>.
           </p>
 
         { info }
@@ -80,7 +80,9 @@ class TimelineContainer extends React.Component {
       </div>
 
       <div onClick={this.handleBookmark.bind(this)} className='pull-right timelineBookmark'>
-        13 { this.state.isBookmarked ? <i className='fa fa-bookmark' /> : <i className='fa fa-bookmark-o' />}
+        { this.state.timeline.bookmarkNum }
+        <span> </span>
+        { this.state.isBookmarked ? <i className='fa fa-2x fa-bookmark' /> : <i className='fa fa-2x fa-bookmark-o' />}
       </div>
     </div>
     );

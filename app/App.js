@@ -23,6 +23,7 @@ class App extends React.Component {
   }
 
   componentDidMount(){
+
     console.log("app: mount");
     if (this.props.userAuth){
       userActions.initUserData(this.props.userAuth.uid);

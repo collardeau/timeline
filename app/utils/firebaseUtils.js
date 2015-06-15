@@ -113,11 +113,17 @@ var firebaseUtils = {
       delete tl.dots;  // this is a clone of original timeline .... or fetch (latest?) from firebase
       userRef.child(user).child('bookmark-index').child(tlId).set(tl);
       userRef.child(user).child('info').child('bookmark').child(tlId).set(true);
+      // write it to the main timeline.... no security rules!
+      userRef.child(tl.owner).child('timeline').child(tlId).child('bookmarkNum')
+      .transaction(current_value => { return (current_value || 0) + 1; });
 
     }else { // remove bookmark
 
       userRef.child(user).child('bookmark-index').child(tlId).set({});
       userRef.child(user).child('info').child('bookmark').child(tlId).set({});
+      userRef.child(tl.owner).child('timeline').child(tlId).child('bookmarkNum')
+      .transaction(current_value => { return current_value - 1; });
+
 
     }
   },
