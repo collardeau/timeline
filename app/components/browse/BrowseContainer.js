@@ -71,10 +71,12 @@ class Browse extends React.Component {
     );
 
     let empty = (
-      <p className='content-padded'>Hello <b>{ this.props.userData.nickname }</b>,
-        <br />
-        No timelines here. Start creating your own: Create <a>one</a>
-      </p>
+      <div className='content-padded'>
+        <p>Greetings, great <b>{ this.props.userData.username }</b>,</p>
+        <p> There are <b>no timelines here</b>, dear friend.<br />
+          You can browse the public timelines, bookmark your favorites, or create your own (private or public) timelines.
+        </p>
+      </div>
     );
 
     let timelines = this.state.timelines.map(( t, i ) => {

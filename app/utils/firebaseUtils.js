@@ -56,9 +56,9 @@ var firebaseUtils = {
     },
 
     changeBmCount: function(tlId, cb) {
-      console.log('fb: NEW bookmark data for: ', tlId);
       ref.child('bmCount').child(tlId)
       .on("value", snapshot => {
+        console.log('fb: NEW bookmark data for: ', tlId);
         cb(snapshot.val());
       }, errorObject => {
         console.log('The read failed: ' + errorObject.code);
