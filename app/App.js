@@ -27,7 +27,7 @@ class App extends React.Component {
     console.log("app: mount");
     if (this.props.userAuth){
       userActions.initUserData(this.props.userAuth.uid);
-      console.log('user in logged in');
+      console.log('user is logged in');
     } else {
       console.log('not logged in');
     }

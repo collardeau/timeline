@@ -10,7 +10,6 @@ class TimelineEdit extends React.Component {
 
   constructor() {
     super();
-    console.log("timelinedEdit: constructor");
     this.state = {
       warning: '',
       dotsToDelete: []

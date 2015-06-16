@@ -23,7 +23,7 @@ class BrowseItem extends React.Component {
   // component should update?
 
   componentWillUnmount(){
-    console.log('browse item: unmount')
+    console.log('browse item: unmount');
     bmStore.removeChangeListener(this.changeContent);
   }
 
