@@ -13,30 +13,19 @@ let userActions = require('./actions/userActions');
 let userStore = require('./stores/userStore');
 
 class App extends React.Component {
-
   constructor(){
     super();
-    this.state = {
-      userData: { username: "", bookmarks: [] }
-    };
+    this.state = { userData: { username: "", bookmarks: [] } };
     this.changeUserContent = this.changeUserContent.bind(this);
   }
 
   componentDidMount(){
-
-    console.log("app: mount");
-    if (this.props.userAuth){
-      userActions.initUserData(this.props.userAuth.uid);
-      console.log('user is logged in');
-    } else {
-      console.log('not logged in');
-    }
+    if (this.props.userAuth) { userActions.changeUserData(this.props.userAuth.uid);
+    } else { console.log('not logged in'); }
     userStore.addChangeListener(this.changeUserContent);
   }
 
-  componentWillUnmount(){
-    userStore.removeChangeListener(this.changeUserContent);
-  }
+  componentWillUnmount(){ userStore.removeChangeListener(this.changeUserContent); }
 
   render() {
 

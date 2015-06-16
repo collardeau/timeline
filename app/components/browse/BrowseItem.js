@@ -13,19 +13,13 @@ class BrowseItem extends React.Component {
   }
 
   componentDidMount(){
-    console.log('browse item: mount');
     bmStore.addChangeListener(this.changeContent);
-    bmActions.changeBm(this.props.timeline.key);
+    // bmActions.changeBm(this.props.timeline.key);
     // should not request new sync everytime it mounts
     // or change content only if count doenst already exists
   }
 
-  // component should update?
-
-  componentWillUnmount(){
-    console.log('browse item: unmount');
-    bmStore.removeChangeListener(this.changeContent);
-  }
+  componentWillUnmount(){ bmStore.removeChangeListener(this.changeContent); }
 
   handleTimelineLink(){
     hasher.setHash('u/' + this.props.timeline.ownerName + '/' + this.props.timeline.key);
@@ -48,7 +42,7 @@ class BrowseItem extends React.Component {
   }
 
   changeContent(){
-    // console.log('browse item: change content (check)');
+    console.log('browse item: change content (check) ', this.props.timeline.key);
     this.setState({
       bmCount: bmStore.getBmCount(this.props.timeline.key)
     });

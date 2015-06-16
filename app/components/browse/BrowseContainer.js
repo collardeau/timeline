@@ -7,11 +7,13 @@ let BrowseItem = require('./BrowseItem');
 let AddTimeline = require('./AddTimeline');
 let timelinesStore = require('../../stores/timelinesStore');
 let timelineActions = require('../../actions/timelineActions');
+let bmActions = require('../../actions/bmActions');
 
 class Browse extends React.Component {
 
   constructor(){
     super();
+    console.log('---------');
     this.state = {
       timelines: timelinesStore.getTimelines('public'),
       activeTab: 'public',
@@ -21,14 +23,27 @@ class Browse extends React.Component {
   }
 
   componentDidMount(){
-    console.log("browse: mount");
+
     timelinesStore.addChangeListener(this.changeContent);
     $('#timelines-loading').removeClass('hidden');
+
     timelineActions.syncPublicTimelines();
+
+    if (this.props.userAuth){
+      timelineActions.initUserTimelineData(this.props.userAuth.uid);
+    } else { console.log('not logged in for user timeline data'); }
+
+      }
+
+  componentWillUpdate(){
+let ids = this.state.timelines.map(t => { return t.key; });
+    console.log(ids);
+    bmActions.changeBmCounts(ids);
+
+
   }
 
   componentWillUnmount(){
-    console.log('browse: unmount');
     timelinesStore.removeChangeListener(this.changeContent);
   }
 

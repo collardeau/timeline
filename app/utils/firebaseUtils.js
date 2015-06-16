@@ -35,49 +35,29 @@ let isPublicTimeline = (tlId) => {
 
 var firebaseUtils = {
 
-    changePublicTimelines(callback){  // public indexes
+    changePublicTimelines(callback){
       ref.child(publicTimelines)
-      .on("value", function(snapshot) {
-        console.log('NEW tl index data');
+      .on("value", snapshot => {
         callback(this.toArray(snapshot.val()).reverse());
-      }.bind(this), function (errorObject) {
-        console.log("The read failed: " + errorObject.code);
-      });
+      }.bind(this), errorObject => { console.log("The read failed: " + errorObject.code); });
    },
 
    changeTimelines: function(uid, cb) {  // own indexes
-      userRef.child(uid).child(timelineIndex)
-      .on("value", snapshot => {
-        console.log('NEW PRIVATE tl index data');
+     userRef.child(uid).child(timelineIndex)
+     .on("value", snapshot => {
         cb(this.toArray(snapshot.val()).reverse());
-      }.bind(this), errorObject => {
-        console.log("The read failed: " + errorObject.code);
-      });
-    },
-
-    changeBmCount: function(tlId, cb) {
-      ref.child('bmCount').child(tlId)
-      .on("value", snapshot => {
-        console.log('NEW bookmark count data');
-        cb(snapshot.val());
-      }, errorObject => {
-        console.log('The read failed: ' + errorObject.code);
-      });
+      }.bind(this), errorObject => { console.log("The read failed: " + errorObject.code); });
     },
 
     changeBookmarks: function(uid, cb) {
       userRef.child(uid).child('bookmark-index')
       .on("value", snapshot => {
-        console.log('NEW bookmark index data');
         cb(this.toArray(snapshot.val()).reverse());
-      }.bind(this), errorObject => {
-        console.log("The read failed: " + errorObject.code);
-      });
+      }.bind(this), errorObject => { console.log("The read failed: " + errorObject.code); });
     },
 
-    killTimelines: function() {
-      console.log('fbUtils: killing timelines');
-      userRef.off('value', this.changeTimelines);
+    killTimelines: function() { console.log('fbUtils: killing timelines');
+      userRef.off('value', this.changeTimelines); // kill bookmarks ? simply off for all user refs
     },
 
     addTimeline(timeline, ui){
@@ -98,12 +78,11 @@ var firebaseUtils = {
       }, console.log);
     },
 
-    loadTimeline(timelineId, user, cb){
+    loadTimeline: function(timelineId, user, cb){
 
       getUserUidPromise(user).then(uid => {
         userRef.child(uid).child(timelines).child(timelineId)
         .on("value", snapshot => {
-          console.log("NEW timeline data");
           let timelineObj = snapshot.val();
           if(timelineObj){
             timelineObj.dots = this.toArray(timelineObj.dots);
@@ -116,6 +95,18 @@ var firebaseUtils = {
       }, console.log);
 
    },
+
+   killTimelineSync(){ console.log('KILLING firebase timeline sync'); // ... but not bookmark?
+     //userRef.off('value');  // ref.child('bmCount.off('value');
+     //ref.child('bmCount').off('value');
+     // ref.off('value');
+   },
+
+    changeBmCount: function(tlId, cb) {
+      ref.child('bmCount').child(tlId)
+      .on("value", snapshot => { cb(snapshot.val()); },
+        errorObject => { console.log('The read failed: ' + errorObject.code); });
+    },
 
    bookmarkTimeline(bookmark, tl, tlId, user){
 
@@ -174,7 +165,6 @@ var firebaseUtils = {
     getUserData(userId, cb ) {  // firebase data, not auth
       ref.child('user').child(userId).child('info')
       .on("value", function(snapshot) {  // could be once?
-        console.log("NEW user data");
         cb(snapshot.val());
       }, function(errorObject){
         console.log("The read failed: " + errorObject.code);

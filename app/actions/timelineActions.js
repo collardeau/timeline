@@ -7,7 +7,7 @@ let bmActions = require('../actions/bmActions.js');
 
 let timelineActions = {
 
-  syncPublicTimelines(){
+  syncPublicTimelines(){ console.log('tl action: sync public timlines');
     firebaseUtils.changePublicTimelines(timelines => {
       AppDispatcher.handleAction({
         actionType: appConstants.CHANGE_PUBLIC_TIMELINES,
@@ -16,6 +16,27 @@ let timelineActions = {
         }
       });
     });
+  },
+
+  initUserTimelineData(uid){
+
+    console.log('tl action: initUserData');
+
+    firebaseUtils.changeBookmarks(uid, bTimelines => { console.log('tl action cb: sync bookmarked timelines');
+      AppDispatcher.handleAction({
+        actionType: appConstants.CHANGE_BOOKMARKS,
+        data: { timelines: bTimelines }
+      });
+    });
+
+    firebaseUtils.changeTimelines(uid, timelines => { console.log('tl action cb: sync private timelines');
+      AppDispatcher.handleAction({
+        actionType: appConstants.CHANGE_TIMELINES,
+        data: { timelines: timelines }
+      });
+
+    });
+
   },
 
   addTimeline(timeline){
@@ -30,8 +51,9 @@ let timelineActions = {
     });
   },
 
-  loadTimeline(timelineId, owner){
-    firebaseUtils.loadTimeline(timelineId, owner, timeline => {
+  loadTimeline(tlId, owner){ console.log('tl action: sync timeline data');
+
+    firebaseUtils.loadTimeline(tlId, owner, timeline => {
       AppDispatcher.handleAction({
         actionType: appConstants.LOAD_TIMELINE,
         data: {
@@ -39,8 +61,24 @@ let timelineActions = {
         }
       });
     });
-    bmActions.changeBm(timelineId);
+
+    console.log('tl action (in load/sync timeline): also syncBmCount');
+    firebaseUtils.changeBmCount(tlId, count => {
+      AppDispatcher.handleAction({
+        actionType: appConstants.CHANGE_TIMELINE_BM,
+        data: {
+          count: count,
+          tlId: tlId
+        }
+      });
+    });
+
   },
+
+  killTimelineSync(timelineId){ console.log('tl action: kill timelines sync');
+    firebaseUtils.killTimelineSync();
+  },
+
 
   bookmarkTimeline(toBookmark, timeline, timelineId, user) {
     AppDispatcher.handleAction({

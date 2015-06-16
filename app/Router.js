@@ -21,10 +21,8 @@ class Router extends React.Component {
     }
 
   componentDidMount() {
-    console.log("router mount");
     hasher.changed.add(this.handleChanges);
     //hasher.initialized.add(this.handleChanges);
-
   }
 
   componentWillUpdate() {

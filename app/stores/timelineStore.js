@@ -16,6 +16,7 @@ let _store = {
 
 const CHANGE_EVENT = 'change';
 const SVG_EVENT = 'svg';  // will reset the svg
+const BM_EVENT = 'bookmark';
 
 let timelineStore = objectAssign({}, EventEmitter.prototype, {
 
@@ -23,9 +24,9 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
 
   getTimeline() { return _store.timeline; },
 
-  changeBmCount(count) { _store.bmCount = count; },
+  changeTimelineBm(count){ _store.bmCount = count; },
 
-  getBmCount() { return _store.bmCount; },
+  getTimelineBm() { return _store.bmCount; },
 
   changeBookmark(status) { _store.isBookmarked = status; },
 
@@ -65,12 +66,12 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(payload){
     var action = payload.action;
     switch(action.actionType){
-       case appConstants.LOAD_TIMELINE:
-          timelineStore.loadTimeline(action.data.timeline);
-          timelineStore.emit(CHANGE_EVENT);
-          break;
-      case appConstants.CHANGE_BM_COUNT:
-        timelineStore.changeBmCount(action.data.count);
+      case appConstants.LOAD_TIMELINE:
+        timelineStore.loadTimeline(action.data.timeline);
+        timelineStore.emit(CHANGE_EVENT);
+        break;
+      case appConstants.CHANGE_TIMELINE_BM:
+        timelineStore.changeTimelineBm(action.data.count);
         timelineStore.emit(CHANGE_EVENT);
         break;
       case appConstants.TOGGLE_TIMELINE_BOOKMARK:

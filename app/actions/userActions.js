@@ -5,26 +5,12 @@ let firebaseUtils = require('../utils/firebaseUtils');
 
 let userActions = {
 
-  initUserData(uid){  // syncs
+  changeUserData(uid){ console.log('user action: change user');
 
     firebaseUtils.getUserData(uid, userData => {
       AppDispatcher.handleAction({
         actionType: appConstants.CHANGE_USER,
         data: { userData: userData }
-      });
-    });
-
-    firebaseUtils.changeTimelines(uid, timelines => {
-      AppDispatcher.handleAction({
-        actionType: appConstants.CHANGE_TIMELINES,
-        data: { timelines: timelines }
-      });
-    });
-
-    firebaseUtils.changeBookmarks(uid, timelines => {
-      AppDispatcher.handleAction({
-        actionType: appConstants.CHANGE_BOOKMARKS,
-        data: { timelines: timelines }
       });
     });
 

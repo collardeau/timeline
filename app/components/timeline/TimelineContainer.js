@@ -6,33 +6,35 @@ let Timeline = require('./Timeline');
 let TimelineAddDot = require('./TimelineAddDot');
 let TimelineEdit = require('./TimelineEdit');
 let timelineStore = require('../../stores/timelineStore');
+let bmStore = require('../../stores/bmStore');
 let timelineActions = require('../../actions/timelineActions');
 let svgActions = require('../../actions/svgActions');
+let bmActions = require('../../actions/bmActions');
 
 class TimelineContainer extends React.Component {
 
   constructor() {
     super();
+    console.log('--------');
     this.state = {
       timeline: { dots: [], name: '', owner: '', isPublic: false },
       isBookmarked: false,
       bmCount: 0
     };
     this.changeContent = this.changeContent.bind(this);
+    this.changeBm = this.changeBm.bind(this);
   }
 
   componentDidMount() {
     $('#timelineSpinner').removeClass('hidden');
-    console.log("tl container: mount");
     timelineStore.addChangeListener(this.changeContent);
-    let owner = this.props.params[0],
-        timelineId = this.props.params[1];
-    timelineActions.loadTimeline(timelineId, owner);  // sync
+    timelineActions.loadTimeline(this.props.params[1], this.props.params[0]);  // sync
   }
 
   componentWillUnmount() {
     console.log("tl container: unmount");
     timelineStore.removeChangeListener(this.changeContent);
+    timelineActions.killTimelineSync();
   }
 
   handleBookmark(){
@@ -130,10 +132,16 @@ class TimelineContainer extends React.Component {
   changeContent() {
     this.setState({
       timeline: timelineStore.getTimeline(),
-      bmCount: timelineStore.getBmCount(),
-      isBookmarked: timelineStore.isBookmarked()
+      isBookmarked: timelineStore.isBookmarked(),
+      bmCount: timelineStore.getTimelineBm()
     });
     $('#timelineSpinner').addClass('hidden');
+  }
+
+  changeBm() {
+    this.setState({
+      bmCount: bmStore.getBmCount()
+    });
   }
 }
 
