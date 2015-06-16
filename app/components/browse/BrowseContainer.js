@@ -12,8 +12,6 @@ class Browse extends React.Component {
 
   constructor(){
     super();
-    console.log("--------------");
-    console.log("browse: constructor");
     this.state = {
       timelines: timelinesStore.getTimelines('public'),
       activeTab: 'public',
@@ -120,7 +118,7 @@ class Browse extends React.Component {
   }
 
   changeContent(){
-    console.log("browse callback: changing content");
+    console.log("browse callback: changing tab content");
     if(this.state.activeTab === 'user'){
       this.setState({ timelines: timelinesStore.getTimelines('user') });
     } else if ( this.state.activeTab === 'bookmarks') {

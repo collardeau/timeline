@@ -38,7 +38,7 @@ var firebaseUtils = {
     changePublicTimelines(callback){  // public indexes
       ref.child(publicTimelines)
       .on("value", function(snapshot) {
-        console.log('fb: NEW tl index data');
+        console.log('NEW tl index data');
         callback(this.toArray(snapshot.val()).reverse());
       }.bind(this), function (errorObject) {
         console.log("The read failed: " + errorObject.code);
@@ -48,7 +48,7 @@ var firebaseUtils = {
    changeTimelines: function(uid, cb) {  // own indexes
       userRef.child(uid).child(timelineIndex)
       .on("value", snapshot => {
-        console.log('fb: NEW PRIVATE tl index data');
+        console.log('NEW PRIVATE tl index data');
         cb(this.toArray(snapshot.val()).reverse());
       }.bind(this), errorObject => {
         console.log("The read failed: " + errorObject.code);
@@ -58,7 +58,7 @@ var firebaseUtils = {
     changeBmCount: function(tlId, cb) {
       ref.child('bmCount').child(tlId)
       .on("value", snapshot => {
-        console.log('fb: NEW bookmark data for: ', tlId);
+        console.log('NEW bookmark count data');
         cb(snapshot.val());
       }, errorObject => {
         console.log('The read failed: ' + errorObject.code);
@@ -68,7 +68,7 @@ var firebaseUtils = {
     changeBookmarks: function(uid, cb) {
       userRef.child(uid).child('bookmark-index')
       .on("value", snapshot => {
-        console.log('fb: NEW bookmark data');
+        console.log('NEW bookmark index data');
         cb(this.toArray(snapshot.val()).reverse());
       }.bind(this), errorObject => {
         console.log("The read failed: " + errorObject.code);
@@ -103,7 +103,7 @@ var firebaseUtils = {
       getUserUidPromise(user).then(uid => {
         userRef.child(uid).child(timelines).child(timelineId)
         .on("value", snapshot => {
-          console.log("fb: NEW timeline data");
+          console.log("NEW timeline data");
           let timelineObj = snapshot.val();
           if(timelineObj){
             timelineObj.dots = this.toArray(timelineObj.dots);
@@ -174,7 +174,7 @@ var firebaseUtils = {
     getUserData(userId, cb ) {  // firebase data, not auth
       ref.child('user').child(userId).child('info')
       .on("value", function(snapshot) {  // could be once?
-        console.log("fb: NEW user data");
+        console.log("NEW user data");
         cb(snapshot.val());
       }, function(errorObject){
         console.log("The read failed: " + errorObject.code);
