@@ -34,7 +34,7 @@ class TimelineContainer extends React.Component {
   componentWillUnmount() {
     console.log("tl container: unmount");
     timelineStore.removeChangeListener(this.changeContent);
-    timelineActions.killTimelineSync();
+    //timelineActions.killTimelineSync();
   }
 
   handleBookmark(){

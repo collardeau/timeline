@@ -42,7 +42,7 @@ class BrowseItem extends React.Component {
   }
 
   changeContent(){
-    console.log('browse item: change content (check) ', this.props.timeline.key);
+    //console.log('browse item: change content (check) ', this.props.timeline.key);
     this.setState({
       bmCount: bmStore.getBmCount(this.props.timeline.key)
     });

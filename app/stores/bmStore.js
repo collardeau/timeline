@@ -3,6 +3,8 @@ const EventEmitter = require('events').EventEmitter;
 let AppDispatcher = require('../dispatcher/AppDispatcher');
 let appConstants = require('../constants/appConstants');
 
+let browseStore = require('../stores/browseStore');
+
 
 let _store = {};
 

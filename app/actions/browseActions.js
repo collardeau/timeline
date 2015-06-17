@@ -1,10 +1,11 @@
 let AppDispatcher = require('../dispatcher/AppDispatcher');
 let appConstants = require('../constants/appConstants');
 let firebaseUtils = require('../utils/firebaseUtils');
+let bmActions = require('../actions/bmActions');
 
 let browseActions = {
 
-  syncTimelines(auth){ console.log('browse actions: sync all timelines');
+  syncTimelines(auth){ console.log('browse actions: sync all timelines'); // init
 
     firebaseUtils.changePublicTimelines(timelines => {
       console.log('browse action cb: sync public timlines');
@@ -12,6 +13,7 @@ let browseActions = {
         actionType: appConstants.CHANGE_PUBLIC_TIMELINES,
         data: { timelines: timelines }
       });
+      browseActions.changeTimelines('public'); // kick off active timelines
     });
 
     if(auth){
@@ -24,8 +26,6 @@ let browseActions = {
           actionType: appConstants.CHANGE_USER_TIMELINES,
           data: { timelines: timelines }
         });
-        this.changeTimelines('public');
-
       });
 
       firebaseUtils.changeBookmarks(uid, timelines => {

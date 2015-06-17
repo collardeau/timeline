@@ -6,6 +6,9 @@ let appConstants = require('../constants/appConstants');
 let publicTimelineStore = require('./publicTimelinesStore');
 let userTimelineStore = require('./userTimelinesStore');
 let bookmarkTimelineStore = require('./bookmarkTimelinesStore');
+// let bmStore = require('./bmStore');
+
+//let bmActions = require('../actions/bmActions');
 
 const CHANGE_EVENT = 'change';
 
@@ -17,10 +20,12 @@ let browseStore = objectAssign({}, EventEmitter.prototype, {
     let store = publicTimelineStore;
     if(filter === 'bookmarks'){ store = bookmarkTimelineStore; }
     if(filter === 'user'){ store = userTimelineStore; }
+    let timelines = store.getTimelines();
     _store = {
-      timelines: store.getTimelines(),
+      timelines: timelines,
       active: filter
     };
+    // bmActions.syncBmCounts(timelines.map((t) => { return t.key; } ));
   },
 
   getTimelines(){ return _store.timelines; },

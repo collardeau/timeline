@@ -7,6 +7,7 @@ let BrowseTable = require('./BrowseTable');
 let BrowseNotice = require('./BrowseNotice');
 let AddTimeline = require('./AddTimeline');
 let browseActions = require('../../actions/browseActions');
+let bmActions = require('../../actions/bmActions');
 let browseStore = require('../../stores/browseStore');
 
 class Browse extends React.Component {
@@ -21,6 +22,10 @@ class Browse extends React.Component {
     browseStore.addChangeListener(this.changeContent);
     $('#timelines-loading').removeClass('hidden');
     browseActions.syncTimelines(this.props.userAuth); // this also kicks off filter public
+  }
+
+  componentDidUpdate(){
+    bmActions.syncBmCounts(this.state.timelines.map((t) => { return t.key; } ));
   }
 
   componentWillUnmount(){ browseStore.removeChangeListener(this.changeContent); }
