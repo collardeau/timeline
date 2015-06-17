@@ -37,7 +37,9 @@ class Timeline extends React.Component {
   }
 
   render() {
-    return <div className="d3-container"></div>;
+    return (
+      <div className="d3-container"></div>
+    );
   }
 
   changeSVG(){
