@@ -2,24 +2,17 @@ const objectAssign = require('react/lib/Object.assign');
 const EventEmitter = require('events').EventEmitter;
 let AppDispatcher = require('../dispatcher/AppDispatcher');
 let appConstants = require('../constants/appConstants');
-// let firebaseUtils = require('../utils/firebaseUtils');
 
-// bookmark timelines index store
-let _store = {
-  timelines: []
-};
+let _store = { timelines: [] };
 
 const CHANGE_EVENT = 'change';
 
 let bookmarkTimelinesStore = objectAssign({}, EventEmitter.prototype, {
 
   changeTimelines(timelines){ _store.timelines = timelines; },
-
   getTimelines(){ return _store.timelines; },
 
-  addTimeline(timeline, timelineId ) {
-    _store.timelines.push(timeline);
-  },
+  // addTimeline(timeline, timelineId ) { _store.timelines.push(timeline); },
 
   addChangeListener(cb) { this.on(CHANGE_EVENT, cb); },
   removeChangeListener(cb) { this.removeListener(CHANGE_EVENT, cb); }
@@ -33,11 +26,11 @@ AppDispatcher.register(function(payload){
       bookmarkTimelinesStore.changeTimelines(action.data.timelines);
       bookmarkTimelinesStore.emit(CHANGE_EVENT);
       break;
-   case appConstants.ADD_TIMELINE:
-      bookmarkTimelinesStore.addTimeline(action.data.timeline, action.data.timelineId);
-      bookmarkTimelinesStore.emit(CHANGE_EVENT);
-      break;
-   default:
+      //   case appConstants.ADD_TIMELINE:
+      //      bookmarkTimelinesStore.addTimeline(action.data.timeline, action.data.timelineId);
+      //      bookmarkTimelinesStore.emit(CHANGE_EVENT);
+      //      break;
+      default:
         return true;
   }
 });

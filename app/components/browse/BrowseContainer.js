@@ -3,56 +3,37 @@ const $ = require('jquery');
 
 let BrowseHeader = require('./BrowseHeader');
 let BrowseControls = require('./BrowseControls');
-let AddTimeline = require('./AddTimeline');
 let BrowseTable = require('./BrowseTable');
-// let timelinesStore = require('../../stores/timelinesStore');
-let browseStore = require('../../stores/browseStore');
-let userTimelinesStore = require('../../stores/userTimelinesStore');
-let bookmarkTimelinesStore = require('../../stores/bookmarkTimelinesStore');
-let publicTimelinesStore = require('../../stores/publicTimelinesStore');
-
 let BrowseNotice = require('./BrowseNotice');
-
-// let timelineActions = require('../../actions/timelineActions');
+let AddTimeline = require('./AddTimeline');
 let browseActions = require('../../actions/browseActions');
-// let bmActions = require('../../actions/bmActions');
+let browseStore = require('../../stores/browseStore');
 
 class Browse extends React.Component {
 
   constructor(){
-    super();
-    console.log('---------');
-    this.state = {
-      timelines: [],
-      activeTab: 'public'
-    };
-
+    super(); console.log('---------');
+    this.state = { timelines: [], activeTab: 'public' };
     this.changeContent = this.changeContent.bind(this);
   }
 
   componentDidMount(){
     browseStore.addChangeListener(this.changeContent);
     $('#timelines-loading').removeClass('hidden');
-    browseActions.syncTimelines(this.props.userAuth);
+    browseActions.syncTimelines(this.props.userAuth); // this also kicks off filter public
   }
 
-  componentWillUnmount(){
-    browseStore.removeChangeListener(this.changeContent);
-  }
+  componentWillUnmount(){ browseStore.removeChangeListener(this.changeContent); }
 
   render() {
 
     let controls = (
-      <BrowseControls active={ this.state.activeTab }
-        userData={ this.props.userData }
-      />
+      <BrowseControls active={ this.state.activeTab } userData={ this.props.userData } />
     );
 
     return (
       <div>
-
         <BrowseHeader isLoggedIn={ Boolean(this.props.userAuth) }/>
-
         <div className="content">
 
           { this.props.userAuth ? controls : '' }
@@ -63,9 +44,7 @@ class Browse extends React.Component {
           <BrowseTable active={this.state.activeTab} timelines={this.state.timelines}/>
 
         </div>
-
         <AddTimeline userAuth={this.props.userAuth} userData={this.props.userData}/>
-
       </div>
     );
   }

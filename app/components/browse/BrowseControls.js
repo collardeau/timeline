@@ -1,12 +1,9 @@
 const React = require('react');
-let timelineActions = require('../../actions/timelineActions.js');
 let browseActions = require('../../actions/browseActions.js');
 
 class BrowseControls extends React.Component {
 
-  handleFilter(type){
-    browseActions.changeTimelines(type);
-  }
+  handleFilter(type){ browseActions.changeTimelines(type); }
 
   render(){
 
@@ -29,10 +26,8 @@ class BrowseControls extends React.Component {
 
     });
 
-   return (
-      <div className="segmented-control">
-        { controlNodes }
-      </div>
+    return (
+      <div className="segmented-control">{ controlNodes }</div>
     );
   }
 }
@@ -44,7 +39,6 @@ BrowseControls.defaultProps = {
 
 BrowseControls.propTypes = {
   active: React.PropTypes.string,
-  filterFn: React.PropTypes.func.isRequired,
   controls: React.PropTypes.array
 };
 
