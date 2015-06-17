@@ -15,27 +15,16 @@ let _store = {
 
 const CHANGE_EVENT = 'change';
 
-let doSomething = function() {
-  console.log("one store listens to another !  craziness! ");
-  if(_store.active === 'public'){
-    _store.timelines = publicTimelineStore.getTimelines();
-    browseStore.emit(CHANGE_EVENT);
-  }
-};
-
-publicTimelineStore.addChangeListener(doSomething);
-
 let browseStore = objectAssign({}, EventEmitter.prototype, {
 
-  changeTimelines(data){
-
-    let filter = data.filter;
-    let newStore = publicTimelineStore;
-
-    if (filter === 'user') { newStore = userTimelineStore; }
-    if (filter === 'bookmarks') { newStore = bookmarkTimelineStore; }
-    _store.timelines = newStore.getTimelines();
-
+  changeTimelines(filter){
+    let store = publicTimelineStore;
+    if(filter === 'bookmarks'){ store = bookmarkTimelineStore; }
+    if(filter === 'user'){ store = userTimelineStore; }
+    _store = {
+      timelines: store.getTimelines(),
+      active: filter
+    };
   },
 
   getTimelines(){ return _store.timelines; },
@@ -60,7 +49,7 @@ AppDispatcher.register(function(payload){
       browseStore.changeTimelines(action.data);
       browseStore.emit(CHANGE_EVENT);
       break;
-   case appConstants.ADD_TIMELINE:
+  case appConstants.ADD_TIMELINE:
       browseStore.addTimeline(action.data.timeline, action.data.timelineId);
       browseStore.emit(CHANGE_EVENT);
       break;

@@ -1,10 +1,11 @@
 const React = require('react');
 let timelineActions = require('../../actions/timelineActions.js');
+let browseActions = require('../../actions/browseActions.js');
 
 class BrowseControls extends React.Component {
 
   handleFilter(type){
-    this.props.filterFn(type);
+    browseActions.changeTimelines(type);
   }
 
   render(){

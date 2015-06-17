@@ -29,6 +29,7 @@ let browseActions = {
           actionType: appConstants.CHANGE_USER_TIMELINES,
           data: { timelines: timelines }
         });
+        this.changeTimelines('public');
 
       });
 
@@ -40,6 +41,13 @@ let browseActions = {
         });
       });
     }
+  },
+
+  changeTimelines(filter) {
+    AppDispatcher.handleAction({
+      actionType: appConstants.CHANGE_TIMELINES,
+      data: filter
+    });
   },
 
   addTimeline(timeline){
