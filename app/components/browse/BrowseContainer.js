@@ -5,9 +5,16 @@ let BrowseHeader = require('./BrowseHeader');
 let BrowseControls = require('./BrowseControls');
 let BrowseItem = require('./BrowseItem');
 let AddTimeline = require('./AddTimeline');
-let timelinesStore = require('../../stores/timelinesStore');
-let timelineActions = require('../../actions/timelineActions');
-let bmActions = require('../../actions/bmActions');
+// let timelinesStore = require('../../stores/timelinesStore');
+let userTimelinesStore = require('../../stores/userTimelinesStore');
+let bookmarkTimelinesStore = require('../../stores/bookmarkTimelinesStore');
+let publicTimelinesStore = require('../../stores/publicTimelinesStore');
+
+let BrowseNotice = require('./BrowseNotice');
+
+// let timelineActions = require('../../actions/timelineActions');
+let browseActions = require('../../actions/browseActions');
+// let bmActions = require('../../actions/bmActions');
 
 class Browse extends React.Component {
 
@@ -15,81 +22,44 @@ class Browse extends React.Component {
     super();
     console.log('---------');
     this.state = {
-      timelines: timelinesStore.getTimelines('public'),
-      activeTab: 'public',
-      notice: ''
+      timelines: [],
+      activeTab: 'public'
     };
+
     this.changeContent = this.changeContent.bind(this);
   }
 
   componentDidMount(){
-
-    timelinesStore.addChangeListener(this.changeContent);
+    publicTimelinesStore.addChangeListener(this.changeContent);
+    userTimelinesStore.addChangeListener(this.changeContent);
+    bookmarkTimelinesStore.addChangeListener(this.changeContent);
     $('#timelines-loading').removeClass('hidden');
-
-    timelineActions.syncPublicTimelines();
-
-    if (this.props.userAuth){
-      timelineActions.initUserTimelineData(this.props.userAuth.uid);
-    } else { console.log('not logged in for user timeline data'); }
-
-      }
-
-  componentWillUpdate(){
-let ids = this.state.timelines.map(t => { return t.key; });
-    console.log(ids);
-    bmActions.changeBmCounts(ids);
-
-
+    browseActions.syncTimelines(this.props.userAuth);
   }
 
   componentWillUnmount(){
-    timelinesStore.removeChangeListener(this.changeContent);
-  }
-
-  notify(notice) {
-    this.setState({
-      notice: notice
-    });
-  }
-
-  handleCloseNotice(){
-    this.setState({
-      notice: ''
-    });
+    publicTimelinesStore.removeChangeListener(this.changeContent);
+    userTimelinesStore.removeChangeListener(this.changeContent);
+    bookmarkTimelinesStore.removeChangeListener(this.changeContent);
   }
 
   filterTimelines(types) {
+    console.log('filtering for: ', types);
+    let store = this.getStore(types);
     this.setState({
-      timelines: timelinesStore.getTimelines(types),
-      activeTab: types
+      activeTab: types,
+      timelines: store.getTimelines()
     });
+    console.log("state now is: ", this.state);
   }
 
   render() {
 
-    let notice = (
-      <div className='flash-alert'>
-        { this.state.notice }
-        <i onClick={this.handleCloseNotice.bind(this) } className='pull-right fa fa-times-circle'></i>
-      </div>
-    );
-
     let controls = (
-      <BrowseControls
-        active={ this.state.activeTab }
+      <BrowseControls active={ this.state.activeTab }
         filterFn={ this.filterTimelines.bind(this) }
         userData={ this.props.userData }
       />
-    );
-
-    let empty = (
-      <div className='content-padded'>
-        <p>Greetings, great <b>{ this.props.userData.username }</b>,</p>
-        <p> There are <b>no timelines here</b>, dear friend.<br />
-          You can browse the public timelines, bookmark your favorites, or create your own (private or public) timelines.
-        </p>
-      </div>
     );
 
     let timelines = this.state.timelines.map(( t, i ) => {
@@ -98,31 +68,19 @@ let ids = this.state.timelines.map(t => { return t.key; });
       );
     });
 
-
     return (
       <div>
 
-        <BrowseHeader
-          isLoggedIn={ Boolean(this.props.userAuth) }
-          notify = { this.notify.bind(this) }
-        />
+        <BrowseHeader isLoggedIn={ Boolean(this.props.userAuth) }/>
 
         <div className="content">
 
-          { this.state.notice ? notice : '' }
-
           { this.props.userAuth ? controls : '' }
 
-          <ul className="table-view">
-            { timelines }
-          </ul>
+          <BrowseNotice activeTab={this.state.activeTab} listLength={this.state.timelines.length}
+            username = { this.props.userData.username } />
 
-          <p id='timelines-loading' className="content-padded hidden">
-            Fetching Timeline... <i className="fa fa-2x fa-spinner fa-spin pull-right"></i>
-          </p>
-
-
-          { this.state.timelines.length || this.state.activeTab === 'public' ? '' : empty }
+          <ul className="table-view"> { timelines } </ul>
 
           </div>
 
@@ -132,15 +90,18 @@ let ids = this.state.timelines.map(t => { return t.key; });
     );
   }
 
-  changeContent(){
-    console.log("browse callback: changing tab content");
-    if(this.state.activeTab === 'user'){
-      this.setState({ timelines: timelinesStore.getTimelines('user') });
-    } else if ( this.state.activeTab === 'bookmarks') {
-      this.setState({ timelines: timelinesStore.getTimelines('bookmarks')});
-    } else {
-      this.setState({ timelines: timelinesStore.getTimelines() });
-    }
+  getStore(tab = this.state.activeTab) {
+    console.log('get store: ', tab);
+    return tab === 'user' ? publicTimelinesStore :
+      tab === 'bookmarks' ? bookmarkTimelinesStore : publicTimelinesStore;
+  }
+
+  changeContent(){ console.log("browse callback: changing tab content");
+    let store = this.getStore();
+    let tab = this.state.activeTab;
+    if(tab === 'user'){ store = userTimelinesStore; }
+    if(tab === 'bookmarks') { store = bookmarkTimelinesStore; }
+    this.setState({ timelines: store.getTimelines() });
     $('#timelines-loading').addClass('hidden');
   }
 

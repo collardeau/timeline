@@ -7,47 +7,32 @@ let userActions = require('../../actions/userActions');
 
 class BrowseHeader extends React.Component {
 
-  constructor(){
-    super();
-    this.state = {
-      menuIsOpen: false
-    };
-  }
+  constructor(){ super(); this.state = { menuIsOpen: false }; }
 
-  handleRoute(route) {
-    hasher.setHash(route);
-  }
+  handleRoute(route) { hasher.setHash(route); }
 
   handleAddTimeline(){
-    if(this.props.isLoggedIn){
-      $('#addTimelineModal').addClass('active');
+    if(this.props.isLoggedIn){ $('#addTimelineModal').addClass('active');
     }else{
-      this.props.notify(
+      userActions.notify((
         <span>
           <a onClick={ this.handleRoute.bind(this, 'login') }>Log in</a> to create timelines
         </span>
-      );
+      ));
     }
   }
 
   handleMenuPopover(){
-    this.setState({
-      menuIsOpen: !this.state.menuIsOpen
-    });
+    this.setState({ menuIsOpen: !this.state.menuIsOpen });
   }
 
   handleLogout(){
-    userActions.logoutUser(() => {
-      hasher.setHash('login');
-    });
+    userActions.logoutUser(() => { hasher.setHash('login'); });
  }
 
   render() {
 
-    let popoverClasses = classNames( {
-      'popover': true,
-      'visible': this.state.menuIsOpen
-    });
+    let popoverClasses = classNames( { 'popover': true, 'visible': this.state.menuIsOpen });
 
     let logout, login, account;
 

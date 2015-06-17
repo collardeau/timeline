@@ -38,7 +38,16 @@ let userActions = {
       actionType: appConstants.LOGOUT_USER
     });
     ui();
+  },
+
+  notify(notice){
+    AppDispatcher.handleAction({
+      actionType: appConstants.NOTIFY_USER,
+      data: notice
+    });
   }
+
+
 
 };
 
