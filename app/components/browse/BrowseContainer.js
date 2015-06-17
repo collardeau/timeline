@@ -3,9 +3,10 @@ const $ = require('jquery');
 
 let BrowseHeader = require('./BrowseHeader');
 let BrowseControls = require('./BrowseControls');
-let BrowseItem = require('./BrowseItem');
 let AddTimeline = require('./AddTimeline');
+let BrowseTable = require('./BrowseTable');
 // let timelinesStore = require('../../stores/timelinesStore');
+let browseStore = require('../../stores/browseStore');
 let userTimelinesStore = require('../../stores/userTimelinesStore');
 let bookmarkTimelinesStore = require('../../stores/bookmarkTimelinesStore');
 let publicTimelinesStore = require('../../stores/publicTimelinesStore');
@@ -30,43 +31,22 @@ class Browse extends React.Component {
   }
 
   componentDidMount(){
-    publicTimelinesStore.addChangeListener(this.changeContent);
-    userTimelinesStore.addChangeListener(this.changeContent);
-    bookmarkTimelinesStore.addChangeListener(this.changeContent);
+    browseStore.addChangeListener(this.changeContent);
     $('#timelines-loading').removeClass('hidden');
     browseActions.syncTimelines(this.props.userAuth);
   }
 
   componentWillUnmount(){
-    publicTimelinesStore.removeChangeListener(this.changeContent);
-    userTimelinesStore.removeChangeListener(this.changeContent);
-    bookmarkTimelinesStore.removeChangeListener(this.changeContent);
-  }
-
-  filterTimelines(types) {
-    console.log('filtering for: ', types);
-    let store = this.getStore(types);
-    this.setState({
-      activeTab: types,
-      timelines: store.getTimelines()
-    });
-    console.log("state now is: ", this.state);
+    browseStore.removeChangeListener(this.changeContent);
   }
 
   render() {
 
     let controls = (
       <BrowseControls active={ this.state.activeTab }
-        filterFn={ this.filterTimelines.bind(this) }
         userData={ this.props.userData }
       />
     );
-
-    let timelines = this.state.timelines.map(( t, i ) => {
-      return (
-        <BrowseItem timeline={t} key={t.key} />
-      );
-    });
 
     return (
       <div>
@@ -80,28 +60,18 @@ class Browse extends React.Component {
           <BrowseNotice activeTab={this.state.activeTab} listLength={this.state.timelines.length}
             username = { this.props.userData.username } />
 
-          <ul className="table-view"> { timelines } </ul>
+          <BrowseTable active={this.state.activeTab} timelines={this.state.timelines}/>
 
-          </div>
+        </div>
 
-          <AddTimeline userAuth={this.props.userAuth} userData={this.props.userData}/>
+        <AddTimeline userAuth={this.props.userAuth} userData={this.props.userData}/>
 
       </div>
     );
   }
 
-  getStore(tab = this.state.activeTab) {
-    console.log('get store: ', tab);
-    return tab === 'user' ? publicTimelinesStore :
-      tab === 'bookmarks' ? bookmarkTimelinesStore : publicTimelinesStore;
-  }
-
   changeContent(){ console.log("browse callback: changing tab content");
-    let store = this.getStore();
-    let tab = this.state.activeTab;
-    if(tab === 'user'){ store = userTimelinesStore; }
-    if(tab === 'bookmarks') { store = bookmarkTimelinesStore; }
-    this.setState({ timelines: store.getTimelines() });
+    this.setState({ timelines: browseStore.getTimelines() });
     $('#timelines-loading').addClass('hidden');
   }
 
