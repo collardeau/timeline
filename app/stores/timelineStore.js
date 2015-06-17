@@ -4,12 +4,14 @@ let AppDispatcher = require('../dispatcher/AppDispatcher');
 let appConstants = require('../constants/appConstants');
 let firebaseUtils = require('../utils/firebaseUtils');
 
+let emptyTimeline = {
+  name: "", description: "", owner: "", ownerName: "",
+  isPublic: false,
+  dots: []
+};
+
 let _store = {
-  timeline: {
-    name: "Timeline", description: "", owner: "", ownerName: "",
-    isPublic: false,
-    dots: []
-  },
+  timeline: emptyTimeline,
   bmCount: 0,
   isBookmarked: false
 };
@@ -23,6 +25,8 @@ let timelineStore = objectAssign({}, EventEmitter.prototype, {
   loadTimeline(timeline){ _store.timeline = timeline; },
 
   getTimeline() { return _store.timeline; },
+
+  emptyTimeline() { _store.timeline = emptyTimeline; },
 
   changeTimelineBm(count){ _store.bmCount = count; },
 
@@ -68,6 +72,10 @@ AppDispatcher.register(function(payload){
     switch(action.actionType){
       case appConstants.LOAD_TIMELINE:
         timelineStore.loadTimeline(action.data.timeline);
+        timelineStore.emit(CHANGE_EVENT);
+        break;
+      case appConstants.KILL_TIMELINE:
+        timelineStore.emptyTimeline();
         timelineStore.emit(CHANGE_EVENT);
         break;
       case appConstants.CHANGE_TIMELINE_BM:

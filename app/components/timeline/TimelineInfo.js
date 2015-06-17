@@ -27,7 +27,7 @@ class TimelineInfo extends React.Component {
       if(numDots === 1){ emptyInfo = <p>Only 1 item in this list</p>; }
     }else{ emptyInfo = <p>No item in this list!</p>; }
 
-    return (
+    let info = (
       <div className="content-padded timelineInfo">
         <div className='timelineDetails'>
           <h3>{this.props.timeline.name}</h3>
@@ -42,12 +42,12 @@ class TimelineInfo extends React.Component {
           { emptyInfo }
       </div>
     );
+
+    return this.props.timeline.name ? info : <span></span>;
   }
 
   changeContent() {
-    this.setState({
-      isBookmarked: timelineStore.isBookmarked()
-    });
+    this.setState({ isBookmarked: timelineStore.isBookmarked() });
   }
 
 }

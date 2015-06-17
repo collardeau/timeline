@@ -20,14 +20,15 @@ class TimelineContainer extends React.Component {
   }
 
   componentDidMount() {
+    console.log("timeline container did mount");
     $('#timelineSpinner').removeClass('hidden');
     timelineStore.addChangeListener(this.changeContent);
     timelineActions.loadTimeline(this.props.params[1], this.props.params[0]);  // sync
   }
 
   componentWillUnmount() { console.log("tl container: unmount");
+    timelineActions.killTimeline(this.props.params[1]);
     timelineStore.removeChangeListener(this.changeContent);
-    //timelineActions.killTimelineSync();
   }
 
   handleDateToggle(){ svgActions.toggleDates(); }

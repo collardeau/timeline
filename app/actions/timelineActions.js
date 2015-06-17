@@ -62,21 +62,24 @@ let timelineActions = {
       });
     });
 
-    console.log('tl action (in load/sync timeline): also syncBmCount');
-    firebaseUtils.changeBmCount(tlId, count => {
-      AppDispatcher.handleAction({
-        actionType: appConstants.CHANGE_TIMELINE_BM,
-        data: {
-          count: count,
-          tlId: tlId
-        }
-      });
-    });
+    // console.log('tl action (in load/sync timeline): also syncBmCount');
+    // firebaseUtils.changeBmCount(tlId, count => {
+    //   AppDispatcher.handleAction({
+    //     actionType: appConstants.CHANGE_TIMELINE_BM,
+    //     data: {
+    //       count: count,
+    //       tlId: tlId
+    //     }
+    //   });
+    // });
 
   },
 
-  killTimelineSync(timelineId){ console.log('tl action: kill timelines sync');
-    firebaseUtils.killTimelineSync();
+  killTimeline(tlId){ console.log('tl action: kill timelines sync');
+    // firebaseUtils.killTimelineSync(tlId);
+    AppDispatcher.handleAction({
+      actionType: appConstants.KILL_TIMELINE
+    });
   },
 
 
