@@ -5,7 +5,8 @@ let appConstants = require('../constants/appConstants');
 
 let emptyStore = {
   username: '',
-  bookmarks: []
+  bookmarks: [],
+  lastNotice: ''
 };
 
 let _store = emptyStore;
@@ -18,8 +19,12 @@ let userStore = objectAssign({}, EventEmitter.prototype, {
 
   getUserData() { return _store; },
 
+  changeNotice(notice) { _store.lastNotice = notice; },
+
+  getNotice() { return _store.lastNotice; },
+
   addChangeListener(cb) { this.on(CHANGE_EVENT, cb); },
-  removeChangeListener(cb) { this.removeListner(CHANGE_EVENT, cb); }
+  removeChangeListener(cb) { this.removeListener(CHANGE_EVENT, cb); }
 
 });
 
@@ -30,12 +35,15 @@ AppDispatcher.register(function(payload){
       userStore.changeUser(action.data.userData);
       userStore.emit(CHANGE_EVENT);
       break;
+   case appConstants.NOTIFY_USER:
+      userStore.changeNotice(action.data);
+      userStore.emit(CHANGE_EVENT);
+      break;
     case appConstants.LOGOUT_USER:
       userStore.changeUser();
       userStore.emit(CHANGE_EVENT);
       break;
     default:
-
     return true;
   }
 });
