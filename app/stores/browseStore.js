@@ -26,7 +26,7 @@ let browseStore = objectAssign({}, EventEmitter.prototype, {
   getTimelines(){ return _store.timelines; },
 
   changeActive(active) { _store.active = active; },
-    // getActive() { return _store.active; },
+  getActive() { return _store.active; },
 
     // addTimeline(timeline, timelineId ){
     //   _store.timelines.push(timeline);

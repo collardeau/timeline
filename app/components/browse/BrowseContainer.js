@@ -50,7 +50,10 @@ class Browse extends React.Component {
   }
 
   changeContent(){ console.log("browse callback: changing tab content");
-    this.setState({ timelines: browseStore.getTimelines() });
+    this.setState({
+      timelines: browseStore.getTimelines(),
+      activeTab: browseStore.getActive()
+    });
     $('#timelines-loading').addClass('hidden');
   }
 
