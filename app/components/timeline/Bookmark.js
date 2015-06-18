@@ -1,36 +1,32 @@
 const React = require('react');
 
-let bmStore = require('../../stores/bmStore');
-let bmActions = require('../../actions/bmActions');
+let bookmarkTimelineStore = require('../../stores/bookmarkTimelinesStore');
+let userActions = require('../../actions/userActions');
 
 class Bookmark extends React.Component {
 
   constructor() { super();
-    this.state = { count: '-',
-      isBookmarked: false
-    };
+    this.state = { isBookmarked: false };
     this.changeContent = this.changeContent.bind(this);
   }
 
   componentDidMount(){
-    bmStore.addChangeListener(this.changeContent);
-    bmActions.changeBmCount(this.props.bId);
+    bookmarkTimelineStore.addChangeListener(this.changeContent);
+    this.changeContent();
   }
 
   componentWillUnmount(){
-    bmStore.removeChangeListener(this.changeContent);
-    bmActions.killBmCount(this.props.bId);
+    bookmarkTimelineStore.removeChangeListener(this.changeContent);
   }
 
   handleClick(){ console.log('handle bookmark click');
-    //let tlClone = JSON.parse(JSON.stringify(this.state.timeline));
-    //timelineActions.bookmarkTimeline(!this.state.isBookmarked, tlClone, this.props.params[1], this.props.userAuth.uid);
+    let tlClone = JSON.parse(JSON.stringify(this.props.timeline));
+    // timelineActions.bookmarkTimeline(!this.state.isBookmarked, tlClone, this.props.params[1], this.props.userAuth.uid);
   }
 
   render(){
     return (
       <div onClick={this.handleClick.bind(this)}>
-         { this.state.count } <span> </span>
          { this.state.isBookmarked ? <i className='fa fa-bookmark' /> : <i className='fa fa-bookmark-o' />}
        </div>
     );
@@ -38,13 +34,9 @@ class Bookmark extends React.Component {
 
   changeContent() {
     this.setState({
-      count: bmStore.getBmCount(this.props.bId)
+      isBookmarked: bookmarkTimelineStore.getBmStatus(this.props.tlId)
     });
   }
 }
-
-Bookmark.propTypes = {
-  bId: React.PropTypes.string
-};
 
 module.exports = Bookmark;

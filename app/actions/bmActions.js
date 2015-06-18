@@ -5,18 +5,6 @@ let browseStore = require('../stores/browseStore');
 
 let bmActions = {
 
-  //   changeBm(tlId){ console.log('bmAction: sync BM');
-  //     firebaseUtils.changeBmCount(tlId, count => {
-  //       AppDispatcher.handleAction({
-  //         actionType: appConstants.CHANGE_BM_COUNT,
-  //         data: {
-  //           count: count,
-  //           tlId: tlId
-  //         }
-  //       });
-  //     });
-  //   },
-
   syncBmCounts(tlIds){ console.log('sync bmCounts');
     tlIds.forEach( tlId => {
       this.changeBmCount(tlId);
@@ -48,21 +36,6 @@ let bmActions = {
       data: tlId
     });
   }
-
-  //   changeBmCounts(tlIds) {
-  //     console.log('bmaction: change bm Counts');
-  //     tlIds.forEach( tlId => {
-  //       firebaseUtils.changeBmCount(tlId, count => {
-  //         AppDispatcher.handleAction({
-  //           actionType: appConstants.CHANGE_BM_COUNT,
-  //           data: {
-  //             count: count,
-  //             tlId: tlId
-  //           }
-  //         });
-  //       });
-  //     });
-  //   }
 
 };
 

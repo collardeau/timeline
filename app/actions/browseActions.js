@@ -27,14 +27,7 @@ let browseActions = {
           data: { timelines: timelines }
         });
       });
-
-      firebaseUtils.changeBookmarks(uid, timelines => {
-        console.log('browse action cb: sync bookmarked timelines');
-        AppDispatcher.handleAction({
-          actionType: appConstants.CHANGE_BOOKMARKS,
-          data: { timelines: timelines }
-        });
-      });
+      // handling bookmarks at app level (also used in timeline view)
     }
   },
 

@@ -20,7 +20,9 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-    if (this.props.userAuth) { userActions.changeUserData(this.props.userAuth.uid);
+    if (this.props.userAuth) {
+      userActions.changeUserData(this.props.userAuth.uid);
+      userActions.changeBookmarkData(this.props.userAuth.uid);
     } else { console.log('not logged in'); }
     userStore.addChangeListener(this.changeUserContent);
   }

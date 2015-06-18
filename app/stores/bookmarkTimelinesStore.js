@@ -12,7 +12,9 @@ let bookmarkTimelinesStore = objectAssign({}, EventEmitter.prototype, {
   changeTimelines(timelines){ _store.timelines = timelines; },
   getTimelines(){ return _store.timelines; },
 
-  // addTimeline(timeline, timelineId ) { _store.timelines.push(timeline); },
+  getBmStatus(tlId){
+    return _store.timelines.some(tl => { return tlId === tl.key; });
+  },
 
   addChangeListener(cb) { this.on(CHANGE_EVENT, cb); },
   removeChangeListener(cb) { this.removeListener(CHANGE_EVENT, cb); }
@@ -22,10 +24,15 @@ let bookmarkTimelinesStore = objectAssign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(payload){
   var action = payload.action;
   switch(action.actionType){
-    case appConstants.CHANGE_BOOKMARK_TIMELINES:
+    case appConstants.CHANGE_BOOKMARKS:
       bookmarkTimelinesStore.changeTimelines(action.data.timelines);
       bookmarkTimelinesStore.emit(CHANGE_EVENT);
       break;
+    case appConstants.GET_BM_STATUS:
+      bookmarkTimelinesStore.getBMStatus(action.data.timelines);
+      bookmarkTimelinesStore.emit(CHANGE_EVENT);
+      break;
+
       //   case appConstants.ADD_TIMELINE:
       //      bookmarkTimelinesStore.addTimeline(action.data.timeline, action.data.timelineId);
       //      bookmarkTimelinesStore.emit(CHANGE_EVENT);

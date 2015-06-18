@@ -7,6 +7,7 @@ let TimelineInfo = require('./TimelineInfo');
 let Timeline = require('./Timeline');
 let TimelineAddDot = require('./TimelineAddDot');
 let TimelineEdit = require('./TimelineEdit');
+let Bookmark = require('./Bookmark');
 let timelineStore = require('../../stores/timelineStore');
 //let bmStore = require('../../stores/bmStore');
 let timelineActions = require('../../actions/timelineActions');
@@ -55,8 +56,9 @@ class TimelineContainer extends React.Component {
           <p id='timelineSpinner' className="content-padded hidden">
             Fetching Timeline... <i className="fa fa-2x fa-spinner fa-spin pull-right"></i>
           </p>
-          <TimelineInfo timeline={this.state.timeline} tlId = { timelineId } />
+          <TimelineInfo timeline={this.state.timeline} tlId={ timelineId } />
           <div className="content-padded">
+            <Bookmark tlId={timelineId} uid={this.props.userAuth && this.props.userAuth.uid } />
             { dateToggle }
           </div>
           <Timeline dots={ this.state.timeline.dots } />

@@ -6,7 +6,6 @@ let bmActions = require('../actions/bmActions.js');
 let timelineActions = {
 
   loadTimeline(tlId, owner){ console.log('tl action: sync timeline data');
-
     firebaseUtils.loadTimeline(tlId, owner, timeline => {
       AppDispatcher.handleAction({
         actionType: appConstants.LOAD_TIMELINE,
@@ -15,7 +14,6 @@ let timelineActions = {
         }
       });
     });
-
   },
 
   killTlSync(tlId, tlOwner){
@@ -31,7 +29,6 @@ let timelineActions = {
       data: toBookmark
     });
     firebaseUtils.bookmarkTimeline(toBookmark, timeline, timelineId, user);
-
   },
 
   deleteTimeline(timelineId, timelineOwner){
@@ -48,7 +45,7 @@ let timelineActions = {
     firebaseUtils.editTimeline(timeline, timelineId);
   },
 
-  addDot(dot, timelineId, timelineOwner){
+  addDot(dot, timelineId, timelineOwner){  // edit itmeline?
     AppDispatcher.handleAction({
       actionType: appConstants.ADD_DOT
     });

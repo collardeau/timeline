@@ -5,7 +5,6 @@ let appConstants = require('../constants/appConstants');
 
 let emptyStore = {
   username: '',
-  bookmarks: [],
   lastNotice: ''
 };
 
@@ -43,7 +42,7 @@ AppDispatcher.register(function(payload){
       userStore.changeUser();
       userStore.emit(CHANGE_EVENT);
       break;
-    default:
+   default:
     return true;
   }
 });

@@ -6,14 +6,22 @@ let firebaseUtils = require('../utils/firebaseUtils');
 let userActions = {
 
   changeUserData(uid){ console.log('user action: change user');
-
     firebaseUtils.getUserData(uid, userData => {
       AppDispatcher.handleAction({
         actionType: appConstants.CHANGE_USER,
         data: { userData: userData }
       });
     });
+  },
 
+  changeBookmarkData(uid) {
+    firebaseUtils.changeBookmarks(uid, timelines => {
+      console.log('browse action cb: sync bookmarked timelines');
+      AppDispatcher.handleAction({
+        actionType: appConstants.CHANGE_BOOKMARKS,
+        data: { timelines: timelines }
+      });
+    });
   },
 
   createUser(user, uiError, ui) {
@@ -46,9 +54,6 @@ let userActions = {
       data: notice
     });
   }
-
-
-
 };
 
 module.exports = userActions;
