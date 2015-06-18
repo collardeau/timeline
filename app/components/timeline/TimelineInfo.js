@@ -20,7 +20,7 @@ class TimelineInfo extends React.Component {
             <br />Timeline curated by <b>{ this.props.timeline.ownerName}</b>.
           </p>
         </div>
-        <Bookmark />
+        <Bookmark bId={this.props.tlId}/>
          { emptyInfo }
       </div>
     );

@@ -55,7 +55,7 @@ class TimelineContainer extends React.Component {
           <p id='timelineSpinner' className="content-padded hidden">
             Fetching Timeline... <i className="fa fa-2x fa-spinner fa-spin pull-right"></i>
           </p>
-          <TimelineInfo timeline={this.state.timeline} />
+          <TimelineInfo timeline={this.state.timeline} tlId = { timelineId } />
           <div className="content-padded">
             { dateToggle }
           </div>
