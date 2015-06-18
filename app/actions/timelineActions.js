@@ -3,53 +3,7 @@ let appConstants = require('../constants/appConstants');
 let firebaseUtils = require('../utils/firebaseUtils');
 let bmActions = require('../actions/bmActions.js');
 
-//todo separate svgActions
-
 let timelineActions = {
-
-  syncPublicTimelines(){ console.log('tl action: sync public timlines');
-    firebaseUtils.changePublicTimelines(timelines => {
-      AppDispatcher.handleAction({
-        actionType: appConstants.CHANGE_PUBLIC_TIMELINES,
-        data: {
-          timelines: timelines
-        }
-      });
-    });
-  },
-
-  initUserTimelineData(uid){
-
-    console.log('tl action: initUserData');
-
-    firebaseUtils.changeBookmarks(uid, bTimelines => { console.log('tl action cb: sync bookmarked timelines');
-      AppDispatcher.handleAction({
-        actionType: appConstants.CHANGE_BOOKMARKS,
-        data: { timelines: bTimelines }
-      });
-    });
-
-    firebaseUtils.changeTimelines(uid, timelines => { console.log('tl action cb: sync private timelines');
-      AppDispatcher.handleAction({
-        actionType: appConstants.CHANGE_TIMELINES,
-        data: { timelines: timelines }
-      });
-
-    });
-
-  },
-
-  addTimeline(timeline){
-    firebaseUtils.addTimeline(timeline, timelineId => {
-      AppDispatcher.handleAction({
-        actionType: appConstants.ADD_TIMELINE,
-        data: {
-          timeline: timeline,
-          timelineId: timelineId
-        }
-      });
-    });
-  },
 
   loadTimeline(tlId, owner){ console.log('tl action: sync timeline data');
 

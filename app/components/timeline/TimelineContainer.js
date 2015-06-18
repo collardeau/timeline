@@ -8,7 +8,7 @@ let Timeline = require('./Timeline');
 let TimelineAddDot = require('./TimelineAddDot');
 let TimelineEdit = require('./TimelineEdit');
 let timelineStore = require('../../stores/timelineStore');
-let bmStore = require('../../stores/bmStore');
+//let bmStore = require('../../stores/bmStore');
 let timelineActions = require('../../actions/timelineActions');
 let svgActions = require('../../actions/svgActions');
 
@@ -19,15 +19,14 @@ class TimelineContainer extends React.Component {
     this.changeContent = this.changeContent.bind(this);
   }
 
-  componentDidMount() {
-    console.log("timeline container did mount");
+  componentDidMount() { console.log("timeline container did mount");
     $('#timelineSpinner').removeClass('hidden');
     timelineStore.addChangeListener(this.changeContent);
     timelineActions.loadTimeline(this.props.params[1], this.props.params[0]);  // sync
   }
 
   componentWillUnmount() { console.log("tl container: unmount");
-    timelineActions.killTimeline(this.props.params[1]);
+    // timelineActions.killTimeline(this.props.params[1]);
     timelineStore.removeChangeListener(this.changeContent);
   }
 
@@ -44,7 +43,7 @@ class TimelineContainer extends React.Component {
     if (numDots) {    // there are items in the timeline
       dateToggle = (
         <button className="btn" onClick = { this.handleDateToggle.bind(this) }>
-          <i className="fa fa-calendar-o"></i>
+          <i className="fa fa-calendar-o"></i> Toggle Dates
         </button>
       );
     }

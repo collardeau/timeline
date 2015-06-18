@@ -96,7 +96,7 @@ var firebaseUtils = {
 
    },
 
-   killTimelineSync(){ console.log('KILLING firebase timeline sync'); // ... but not bookmark?
+   killTimelineSync: function(){ console.log('KILLING firebase timeline sync'); // ... but not bookmark?
      //userRef.off('value');  // ref.child('bmCount.off('value');
      //ref.child('bmCount').off('value');
      // ref.off('value');
@@ -106,6 +106,12 @@ var firebaseUtils = {
       ref.child('bmCount').child(tlId)
       .on("value", snapshot => { cb(snapshot.val()); },
         errorObject => { console.log('The read failed: ' + errorObject.code); });
+    },
+
+    killBmSync: function() {
+      console.log('fbUtils: killBmCounts.... now!');
+      ref.off();
+      ref.child('bmCount').child('-JrdC_gXXwKUTcffcVPX').off();
     },
 
    bookmarkTimeline(bookmark, tl, tlId, user){

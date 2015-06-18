@@ -28,7 +28,10 @@ class Browse extends React.Component {
     bmActions.syncBmCounts(this.state.timelines.map((t) => { return t.key; } ));
   }
 
-  componentWillUnmount(){ browseStore.removeChangeListener(this.changeContent); }
+  componentWillUnmount(){
+    browseStore.removeChangeListener(this.changeContent);
+    bmActions.killBmCounts();
+  }
 
   render() {
 

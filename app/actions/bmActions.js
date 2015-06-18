@@ -30,6 +30,10 @@ let bmActions = {
         });
       });
     });
+  },
+
+  killBmCounts(){ console.log('bm action: killMbCounts');
+    firebaseUtils.killBmSync();
   }
 
   //   changeBmCounts(tlIds) {

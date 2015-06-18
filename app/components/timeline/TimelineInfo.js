@@ -37,7 +37,7 @@ class TimelineInfo extends React.Component {
         </div>
         <div onClick={this.handleBookmark.bind(this)} className='pull-right timelineBookmark'>
           { this.props.bmCount } <span> </span>
-          { this.props.isBookmarked ? <i className='fa fa-2x fa-bookmark' /> : <i className='fa fa-2x fa-bookmark-o' />}
+          { this.props.isBookmarked ? <i className='fa fa-bookmark' /> : <i className='fa fa-bookmark-o' />}
         </div>
           { emptyInfo }
       </div>
