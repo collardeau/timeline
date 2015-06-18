@@ -19,6 +19,8 @@ let bmStore = objectAssign({}, EventEmitter.prototype, {
 
   getAll(){ return Object.keys(_store); },
 
+  killBmCount(tlId) { delete _store[tlId]; },
+
   addChangeListener(cb) { this.on(CHANGE_EVENT, cb); },
   removeChangeListener(cb) { this.removeListener(CHANGE_EVENT, cb); }
 
@@ -29,6 +31,10 @@ AppDispatcher.register(function(payload){
   switch(action.actionType){
     case appConstants.CHANGE_BM_COUNT:
       bmStore.changeBmCount(action.data.count, action.data.tlId);
+      bmStore.emit(CHANGE_EVENT);
+      break;
+    case appConstants.KILL_BM_SYNC:
+      bmStore.killBmCount(action.data);
       bmStore.emit(CHANGE_EVENT);
       break;
     default:

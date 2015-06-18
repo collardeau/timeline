@@ -41,8 +41,12 @@ let bmActions = {
     });
   },
 
-  killBmCount(tlId){ 
+  killBmCount(tlId){
     firebaseUtils.killBmSync(tlId);
+    AppDispatcher.handleAction({
+      actionType: appConstants.KILL_BM_SYNC,
+      data: tlId
+    });
   }
 
   //   changeBmCounts(tlIds) {

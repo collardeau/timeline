@@ -74,15 +74,11 @@ AppDispatcher.register(function(payload){
         timelineStore.loadTimeline(action.data.timeline);
         timelineStore.emit(CHANGE_EVENT);
         break;
-      case appConstants.KILL_TIMELINE:
+      case appConstants.KILL_TL_SYNC:
         timelineStore.emptyTimeline();
         timelineStore.emit(CHANGE_EVENT);
         break;
-      case appConstants.CHANGE_TIMELINE_BM:
-        timelineStore.changeTimelineBm(action.data.count);
-        timelineStore.emit(CHANGE_EVENT);
-        break;
-      case appConstants.TOGGLE_TIMELINE_BOOKMARK:
+     case appConstants.TOGGLE_TIMELINE_BOOKMARK:
         timelineStore.changeBookmark(action.data);
         timelineStore.emit(CHANGE_EVENT);
         break;

@@ -102,12 +102,6 @@ var firebaseUtils = {
      userRef.child(tlOwner).child(timelines).child(tlId).off();
    },
 
-   killTimelineSync: function(){ console.log('KILLING firebase timeline sync'); // ... but not bookmark?
-     //userRef.off('value');  // ref.child('bmCount.off('value');
-     //ref.child('bmCount').off('value');
-     // ref.off('value');
-   },
-
     changeBmCount: function(tlId, cb) {
       bmRef.child(tlId)
       .on("value", snapshot => { cb(snapshot.val()); },

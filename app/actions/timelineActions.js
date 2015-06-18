@@ -20,15 +20,10 @@ let timelineActions = {
 
   killTlSync(tlId, tlOwner){
     firebaseUtils.killTlSync(tlId, tlOwner);
-  },
-
-  killTimeline(tlId){ console.log('tl action: kill timelines sync');
-    // firebaseUtils.killTimelineSync(tlId);
     AppDispatcher.handleAction({
-      actionType: appConstants.KILL_TIMELINE
+      actionType: appConstants.KILL_TL_SYNC
     });
   },
-
 
   bookmarkTimeline(toBookmark, timeline, timelineId, user) {
     AppDispatcher.handleAction({
