@@ -1,15 +1,26 @@
 const React = require('react');
 
-let timelineStore = require('../../stores/timelineStore');
-let timelineActions = require('../../actions/timelineActions');
-// let bmStore = require('../../stores/bmStore');
-// let bmActions = require('../../actions/bmActions');
+let bmStore = require('../../stores/bmStore');
+let bmActions = require('../../actions/bmActions');
 
-class TimelineInfo extends React.Component {
+class Bookmark extends React.Component {
 
   constructor() { super();
-    this.state = { isBookmarked: false, bmCount: 0 };
+    this.state = {
+      isBookmarked: false,
+      count: 0
+    };
     this.changeContent = this.changeContent.bind(this);
+  }
+
+  componentDidMount(){
+    bmStore.addChangeListener(this.changeContent);
+    bmActions.changeBmCount(this.props.id);
+  }
+
+  componentWillUnmount(){
+    bmStore.removeChangeListener(this.changeContent);
+    bmActions.killBmCount(this.props.id);
   }
 
   handleClick(){ console.log('handle bookmark click');
@@ -20,7 +31,7 @@ class TimelineInfo extends React.Component {
   render(){
     return (
       <div onClick={this.handleClick.bind(this)}>
-         { this.state.bmCount } <span> </span>
+         { this.state.count } <span> </span>
          { this.state.isBookmarked ? <i className='fa fa-bookmark' /> : <i className='fa fa-bookmark-o' />}
        </div>
     );
@@ -28,9 +39,15 @@ class TimelineInfo extends React.Component {
   }
 
   changeContent() {
-    this.setState({ isBookmarked: timelineStore.isBookmarked() });
+    this.setState({
+      count: bmStore.getBmCount(this.props.id),
+      isBookmarked: false
+    });
   }
-
 }
 
-module.exports = TimelineInfo;
+Bookmark.defaultProps = {
+  id: '-JrdLmlApUrFxbYrblp-'
+};
+
+module.exports = Bookmark;

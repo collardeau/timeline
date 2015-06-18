@@ -5,8 +5,9 @@ let appConstants = require('../constants/appConstants');
 
 let browseStore = require('../stores/browseStore');
 
-
-let _store = {};
+let _store = {
+  test: 777
+};
 
 const CHANGE_EVENT = 'change';
 
@@ -15,6 +16,8 @@ let bmStore = objectAssign({}, EventEmitter.prototype, {
   changeBmCount(count, tlId){ _store[tlId] = count; },
 
   getBmCount(tlId){ return _store[tlId] || 0; },
+
+  getAll(){ return Object.keys(_store); },
 
   addChangeListener(cb) { this.on(CHANGE_EVENT, cb); },
   removeChangeListener(cb) { this.removeListener(CHANGE_EVENT, cb); }

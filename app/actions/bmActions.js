@@ -17,23 +17,32 @@ let bmActions = {
   //     });
   //   },
 
-  syncBmCounts(tlIds){
-    console.log('sync bmCounts');
+  syncBmCounts(tlIds){ console.log('sync bmCounts');
     tlIds.forEach( tlId => {
-      firebaseUtils.changeBmCount(tlId, count => {
-        AppDispatcher.handleAction({
-          actionType: appConstants.CHANGE_BM_COUNT,
-          data: {
-            count: count || 0,
-            tlId: tlId
-          }
-        });
+      this.changeBmCount(tlId);
+    });
+  },
+
+  changeBmCount(tlId){ console.log('bm action: changeBmCount');
+    firebaseUtils.changeBmCount(tlId, count => {
+      AppDispatcher.handleAction({
+        actionType: appConstants.CHANGE_BM_COUNT,
+        data: {
+          count: count || 0,
+          tlId: tlId
+        }
       });
     });
   },
 
-  killBmCounts(){ console.log('bm action: killMbCounts');
-    firebaseUtils.killBmSync();
+  killBmCounts(tlIds){ console.log('bm action: killMbCounts');
+    tlIds.forEach( tlId => {
+      this.killBmCount(tlId);
+    });
+  },
+
+  killBmCount(tlId){ 
+    firebaseUtils.killBmSync(tlId);
   }
 
   //   changeBmCounts(tlIds) {

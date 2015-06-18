@@ -16,17 +16,10 @@ let timelineActions = {
       });
     });
 
-    // console.log('tl action (in load/sync timeline): also syncBmCount');
-    // firebaseUtils.changeBmCount(tlId, count => {
-    //   AppDispatcher.handleAction({
-    //     actionType: appConstants.CHANGE_TIMELINE_BM,
-    //     data: {
-    //       count: count,
-    //       tlId: tlId
-    //     }
-    //   });
-    // });
+  },
 
+  killTlSync(tlId, tlOwner){
+    firebaseUtils.killTlSync(tlId, tlOwner);
   },
 
   killTimeline(tlId){ console.log('tl action: kill timelines sync');

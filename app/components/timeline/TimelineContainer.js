@@ -26,8 +26,8 @@ class TimelineContainer extends React.Component {
   }
 
   componentWillUnmount() { console.log("tl container: unmount");
-    // timelineActions.killTimeline(this.props.params[1]);
     timelineStore.removeChangeListener(this.changeContent);
+    timelineActions.killTlSync(this.props.params[1], this.state.timeline.owner);
   }
 
   handleDateToggle(){ svgActions.toggleDates(); }

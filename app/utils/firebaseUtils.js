@@ -4,6 +4,7 @@ var mockup = require('./mockup.json');
 
 var ref = new Firebase(appConstants.FIREBASE_HOST);
 var userRef = ref.child('user');
+var bmRef = ref.child('bmCount');
 let publicTimelines = 'timeline-public-index';
 let timelines = 'timeline';
 let timelineIndex = 'timeline-index';
@@ -96,6 +97,11 @@ var firebaseUtils = {
 
    },
 
+   killTlSync: function(tlId, tlOwner){
+     console.log(tlId, tlOwner);
+     userRef.child(tlOwner).child(timelines).child(tlId).off();
+   },
+
    killTimelineSync: function(){ console.log('KILLING firebase timeline sync'); // ... but not bookmark?
      //userRef.off('value');  // ref.child('bmCount.off('value');
      //ref.child('bmCount').off('value');
@@ -103,15 +109,13 @@ var firebaseUtils = {
    },
 
     changeBmCount: function(tlId, cb) {
-      ref.child('bmCount').child(tlId)
+      bmRef.child(tlId)
       .on("value", snapshot => { cb(snapshot.val()); },
         errorObject => { console.log('The read failed: ' + errorObject.code); });
     },
 
-    killBmSync: function() {
-      console.log('fbUtils: killBmCounts.... now!');
-      ref.off();
-      ref.child('bmCount').child('-JrdC_gXXwKUTcffcVPX').off();
+    killBmSync: function(tlId) { console.log('fbUtils: killBmSync');
+      bmRef.child(tlId).off();
     },
 
    bookmarkTimeline(bookmark, tl, tlId, user){

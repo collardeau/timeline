@@ -9,6 +9,7 @@ let AddTimeline = require('./AddTimeline');
 let browseActions = require('../../actions/browseActions');
 let bmActions = require('../../actions/bmActions');
 let browseStore = require('../../stores/browseStore');
+let bmStore = require('../../stores/bmStore');
 
 class Browse extends React.Component {
 
@@ -30,7 +31,7 @@ class Browse extends React.Component {
 
   componentWillUnmount(){
     browseStore.removeChangeListener(this.changeContent);
-    bmActions.killBmCounts();
+    bmActions.killBmCounts(bmStore.getAll());
   }
 
   render() {
