@@ -1,7 +1,6 @@
 let AppDispatcher = require('../dispatcher/AppDispatcher');
 let appConstants = require('../constants/appConstants');
 let firebaseUtils = require('../utils/firebaseUtils');
-let bmActions = require('../actions/bmActions.js');
 
 let timelineActions = {
 
@@ -21,6 +20,14 @@ let timelineActions = {
     AppDispatcher.handleAction({
       actionType: appConstants.KILL_TL_SYNC
     });
+  },
+
+  addTimeline(timeline, ui){
+    // AppDispatcher.handleAction({
+    //   actionType: appConstants.ADD_TIMELINE,
+    //   data: { timeline: timeline }
+    // });
+    firebaseUtils.addTimeline(timeline, ui);
   },
 
   bookmarkTimeline(toBookmark, timeline, timelineId, user) {

@@ -23,8 +23,6 @@ class TimelineControls extends React.Component {
     return (
       <div>
         <div className="segmented-control">
-          <a className="control-item">Copy link</a>
-          <a className="control-item">Bookmark</a>
           { edit }
           { addDot }
        </div>

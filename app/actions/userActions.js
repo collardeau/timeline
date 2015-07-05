@@ -26,14 +26,14 @@ let userActions = {
 
   createUser(user, uiError, ui) {
     authUtils.createUser(user).then(auth => {
-      this.initUserData(auth.uid);
+      this.changeUserData(auth.uid);
       ui();
     }, uiError);
   },
 
   loginUser(user, uiError, ui){
     authUtils.login(user).then(auth => {
-      this.initUserData(auth.uid);
+      this.changeUserData(auth.uid);
       ui();
     }, uiError );
   },

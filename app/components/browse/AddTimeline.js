@@ -39,17 +39,20 @@ class AddTimeline extends React.Component {
       && firstDot.name && firstDot.timestamp
       && secondDot.name && secondDot.timestamp ) {
 
-    let timeline = {
-      name: name,
-      description: desc,
-      isPublic: this.refs.privacy.getDOMNode().checked,
-      owner: this.props.userAuth.uid,
-      ownerName: this.props.userData.username,
-      dots: [firstDot, secondDot]
-    };
+      let timeline = {
+        name: name,
+        description: desc,
+        isPublic: this.refs.privacy.getDOMNode().checked,
+        owner: this.props.userAuth.uid,
+        ownerName: this.props.userData.username,
+        dots: [firstDot, secondDot]
+      };
 
-    timelineActions.addTimeline(timeline);
-    // this.closeModal();
+      timelineActions.addTimeline(timeline, tlId => {
+        hasher.setHash('u/' + this.props.userData.username + "/" + tlId);
+
+      });
+      //this.closeModal();
 
     }else {
       if(!name){

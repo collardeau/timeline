@@ -35,8 +35,9 @@ class TimelineContainer extends React.Component {
 
   render(){
 
-    // let isOwner = false;
-    // if ( this.props.userAuth && this.props.userAuth.uid === this.state.timeline.owner) { isOwner = true; }
+    let isOwner = false;
+    if ( this.props.userAuth && this.props.userAuth.uid === this.state.timeline.owner) { isOwner = true; }
+
     let dateToggle;
     let numDots = this.state.timeline.dots.length;
     let timelineId = this.props.params[1];
@@ -48,17 +49,18 @@ class TimelineContainer extends React.Component {
         </button>
       );
     }
+    // <Bookmark tlId={timelineId} uid={this.props.userAuth && this.props.userAuth.uid } />
 
     return (
       <div>
         <TimelineHeader />
         <div className="content">
+          <TimelineControls owner={isOwner} />
           <p id='timelineSpinner' className="content-padded hidden">
             Fetching Timeline... <i className="fa fa-2x fa-spinner fa-spin pull-right"></i>
           </p>
           <TimelineInfo timeline={this.state.timeline} tlId={ timelineId } />
           <div className="content-padded">
-            <Bookmark tlId={timelineId} uid={this.props.userAuth && this.props.userAuth.uid } />
             { dateToggle }
           </div>
           <Timeline dots={ this.state.timeline.dots } />

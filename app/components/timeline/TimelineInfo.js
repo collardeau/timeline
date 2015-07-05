@@ -34,7 +34,6 @@ class TimelineInfo extends React.Component {
       <div className="content-padded timelineInfo">
         <div className='timelineDetails'>
           <h3>{this.props.timeline.name}</h3>
-          <h5>{this.state.bmCount} bookmarks</h5>
           <p>{this.props.timeline.description}.
             <br />Timeline curated by <b>{ this.props.timeline.ownerName}</b>.
           </p>
