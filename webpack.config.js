@@ -23,7 +23,7 @@ var config = {
     },
     module: {
         loaders: [
-            { test: /\.(js|jsx)$/, loaders: ['jsx', 'babel'], exclude: /node_modules/},
+            { test: /\.(js|jsx)$/, loaders: ['babel'], exclude: /node_modules/},
             { test: /\.scss$/, loaders: [ExtractTextPlugin.extract("css"), 'css', 'sass?' + sassNeatPaths] },
             { test: /\.css$/, loader: ExtractTextPlugin.extract("css") }
         ]
