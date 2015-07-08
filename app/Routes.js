@@ -10,13 +10,15 @@ export default class Routes extends React.Component {
 
   render() {
 
+    let { userData } = this.props.appState;
+
     switch(this.props.route) {
 
         case "browse":
           return (
             <BrowseContainer
               userAuth={ this.props.userAuth }
-              userData = { this.props.userData }
+              userData = { userData }
             />
           );
 
@@ -25,7 +27,7 @@ export default class Routes extends React.Component {
             <TimelineContainer
               params = { this.props.params }
               userAuth = { this.props.userAuth }
-              userData = { this.props.userData }
+              userData = { userData }
             />
           );
 
@@ -44,7 +46,7 @@ export default class Routes extends React.Component {
           return (
             <BrowseContainer
               userAuth={ this.props.userAuth }
-              userData = { this.props.userData }
+              userData = { userData }
             />
         );
     }
