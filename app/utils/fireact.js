@@ -1,11 +1,19 @@
-console.log("wow, look at me, FIREACT");
 let firebase = require('firebase');
 
-module.exports = {
+let ref = new Firebase('https://time-line.firebaseio.com/');
 
- subscribe(path, ui) {
-   ui({
-     username: 'grosminet'
-   });
- }
+let buildPath = (path) => {
+  return path.reduce((prev, next) => {
+    return prev.child(next); 
+  }, ref)
+}
+
+module.exports = {
+  
+  subscribe(path, cb){
+    buildPath(path).on("value", 
+      snapshot => cb(snapshot.val()), 
+      errorObject => console.log("The read failed: " + errorObject.code));
+  }
+
 };

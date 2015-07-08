@@ -5,7 +5,7 @@ const React = require('react');
 const Router = require('react-lil-router');
 const Routes = require('./Routes');
 
-let fireact = require('./utils/fireact');
+let appActions = require('./actions/appActions');
 
 class App extends React.Component {
 
@@ -16,15 +16,17 @@ class App extends React.Component {
         username: "anonymous", 
         bookmarks: []
       },
-      auth: null
+      auth: {
+        name: "tonton"
+      } 
     };
   }
 
   componentDidMount(){
-    fireact.subscribe('user', user => {
-      this.setState({user});
+    appActions.syncUser({
+      q: 'tonton',
+      ui: user => this.setState({user})
     });
-    
   }
 
   render() {
