@@ -36,28 +36,32 @@ class Browse extends React.Component {
 
   render() {
 
+    let { username, auth } = this.props;
+
     let controls = (
       <BrowseControls active={ this.state.activeTab } userData={ this.props.userData } />
     );
 
     return (
       <div>
-        <BrowseHeader isLoggedIn={ Boolean(this.props.userAuth) }/>
+        <BrowseHeader isLoggedIn={ Boolean(auth) }/>
         <div className="content">
-          { this.props.userData.username}
+
+          { this.props.username }
 
           { this.props.userAuth ? controls : '' }
 
           <BrowseNotice activeTab={this.state.activeTab} listLength={this.state.timelines.length}
-            username = { this.props.userData.username } />
+            username = { username } />
 
           <BrowseTable active={this.state.activeTab} timelines={this.state.timelines}/>
 
         </div>
-        <AddTimeline userAuth={this.props.userAuth} userData={this.props.userData}/>
       </div>
     );
   }
+
+  //<AddTimeline userAuth={auth} userData={username}/>
 
   changeContent(){ console.log("browse callback: changing tab content");
     this.setState({

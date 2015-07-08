@@ -1,58 +1,31 @@
-const React = require('react');
-
-let Login = require('./components/login/Login');
-let TimelineContainer = require('./components/timeline/TimelineContainer');
-let BrowseContainer = require('./components/browse/BrowseContainer');
-let Account = require('./components/Account.js');
-let About = require('./components/About.js');
+import React from 'react';
 
 export default class Routes extends React.Component {
 
   render() {
 
-    let { userData } = this.props.appState;
+    let { user, auth } = this.props.appState;
 
-    switch(this.props.route) {
-
-        case "browse":
-          return (
-            <BrowseContainer
-              userAuth={ this.props.userAuth }
-              userData = { userData }
-            />
-          );
-
-       case "u":
-           return (
-            <TimelineContainer
-              params = { this.props.params }
-              userAuth = { this.props.userAuth }
-              userData = { userData }
-            />
-          );
-
-        case "account":
-          return (
-            <Account userAuth= { this.props.userAuth } />
-          );
-
-        case "login":
-          return <Login />;
-
-        case "about":
-          return <About />;
-
-        default:
-          return (
-            <BrowseContainer
-              userAuth={ this.props.userAuth }
-              userData = { userData }
-            />
-        );
-    }
+    return (
+      <div>
+        <h1>Deal</h1>
+        { user.username}
+      </div>
+    )
 
   }
 
+}
+
+Routes.defaultProps = {
+  // to be passed in by Router
+  route: "home",
+  params: []
+}
+
+Routes.propTypes = {
+  route: React.PropTypes.string.isRequired,
+  params: React.PropTypes.array.isRequired
 }
 
 
