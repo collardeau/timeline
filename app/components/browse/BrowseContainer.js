@@ -44,6 +44,7 @@ class Browse extends React.Component {
       <div>
         <BrowseHeader isLoggedIn={ Boolean(this.props.userAuth) }/>
         <div className="content">
+          { this.props.userData.username}
 
           { this.props.userAuth ? controls : '' }
 

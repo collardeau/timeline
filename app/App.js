@@ -3,20 +3,18 @@ require('./styles/main.scss');
 
 const React = require('react');
 const Router = require('react-lil-router');
-
-let Login = require('./components/login/Login');
-let TimelineContainer = require('./components/timeline/TimelineContainer');
-let BrowseContainer = require('./components/browse/BrowseContainer');
-let Account = require('./components/Account.js');
-let About = require('./components/About.js');
+const Routes = require('./Routes');
 
 let userActions = require('./actions/userActions');
 let userStore = require('./stores/userStore');
 
 class App extends React.Component {
+
   constructor(){
     super();
-    this.state = { userData: { username: "", bookmarks: [] } };
+    this.state = { 
+      userData: { username: "Billy", bookmarks: [] } 
+    };
     this.changeUserContent = this.changeUserContent.bind(this);
   }
 
@@ -31,45 +29,11 @@ class App extends React.Component {
   componentWillUnmount(){ userStore.removeChangeListener(this.changeUserContent); }
 
   render() {
-
-      switch(this.props.route) {
-
-          case "browse":
-            return (
-              <BrowseContainer
-                userAuth={ this.props.userAuth }
-                userData = { this.state.userData }
-              />
-            );
-
-         case "u":
-             return (
-              <TimelineContainer
-                params = { this.props.params }
-                userAuth = { this.props.userAuth }
-                userData = { this.state.userData }
-              />
-            );
-
-          case "account":
-            return (
-              <Account userAuth= { this.props.userAuth } />
-            );
-
-          case "login":
-            return <Login />;
-
-          case "about":
-            return <About />;
-
-          default:
-            return (
-              <BrowseContainer
-                userAuth={ this.props.userAuth }
-                userData = { this.state.userData }
-              />
-          );
-      }
+    return (
+      <Router>
+        <Routes userData={this.state.userData}/>
+      </Router>
+    );
 
   }
 
@@ -82,7 +46,5 @@ class App extends React.Component {
 
 }
 
-React.render(
-  <Router><App /></Router>, document.getElementById('app')
-);
+React.render(<App />, document.getElementById('app'));
 
