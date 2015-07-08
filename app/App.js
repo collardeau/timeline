@@ -16,9 +16,7 @@ class App extends React.Component {
         username: "anonymous", 
         bookmarks: []
       },
-      auth: {
-        name: "tonton"
-      } 
+      auth: null
     };
   }
 

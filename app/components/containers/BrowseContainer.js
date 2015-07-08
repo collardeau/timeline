@@ -1,6 +1,8 @@
 import React from 'react';
 import appActions from '../../actions/appActions.js';
 
+import BrowseTable from '../browse/BrowseTable';
+
 export default class Container extends React.Component {
 
   constructor(props){
@@ -15,10 +17,10 @@ export default class Container extends React.Component {
   }
 
   render(){
-    console.log(this.state.timelines);
     return (
       <div>
         <h1>Container</h1>
+        <BrowseTable timelines={this.state.timelines}/>
       </div>
     );
   }

@@ -1,5 +1,6 @@
 import React from 'react';
-import Container from './components/containers/Container';
+import BrowseContainer from './components/containers/BrowseContainer';
+import Heading from './components/Heading';
 
 export default class Routes extends React.Component {
 
@@ -9,9 +10,8 @@ export default class Routes extends React.Component {
 
     return (
       <div>
-        <h1>App</h1>
-        { user.username}
-        <Container userState={user.username }/>
+        <Heading>Browse</Heading>
+        <BrowseContainer />
       </div>
     )
 
