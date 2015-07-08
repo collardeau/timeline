@@ -23,10 +23,7 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-    appActions.syncUser({
-      q: 'tonton',
-      ui: user => this.setState({user})
-    });
+    appActions.syncUser('tonton', user => this.setState({user}));
   }
 
   render() {

@@ -1,4 +1,5 @@
 import React from 'react';
+import Container from './components/containers/Container';
 
 export default class Routes extends React.Component {
 
@@ -8,8 +9,9 @@ export default class Routes extends React.Component {
 
     return (
       <div>
-        <h1>Deal</h1>
+        <h1>App</h1>
         { user.username}
+        <Container userState={user.username }/>
       </div>
     )
 
