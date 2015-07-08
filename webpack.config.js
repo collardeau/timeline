@@ -10,7 +10,7 @@ var config = {
 
     entry: {
         app: [
-            './app/Router.js'
+            './app/App.js'
         ],
         vendor: [
             'react',

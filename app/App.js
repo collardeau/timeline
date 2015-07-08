@@ -2,6 +2,7 @@ require('normalize.css/normalize.css');
 require('./styles/main.scss');
 
 const React = require('react');
+const Router = require('react-lil-router');
 
 let Login = require('./components/login/Login');
 let TimelineContainer = require('./components/timeline/TimelineContainer');
@@ -79,7 +80,9 @@ class App extends React.Component {
    });
   }
 
-
 }
 
-module.exports = App;
+React.render(
+  <Router><App /></Router>, document.getElementById('app')
+);
+

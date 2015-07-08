@@ -38,7 +38,8 @@
     "jquery": "^2.1.4",
     "moment": "^2.10.2",
     "normalize.css": "^3.0.3",
-    "react": "^0.13.2"
+    "react": "^0.13.2",
+    "react-lil-router": "^0.1.0"
   },
   "scripts": {
     "dev": "webpack-dev-server --config webpack.config.dev.js --inline --progress --colors --content-base public --history-api-fallback",
