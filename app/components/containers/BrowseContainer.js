@@ -6,11 +6,12 @@ import BrowseTable from '../browse/BrowseTable';
 export default class Container extends React.Component {
 
   componentDidMount(){
-    appActions.syncTimelines((timelines => this.props.changeState({timelines})));
+    appActions.syncTimelines(timelines => {
+      this.props.changeState({timelines});
+    });
   }
 
-  handleCutSync(){
-    console.log('killing sync');
+  componentWillUnmount(){
     appActions.cutSync('public');
   }
 
@@ -18,7 +19,6 @@ export default class Container extends React.Component {
     let { timelines } = this.props;
     return (
       <div className='content'>
-        <button onClick={this.handleCutSync}>Kill Sync</button>
         <BrowseTable changeState={this.props.changeState} timelines={timelines}/>
       </div>
     );
