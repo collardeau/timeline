@@ -14,6 +14,7 @@ export default class Container extends React.Component {
 
   componentDidMount(){
     appActions.syncTimelines((timelines => this.setState({timelines})));
+
   }
 
   render(){
