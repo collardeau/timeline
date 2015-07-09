@@ -2,8 +2,7 @@ require('normalize.css/normalize.css');
 require('./styles/main.scss');
 
 const React = require('react');
-const Router = require('react-lil-router');
-const Routes = require('./Routes');
+const Router = require('./Router');
 
 let appActions = require('./actions/appActions');
 
@@ -13,6 +12,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       app: this,
+      route: '',
+      routeParams: [],
       user: {
         username: "anonymous",
         bookmarks: []
@@ -27,15 +28,12 @@ class App extends React.Component {
   }
 
   changeState(data){
-    // record history?
     this.state.app.setState(data);
   }
 
   render() {
     return (
-      <Router>
-        <Routes appState={this.state} changeState={this.changeState.bind(this)}/>
-      </Router>
+      <Router appState={this.state} changeState={this.changeState.bind(this)}/>
     );
   }
 

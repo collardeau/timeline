@@ -5,18 +5,16 @@ import Heading from './components/Heading';
 export default class Routes extends React.Component {
 
   change(){
-    console.log('click');
-    console.log(this.props);
     this.props.changeState({
       user: {
-        username: "You stupid fuck!"
+        username: "change from view below"
       }
     });
   }
 
   render() {
 
-    let { user, auth } = this.props.appState;
+    let { user, auth, route, routeParams } = this.props.appState;
 
     return (
       <div>
@@ -30,15 +28,4 @@ export default class Routes extends React.Component {
   }
 
 }
-
-Routes.defaultProps = {
-  // to be passed in by Router
-  route: "home",
-  params: []
-};
-
-Routes.propTypes = {
-  params: React.PropTypes.array.isRequired,
-  route: React.PropTypes.string.isRequired
-};
 
