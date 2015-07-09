@@ -19,7 +19,12 @@ class App extends React.Component {
         bookmarks: []
       },
       auth: null,
-      timelines: []
+      timelines: [],
+      timeline: {
+        dots: [],
+        desc: 'timeline desc',
+        name: "the legacy"
+      }
     };
   }
 

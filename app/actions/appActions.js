@@ -1,6 +1,6 @@
-let fireact = require ('../utils/fireact');
+import fireact from '../utils/fireact';
 
-let appActions = {
+export default {
 
   syncUser(userId, ui){
     fireact.subscribe({
@@ -16,8 +16,15 @@ let appActions = {
       asArray: true,
       then: ui
     });
+  },
+
+  syncTimeline(options, ui){
+    fireact.subscribe({
+      loc: ['user', 'simplelogin:72', 'timeline', '-JrdC_gXXwKUTcffcVPX'],
+      asArray: false,
+      then: ui
+    });
   }
 
 };
 
-module.exports = appActions;
