@@ -1,27 +1,19 @@
 import React from 'react';
-import Heading from './components/Heading';
 import BrowseContainer from './components/containers/BrowseContainer';
 
 export default class Routes extends React.Component {
 
-  change(){
-    this.props.changeState({
-      user: {
-        username: "change from view below"
-      }
-    });
-  }
-
   render() {
 
-    let { user, auth, route, routeParams, timelines } = this.props.appState;
+    let { route, timelines } = this.props.appState;
+    let { changeState } = this.props;
 
-    return (
-      <div>
-        <Heading>Browse</Heading>
-        <BrowseContainer changeState={this.props.changeState} timelines={timelines}/>
-      </div>
-    );
+    switch(route){
+      case 'browse':
+        return <BrowseContainer changeState={changeState} timelines={timelines}/>;
+      default:
+        return <div>404</div>;
+    }
 
   }
 
