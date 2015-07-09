@@ -1,6 +1,6 @@
 import React from 'react';
-//import BrowseContainer from './components/containers/BrowseContainer';
 import Heading from './components/Heading';
+import BrowseContainer from './components/containers/BrowseContainer';
 
 export default class Routes extends React.Component {
 
@@ -14,14 +14,12 @@ export default class Routes extends React.Component {
 
   render() {
 
-    let { user, auth, route, routeParams } = this.props.appState;
+    let { user, auth, route, routeParams, timelines } = this.props.appState;
 
     return (
       <div>
         <Heading>Browse</Heading>
-        <div className='content' onClick={this.change.bind(this)}>
-          { user.username }
-        </div>
+        <BrowseContainer changeState={this.props.changeState} timelines={timelines}/>
       </div>
     );
 

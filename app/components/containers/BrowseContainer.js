@@ -5,23 +5,14 @@ import BrowseTable from '../browse/BrowseTable';
 
 export default class Container extends React.Component {
 
-  constructor(props){
-    super(props);
-    this.state = {
-      timelines: []
-    };
-  }
-
   componentDidMount(){
-    appActions.syncTimelines((timelines => this.setState({timelines})));
-
+    appActions.syncTimelines((timelines => this.props.changeState({timelines})));
   }
 
   render(){
     return (
-      <div>
-        <h1>Container</h1>
-        <BrowseTable timelines={this.state.timelines}/>
+      <div className='content'>
+        <BrowseTable timelines={this.props.timelines}/>
       </div>
     );
   }
