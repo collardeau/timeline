@@ -11,12 +11,14 @@ class App extends React.Component {
 
   constructor(props){
     super(props);
-    this.state = { 
-      user: { 
-        username: "anonymous", 
+    this.state = {
+      app: this,
+      user: {
+        username: "anonymous",
         bookmarks: []
       },
-      auth: null
+      auth: null,
+      timelines: []
     };
   }
 
@@ -24,10 +26,15 @@ class App extends React.Component {
     appActions.syncUser('tonton', user => this.setState({user}));
   }
 
+  changeState(data){
+    // record history?
+    this.state.app.setState(data);
+  }
+
   render() {
     return (
       <Router>
-        <Routes appState={this.state}/>
+        <Routes appState={this.state} changeState={this.changeState.bind(this)}/>
       </Router>
     );
   }
