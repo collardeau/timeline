@@ -1,5 +1,10 @@
-var appConstants = {
 
+export default {
+
+  firebase: {
+    FIREBASE_HOST: "https://time-line.firebaseio.com/",
+    PUBLIC_INDEX: "timeline-public-index"
+  },
     FIREBASE_HOST: "https://time-line.firebaseio.com/",
 
     CHANGE_TIMELINES: "CHANGE_TIMELINES",
@@ -28,5 +33,4 @@ var appConstants = {
     LOGOUT_USER: "LOGOUT_USER"
 };
 
-module.exports = appConstants;
 

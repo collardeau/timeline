@@ -16,11 +16,6 @@ class Timeline extends React.Component {
     timelineStore.addSVGListener(this.changeSVG);
   }
 
-  componentWillUnMount(){
-    timelineStore.removeSVGListener(this.changSVG);
-    SVG.killSVG();
-  }
-
   shouldComponentUpdate(){
     console.log("should timeline update?");
     return this.props.dots.length ? false : true;
@@ -33,19 +28,20 @@ class Timeline extends React.Component {
   }
 
   componentWillUnmount() {
+    timelineStore.removeSVGListener(this.changSVG);
     SVG.killSVG();
-  }
-
-  render() {
-    return (
-      <div className="d3-container"></div>
-    );
   }
 
   changeSVG(){
     console.log("change svg callback");
     SVG.killSVG();
     SVG.draw(this.props.dots);
+  }
+
+  render() {
+    return (
+      <div className="d3-container"></div>
+    );
   }
 
 }

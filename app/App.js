@@ -33,6 +33,8 @@ class App extends React.Component {
   }
 
   changeState(data){
+    console.log('changing state');
+    console.log(data);
     this.state.app.setState(data);
   }
 

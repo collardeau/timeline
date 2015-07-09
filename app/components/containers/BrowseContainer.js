@@ -9,10 +9,16 @@ export default class Container extends React.Component {
     appActions.syncTimelines((timelines => this.props.changeState({timelines})));
   }
 
+  handleCutSync(){
+    console.log('killing sync');
+    appActions.cutSync('public');
+  }
+
   render(){
     let { timelines } = this.props;
     return (
       <div className='content'>
+        <button onClick={this.handleCutSync}>Kill Sync</button>
         <BrowseTable changeState={this.props.changeState} timelines={timelines}/>
       </div>
     );

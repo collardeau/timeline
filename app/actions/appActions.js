@@ -1,4 +1,5 @@
 import fireact from '../utils/fireact';
+import { firebase } from '../constants/appConstants.js';
 
 export default {
 
@@ -12,7 +13,7 @@ export default {
 
   syncTimelines(ui){
     fireact.subscribe({
-      loc: ['timeline-public-index'],
+      loc: [firebase.PUBLIC_INDEX],
       asArray: true,
       then: ui
     });
@@ -23,6 +24,12 @@ export default {
       loc: ['user', 'simplelogin:72', 'timeline', '-JrdC_gXXwKUTcffcVPX'],
       asArray: false,
       then: ui
+    });
+  },
+
+  cutSync(){
+    fireact.unsubscribe({
+      loc: [firebase.PUBLIC_INDEX]
     });
   }
 

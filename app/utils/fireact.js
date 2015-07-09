@@ -20,11 +20,16 @@ let toArray = obj => {
 module.exports = {
 
   subscribe(options){
-    buildPath(options.loc).on("value", snapshot => {
+    let { loc, asArray, then } = options;
+    buildPath(loc).on("value", snapshot => {
       let data = snapshot.val();
-      if(options.asArray){ data = toArray(data); }
-      options.then(data);
+      if(asArray){ data = toArray(data); }
+      then(data);
     }, errorObject => console.log("The read failed: " + errorObject.code));
+  },
+
+  unsubscribe(options){
+    buildPath(options.loc).off('value');
   }
 
 };
