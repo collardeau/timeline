@@ -10,12 +10,14 @@ export default class Login extends React.Component {
     }, {
       success: this.props.changeState
     });
+    window.location.hash = 'browse';
   }
 
   render() {
 
     return (
       <div>
+        <h5>The login form</h5>
         <button onClick={this.handleSubmit.bind(this)}>Submit</button>
       </div>
     );

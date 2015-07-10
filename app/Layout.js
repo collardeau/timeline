@@ -33,16 +33,18 @@ export default class Layout extends React.Component {
   render() {
 
     let { changeState } = this.props;
-    let {loc, warning } = this.props.appState;
+    let {loc, warning, menuIsOpen, auth } = this.props.appState;
 
     let content = this.contentMkr(loc.route);
 
     return (
       <div>
-        <Header changeState={changeState} route={loc.route} />
-        <Menu changeState={changeState }/>
-        <Warning warning={warning}/>
-        { content }
+        <Header changeState={changeState} menuIsOpen={menuIsOpen} route={loc.route} />
+        <Menu changeState={changeState } isOpen={menuIsOpen} auth={auth}/>
+        <div className='content'>
+          <Warning warning={warning}/>
+          { content }
+        </div>
       </div>
     );
 

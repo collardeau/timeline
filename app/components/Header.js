@@ -10,11 +10,15 @@ export default class Header extends React.Component {
     );
   }
 
-  handleClick(){
-    console.log('click');
-    console.log(this.props);
+  handleWarn(){
     this.props.changeState({
       warning: { message: "Are you kidding me" }
+    });
+  }
+
+  handleMenuClick(){
+    this.props.changeState({
+      menuIsOpen: !this.props.menuIsOpen
     });
   }
 
@@ -24,7 +28,10 @@ export default class Header extends React.Component {
 
     return (
       <header className="bar bar-nav">
-        <button onClick={this.handleClick.bind(this)} className='btn pull-right'>
+        <button onClick={this.handleMenuClick.bind(this)} className='btn pull-left'>
+          <i className='fa fa-car' />
+        </button>
+        <button onClick={this.handleWarn.bind(this)} className='btn pull-right'>
           <i className='fa fa-home' />
         </button>
         <h1 className="title">{ route }</h1>

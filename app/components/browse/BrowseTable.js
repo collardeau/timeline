@@ -7,7 +7,7 @@ export default class BrowseTable extends React.Component {
   render() {
 
     let items = this.props.items.map(( item, i ) => {
-      return <BrowseItem item={item} />;
+      return <BrowseItem key={i} item={item} />;
     });
 
     return <ul className="table-view"> { items } </ul>;
