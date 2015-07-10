@@ -25,8 +25,7 @@ export default class Router extends React.Component {
   }
 
   render () {
-    let { appState, changeState } = this.props;
-    return <Routes appState={appState} changeState={changeState}/>;
+    return <span></span>;
   }
 
 }

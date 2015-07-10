@@ -1,7 +1,12 @@
-import fireact from '../utils/fireact';
 import { firebase } from '../constants/appConstants.js';
+import fireact from '../utils/fireact';
+import router from '../utils/lil-router';
 
 export default {
+
+  route(ui){
+    router().start(ui);
+  },
 
   syncUser(userId, ui){
     fireact.subscribe({

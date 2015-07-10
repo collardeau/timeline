@@ -5,6 +5,24 @@ export default {
     FIREBASE_HOST: "https://time-line.firebaseio.com/",
     PUBLIC_INDEX: "timeline-public-index"
   },
+  EMPTY_STATE: {
+    app: this,
+    route: '',
+    routeParams: [],
+    user: {
+      username: "anonymous",
+      bookmarks: []
+    },
+    auth: null,
+    menuIsOpen: false,
+    timelines: [],
+    timeline: {
+      dots: [],
+      desc: 'timeline desc',
+      name: "the legacy"
+    }
+  },
+
     FIREBASE_HOST: "https://time-line.firebaseio.com/",
 
     CHANGE_TIMELINES: "CHANGE_TIMELINES",
@@ -32,5 +50,4 @@ export default {
     CHANGE_USER: "CHANGE_USER",
     LOGOUT_USER: "LOGOUT_USER"
 };
-
 

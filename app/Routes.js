@@ -1,28 +1,35 @@
 import React from 'react';
 import Heading from './components/Heading.js';
-import BrowseContainer from './components/containers/BrowseContainer';
-import TimelineContainer from './components/containers/TimelineContainer';
+import Menu from './components/Menu.js';
+
+import lilRouter from './utils/lil-router';
+let router = lilRouter();
 
 export default class Routes extends React.Component {
 
+  componentDidMount(){
+    router.start(this.props.changeState);
+  }
+
   render() {
 
-    let { route, routeParams, timelines, timeline } = this.props.appState;
+    let { route, routeParams, timelines, timeline, menuIsOpen } = this.props.appState;
     let { changeState } = this.props;
+    //<BrowseContainer changeState={changeState} timelines={timelines}/>
+    //<TimelineContainer changeState={changeState} timeline={timeline}/>
 
     switch(route){
       case 'browse':
         return (
           <div>
-            <Heading>Browse</Heading>
-            <BrowseContainer changeState={changeState} timelines={timelines}/>
+            <h1>Browse Route</h1>
+            { this.props.appState.user.username }
           </div>
       );
       case 'u':
         return (
           <div>
-            <Heading>Timeline</Heading>
-            <TimelineContainer changeState={changeState} timeline={timeline}/>
+            <h1>User Route</h1>
           </div>
         );
 

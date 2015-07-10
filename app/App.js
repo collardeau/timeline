@@ -2,9 +2,12 @@ require('normalize.css/normalize.css');
 require('./styles/main.scss');
 
 const React = require('react');
-const Router = require('./Router');
+let Routes = require('./Routes');
+let Menu = require('./components/Menu');
+let Heading = require('./components/Heading');
 
 let appActions = require('./actions/appActions');
+let router = require('./utils/lil-router');
 
 class App extends React.Component {
 
@@ -19,6 +22,7 @@ class App extends React.Component {
         bookmarks: []
       },
       auth: null,
+      menuIsOpen: false,
       timelines: [],
       timeline: {
         dots: [],
@@ -29,18 +33,20 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-    appActions.syncUser('tonton', user => this.setState({user}));
+    appActions.route(this.changeState.bind(this));
+    appActions.syncUser('tonton', user => this.changeState({user}));
   }
 
-  changeState(data){
-    console.log('changing state');
-    console.log(data);
+  changeState(data){ console.log(data);
     this.state.app.setState(data);
   }
-
   render() {
     return (
-      <Router appState={this.state} changeState={this.changeState.bind(this)}/>
+      <div>
+        <Heading>{this.state.route}</Heading>
+        <Routes appState={this.state} changeState={this.changeState.bind(this)}/>;
+        <Menu />
+      </div>
     );
   }
 
