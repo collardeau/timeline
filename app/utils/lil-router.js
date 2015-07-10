@@ -4,8 +4,10 @@ let handleChange = (ui) => {
   let hash = hasher.getHash();
   let parts = hash.split('/');
   ui({
-    route: parts.shift(),
-    routeParams: parts
+    loc: {
+      route: parts.shift(),
+      params: parts
+    }
   });
 };
 

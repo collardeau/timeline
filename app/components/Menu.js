@@ -4,13 +4,17 @@ export default class Menu extends React.Component {
 
   render() {
 
+    let styles = {
+      backgroundColor: '#ddd'
+    };
+
     return (
-      <div>
-        <h1>Menu 1</h1>
-        <h1>Menu 2</h1>
-        <h1>Menu 3</h1>
-        <h1>Menu 4</h1>
-      </div>
+      <ul style={styles}>
+        <li>Menu 1</li>
+        <li>Menu 2</li>
+        <li>Menu 3</li>
+        <li>Menu 5</li>
+      </ul>
 
     );
   }

@@ -7,7 +7,7 @@ export default class Container extends React.Component {
 
   componentDidMount(){
     appActions.syncTimelines(timelines => {
-      this.props.changeState({timelines});
+      this.props.cS({timelines});
     });
   }
 
@@ -16,10 +16,10 @@ export default class Container extends React.Component {
   }
 
   render(){
-    let { timelines } = this.props;
+    let { items } = this.props;
     return (
-      <div className='content'>
-        <BrowseTable changeState={this.props.changeState} timelines={timelines}/>
+      <div>
+        <BrowseTable items={items} />
       </div>
     );
   }

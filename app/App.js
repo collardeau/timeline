@@ -2,21 +2,24 @@ require('normalize.css/normalize.css');
 require('./styles/main.scss');
 
 const React = require('react');
-let Routes = require('./Routes');
-let Menu = require('./components/Menu');
-let Heading = require('./components/Heading');
+let Layout = require('./Layout');
 
 let appActions = require('./actions/appActions');
-let router = require('./utils/lil-router');
 
 class App extends React.Component {
+
+  // returns layout function
+  // bootstraps the app (sync user data, start router)
+  // keeps state of the app
 
   constructor(props){
     super(props);
     this.state = {
       app: this,
-      route: '',
-      routeParams: [],
+      loc: {
+        route: '',
+        params: []
+      },
       user: {
         username: "anonymous",
         bookmarks: []
@@ -40,14 +43,9 @@ class App extends React.Component {
   changeState(data){ console.log(data);
     this.state.app.setState(data);
   }
+
   render() {
-    return (
-      <div>
-        <Heading>{this.state.route}</Heading>
-        <Routes appState={this.state} changeState={this.changeState.bind(this)}/>;
-        <Menu />
-      </div>
-    );
+    return <Layout appState={this.state} changeState={this.changeState.bind(this)}/>;
   }
 
 }
