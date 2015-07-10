@@ -1,15 +1,14 @@
 import React from 'react';
 
-import Menu from './components/Menu.js';
-import Header from './components/Header.js';
-import Warning from './components/Warning.js';
-import BrowseContainer from './components/containers/BrowseContainer';
-import Login from './components/login/Login';
+import Menu from './sections/Menu.js';
+import Header from './sections/Header.js';
+import Warning from './sections/Warning.js';
+import BrowseContainer from './sections/BrowseContainer';
+import Login from './sections/Login';
 
 export default class Layout extends React.Component {
 
   shouldComponentUpdate(oldProps, newProps){
-    //console.log('should component update');
     return true;
   }
 

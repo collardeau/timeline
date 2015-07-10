@@ -1,5 +1,5 @@
 import React from 'react';
-import actions from '../actions/appActions.js';
+import actions from '../../actions/appActions.js';
 import classNames from 'classnames';
 
 export default class Menu extends React.Component {

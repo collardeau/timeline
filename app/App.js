@@ -2,10 +2,9 @@ require('normalize.css/normalize.css');
 require('./styles/main.scss');
 
 const React = require('react');
-let Layout = require('./Layout');
+let Layout = require('./components/Layout');
 
 let appActions = require('./actions/appActions');
-let authUtils = require('./utils/authUtils');
 
 class App extends React.Component {
 
