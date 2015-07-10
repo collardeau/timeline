@@ -5,6 +5,10 @@ import authUtils from '../utils/authUtils';
 
 export default {
 
+  checkAuth(){
+    return authUtils.isLoggedIn();
+  },
+
   route(ui){
     router().start(ui);
   },

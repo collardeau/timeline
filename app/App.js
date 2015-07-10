@@ -13,25 +13,28 @@ class App extends React.Component {
   // bootstraps the app (sync user data, start router)
   // keeps state of the app
 
-  constructor(props){
-    super(props);
+  constructor(){
+    super();
     this.state = {
       app: this,
+      auth: appActions.checkAuth(),
       loc: {
         route: '',
         params: []
       },
       user: {
-        username: "anonymous",
+        username: "",
         bookmarks: []
       },
-      auth: authUtils.isLoggedIn(),
+      warning: {
+        message: ''
+      },
       menuIsOpen: false,
       timelines: [],
       timeline: {
         dots: [],
-        desc: 'timeline desc',
-        name: "the legacy"
+        desc: 'desc',
+        name: "legacy"
       }
     };
   }

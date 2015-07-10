@@ -2,14 +2,14 @@ import React from 'react';
 
 import Menu from './components/Menu.js';
 import Header from './components/Header.js';
+import Warning from './components/Warning.js';
 import BrowseContainer from './components/containers/BrowseContainer';
 import Login from './components/login/Login';
 
 export default class Layout extends React.Component {
 
   shouldComponentUpdate(oldProps, newProps){
-    console.log('should component update');
-    //console.log(oldProps, newProps);
+    //console.log('should component update');
     return true;
   }
 
@@ -32,15 +32,16 @@ export default class Layout extends React.Component {
 
   render() {
 
-    let {route} = this.props.appState.loc;
-    let content = this.contentMkr(route);
+    let { changeState } = this.props;
+    let {loc, warning } = this.props.appState;
 
-    console.log(this.props.appState.auth);
+    let content = this.contentMkr(loc.route);
 
     return (
       <div>
-        <Header route={route} />
-        <Menu changeState={ this.props.changeState }/>
+        <Header changeState={changeState} route={loc.route} />
+        <Menu changeState={changeState }/>
+        <Warning warning={warning}/>
         { content }
       </div>
     );
