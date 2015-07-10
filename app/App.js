@@ -5,6 +5,7 @@ const React = require('react');
 let Layout = require('./Layout');
 
 let appActions = require('./actions/appActions');
+let authUtils = require('./utils/authUtils');
 
 class App extends React.Component {
 
@@ -24,7 +25,7 @@ class App extends React.Component {
         username: "anonymous",
         bookmarks: []
       },
-      auth: null,
+      auth: authUtils.isLoggedIn(),
       menuIsOpen: false,
       timelines: [],
       timeline: {

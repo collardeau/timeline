@@ -3,8 +3,15 @@ import React from 'react';
 import Menu from './components/Menu.js';
 import Header from './components/Header.js';
 import BrowseContainer from './components/containers/BrowseContainer';
+import Login from './components/login/Login';
 
 export default class Layout extends React.Component {
+
+  shouldComponentUpdate(oldProps, newProps){
+    console.log('should component update');
+    //console.log(oldProps, newProps);
+    return true;
+  }
 
   contentMkr(route){
 
@@ -14,6 +21,8 @@ export default class Layout extends React.Component {
     switch(route){
       case 'browse':
         return <BrowseContainer cS={changeState} items={timelines}/>;
+      case 'login':
+        return <Login cS={changeState}/>;
       case 'u':
         return <div>user container</div>;
       default:
@@ -25,6 +34,8 @@ export default class Layout extends React.Component {
 
     let {route} = this.props.appState.loc;
     let content = this.contentMkr(route);
+
+    //console.log(this.props.appState.auth);
 
     return (
       <div>

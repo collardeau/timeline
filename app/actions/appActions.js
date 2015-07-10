@@ -1,11 +1,18 @@
 import { firebase } from '../constants/appConstants.js';
 import fireact from '../utils/fireact';
 import router from '../utils/lil-router';
+import authUtils from '../utils/authUtils';
 
 export default {
 
   route(ui){
     router().start(ui);
+  },
+
+  login(user, ui){
+    authUtils.login(user).then(auth => {
+      ui.success();
+    });
   },
 
   syncUser(userId, ui){
