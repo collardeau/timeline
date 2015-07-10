@@ -11,8 +11,13 @@ export default {
 
   login(user, ui){
     authUtils.login(user).then(auth => {
-      ui.success();
+      ui.success(auth);
     });
+  },
+
+  logout(ui){
+    authUtils.logout();
+    ui({auth: null});
   },
 
   syncUser(userId, ui){

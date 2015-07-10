@@ -22,7 +22,7 @@ export default class Layout extends React.Component {
       case 'browse':
         return <BrowseContainer cS={changeState} items={timelines}/>;
       case 'login':
-        return <Login cS={changeState}/>;
+        return <Login changeState={changeState}/>;
       case 'u':
         return <div>user container</div>;
       default:
@@ -35,12 +35,12 @@ export default class Layout extends React.Component {
     let {route} = this.props.appState.loc;
     let content = this.contentMkr(route);
 
-    //console.log(this.props.appState.auth);
+    console.log(this.props.appState.auth);
 
     return (
       <div>
         <Header route={route} />
-        <Menu />
+        <Menu changeState={ this.props.changeState }/>
         { content }
       </div>
     );

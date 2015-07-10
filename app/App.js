@@ -38,7 +38,7 @@ class App extends React.Component {
 
   componentDidMount(){
     appActions.route(this.changeState.bind(this));
-    appActions.syncUser('tonton', user => this.changeState({user}));
+    //appActions.syncUser('tonton', user => this.changeState({user}));
   }
 
   changeState(data){ console.log(data);

@@ -8,9 +8,7 @@ export default class Login extends React.Component {
       email: 't@c.com',
       password: 'pw'
     }, {
-      success: () => {
-        console.log('yeah');
-      }
+      success: this.props.changeState
     });
   }
 
@@ -18,7 +16,7 @@ export default class Login extends React.Component {
 
     return (
       <div>
-        <button onClick={this.handleSubmit}>Submit</button>
+        <button onClick={this.handleSubmit.bind(this)}>Submit</button>
       </div>
     );
 
