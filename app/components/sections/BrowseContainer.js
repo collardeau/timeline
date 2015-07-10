@@ -7,7 +7,7 @@ export default class Container extends React.Component {
 
   componentDidMount(){
     appActions.syncTimelines(timelines => {
-      this.props.cS({timelines});
+      this.props.changeState({timelines});
     });
   }
 

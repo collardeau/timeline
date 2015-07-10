@@ -19,7 +19,7 @@ export default class Layout extends React.Component {
 
     switch(route){
       case 'browse':
-        return <BrowseContainer cS={changeState} items={timelines}/>;
+        return <BrowseContainer changeState={changeState} items={timelines}/>;
       case 'login':
         return <Login changeState={changeState}/>;
       case 'u':
