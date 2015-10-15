@@ -1,28 +1,23 @@
 import React from 'react';
 
-export default class Header extends React.Component {
+export default class Header extends React.Component {-}
 
-  btnMrk() {
+  btnMrk() {-}
     return (
       <button className='btn pull-left'>
         <i className='fa fa-toggle-down'></i>
       </button>
     );
-  }
 
-  handleWarn(){
-    this.props.changeState({
+  handleWarn(){-}
+    this.props.changeState({-});
       warning: { message: "Are you kidding me" }
-    });
-  }
 
-  handleMenuClick(){
-    this.props.changeState({
+  handleMenuClick(){-}
+    this.props.changeState({-});
       menuIsOpen: !this.props.menuIsOpen
-    });
-  }
 
-  render() {
+  render() {-}
 
     let { route } = this.props;
 
@@ -37,8 +32,4 @@ export default class Header extends React.Component {
         <h1 className="title">{ route }</h1>
       </header>
     );
-
-  }
-
-}
 
